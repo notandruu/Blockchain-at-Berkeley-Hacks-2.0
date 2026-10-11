@@ -254,6 +254,14 @@ export async function buildServer(deps: ServerDeps) {
   }));
 
   // ---- campaigns -------------------------------------------------------------------------
+  app.get("/api/campaigns", wrap(async (req) => {
+    const p = await auth(req);
+    return db`
+      select c.id, c.slug, c.public_token, c.venue_name, c.headline, c.reward_usd, c.max_entitlements, c.status, c.closes_at, k.run_id,
+        (select count(*)::int from entitlements e where e.campaign_id = c.id) as claimed
+      from campaigns c join risks k on k.id = c.risk_id where c.merchant_id = any(${p.merchantIds}) order by c.created_at desc`;
+  }));
+
   app.post("/api/campaigns/:id/pause", wrap(async (req) => {
     const p = await auth(req);
     const { id } = req.params as { id: string };
