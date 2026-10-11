@@ -53,7 +53,7 @@ const SYSTEM_RESEARCH = `You are RiskPilot's research agent. You help a small bu
 
 Work in this order, and keep it short (aim for 6 to 9 tool calls):
 1. read_source on the merchant's website with a screenshot to learn what they sell and who they serve.
-2. list_market_candidates for the relevant categories. Gemini sandbox inventory differs from production; trust what the tool returns.
+2. list_market_candidates for the relevant categories, then inspect_contract on promising sandbox events. Sandbox liquidity is thin and often sits only in near-term events; pick an event whose contracts show live depth.
 3. search_evidence once or twice for facts that matter to the chosen event (current price level, a scheduled game, a forecast).
 4. read_source on the chosen contract's terms or settlement source page when it is a web page, to confirm how it settles.
 5. record_finding for each fact you will rely on. Use provenance "source" only with an exact passage copied from a captured page.
@@ -164,12 +164,14 @@ export async function runResearch(deps: AgentDeps, inputs: RunInputs, intake: In
       },
     }),
     inspect_contract: tool({
-      description: "Show the contracts in one event: labels, strikes, expiry, settlement source, rules text and terms URL.",
+      description: "Show the contracts in one event: labels, strikes, expiry, settlement source, rules text, terms URL and, for sandbox, the live ask depth of each contract.",
       inputSchema: z.object({ eventTicker: z.string(), environment: z.enum(["sandbox", "production"]) }),
       execute: async ({ eventTicker, environment }) => {
         const cs = kit.eventCandidates(eventTicker, environment);
         if (!cs.length) return { error: "unknown event; call list_market_candidates first" };
+        const depth = environment === "sandbox" ? await kit.depthSummary(cs.map((c) => c.instrumentSymbol), `Reading the live sandbox book for ${cs[0]!.eventTitle}`) : null;
         return {
+          liveDepth: depth ?? "production listings are reference only and cannot be bought here",
           event: cs[0]!.eventTitle,
           expiry: cs[0]!.expiryDate,
           settlementSource: cs[0]!.settlementSource,

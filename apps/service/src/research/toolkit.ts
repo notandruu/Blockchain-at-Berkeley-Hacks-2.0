@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { DomainError, type MarketCandidate, type NewRunEvent, type RunEvent } from "@riskpilot/domain";
 import type { ContextResearch, ProviderReceipt, ScrapeResult } from "@riskpilot/provider-context";
-import { createPublicClient, discoverInventory, type GeminiClient } from "@riskpilot/provider-gemini";
+import { createPublicClient, discoverInventory, fetchDepth, type GeminiClient } from "@riskpilot/provider-gemini";
 import type { Sql } from "../db.js";
 import { appendEvent } from "../events.js";
 import { storeScreenshot } from "../storage.js";
@@ -216,6 +216,37 @@ export class ResearchToolkit {
     }
   }
 
+  // Best YES and NO asks (NO derived from YES bids) and total size per contract, read from
+  // fresh snapshots. Lets the agent choose an event that can actually be bought.
+  async depthSummary(symbols: string[], objective: string) {
+    const started = await this.emit({ type: "tool.started", provider: "gemini_markets", mode: "sandbox_exchange", title: objective, payload: { tool: "depth", symbols: symbols.length } });
+    try {
+      const c = this.publicClients.get("sandbox") ?? (await createPublicClient("sandbox"));
+      this.publicClients.set("sandbox", c);
+      const rows = await Promise.all(
+        symbols.map(async (s) => {
+          const d = await fetchDepth(c, "sandbox", s);
+          const sum = (l: { quantity: string }[]) => l.reduce((t, x) => t + Number(x.quantity), 0);
+          const bestBid = d.bids.map((b) => Number(b.price)).sort((a, b) => b - a)[0];
+          return {
+            symbol: s,
+            bestYesAsk: d.asks.map((a) => Number(a.price)).sort((a, b) => a - b)[0] ?? null,
+            yesAskSize: sum(d.asks),
+            bestNoAsk: bestBid != null ? Number((1 - bestBid).toFixed(4)) : null,
+            noAskSize: sum(d.bids),
+            observedAt: d.observedAt,
+          };
+        }),
+      );
+      const withDepth = rows.filter((r) => r.yesAskSize + r.noAskSize > 0).length;
+      await this.emit({ type: "tool.completed", provider: "gemini_markets", mode: "sandbox_exchange", title: `${withDepth} of ${rows.length} contracts have live depth`, payload: { tool: "depth", startedSequence: started.sequence, rows } });
+      return rows;
+    } catch (err) {
+      await this.toolFailed("depth", started.sequence, err);
+      throw err;
+    }
+  }
+
   eventCandidates(eventTicker: string, environment?: "sandbox" | "production"): MarketCandidate[] {
     return [...this.candidates.values()].filter((c) => c.eventTicker === eventTicker && (!environment || c.environment === environment));
   }
@@ -224,7 +255,7 @@ export class ResearchToolkit {
     const code = err instanceof DomainError ? err.code : "PROVIDER_UNAVAILABLE";
     await this.emit({
       type: "tool.failed",
-      provider: tool === "list_market_candidates" ? "gemini_markets" : "context",
+      provider: tool === "list_market_candidates" || tool === "depth" ? "gemini_markets" : "context",
       mode: "live_research",
       title: err instanceof Error ? err.message.slice(0, 200) : "request failed",
       sourceUrl: url ?? null,
