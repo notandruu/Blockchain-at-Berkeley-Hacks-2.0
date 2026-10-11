@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T23:16:40.611Z",
+  "generatedAt": "2026-10-11T23:32:29.152Z",
   "environment": "sandbox",
   "params": {
     "reward": "20",
@@ -7,7 +7,7 @@
     "budget": "350",
     "ceiling": "0.65",
     "asset": "BTC",
-    "minHours": 0.25
+    "minHours": 2
   },
   "inventory": {
     "eventsScanned": 94,
@@ -21,343 +21,11 @@
   },
   "options": [
     {
-      "symbol": "GEMI-BTC2610120000-HI83200",
-      "label": "$83,200 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "30f5289b27b91f9fcf3b0862d75b08e09a1a449a9751d3dc4041b2c99834e509",
-      "observedAt": "2026-10-11T23:16:42.034Z",
-      "lastUpdateId": "1790796214508502",
-      "asksTop": [
-        {
-          "price": "0.0900",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.1100",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.45",
-        "max": "15.60",
-        "avg": "0.2125"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83300",
-      "label": "$83,300 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "97ec3e95726a857437353e43190054503dc01eac116c3bb18e5e293bc05aa2fd",
-      "observedAt": "2026-10-11T23:16:42.102Z",
-      "lastUpdateId": "1790796214508506",
-      "asksTop": [
-        {
-          "price": "0.0800",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.1000",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.35",
-        "max": "15.60",
-        "avg": "0.2108"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83400",
-      "label": "$83,400 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "bef743f007bdfa0acb3e52bca1b09bdfc87b772159b2b9f1d5f7bbe29f3fb52c",
-      "observedAt": "2026-10-11T23:16:42.169Z",
-      "lastUpdateId": "1790796214508510",
-      "asksTop": [
-        {
-          "price": "0.0700",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.0900",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.24",
-        "max": "15.60",
-        "avg": "0.2092"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83500",
-      "label": "$83,500 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "72036adae52b22b6fbf85eaf03d83c4e46ad59b279d3f4dba9a81a8dee0940b3",
-      "observedAt": "2026-10-11T23:16:42.235Z",
-      "lastUpdateId": "1790796214508519",
-      "asksTop": [
-        {
-          "price": "0.0700",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.0800",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.19",
-        "max": "15.60",
-        "avg": "0.2083"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83600",
-      "label": "$83,600 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "c6da1f48a6f030e239a9496eee2901e16afa5fcecf32499aa7c999f274c75a59",
-      "observedAt": "2026-10-11T23:16:42.301Z",
-      "lastUpdateId": "1790796214508526",
-      "asksTop": [
-        {
-          "price": "0.0700",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.0800",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.19",
-        "max": "15.60",
-        "avg": "0.2083"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83700",
-      "label": "$83,700 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "dcea16426287b4f416fb4967cf0717f1dba700882769c79d59ad0cfc643d535c",
-      "observedAt": "2026-10-11T23:16:42.367Z",
-      "lastUpdateId": "1790796214508531",
-      "asksTop": [
-        {
-          "price": "0.0700",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.0800",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.19",
-        "max": "15.60",
-        "avg": "0.2083"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83000",
-      "label": "$83,000 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "14fae40e6dfc3afdbec6daf5b6b566fc295eae4136136e2a07892ba058d1a3fb",
-      "observedAt": "2026-10-11T23:16:42.490Z",
-      "lastUpdateId": "1790796214508494",
-      "asksTop": [
-        {
-          "price": "0.1500",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.1700",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0400",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.0300",
-          "quantity": "25.00"
-        },
-        {
-          "price": "0.0200",
-          "quantity": "5.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "14.08",
-        "max": "15.60",
-        "avg": "0.2225"
-      }
-    },
-    {
-      "symbol": "GEMI-BTC2610120000-HI83100",
-      "label": "$83,100 or above",
-      "expiry": "2026-10-12T00:00:00.000Z",
-      "rulesHash": "7f3ff3247be5cd96ef11755f8edd6622c1c0376d30ecfd74bd404fd232c87d4f",
-      "observedAt": "2026-10-11T23:16:42.556Z",
-      "lastUpdateId": "1790796214508498",
-      "asksTop": [
-        {
-          "price": "0.1200",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.1300",
-          "quantity": "5.00"
-        },
-        {
-          "price": "0.2300",
-          "quantity": "25.00"
-        }
-      ],
-      "bidsTop": [
-        {
-          "price": "0.0300",
-          "quantity": "30.00"
-        },
-        {
-          "price": "0.0100",
-          "quantity": "30.00"
-        }
-      ],
-      "entitlements": 3,
-      "reason": "depth",
-      "quote": {
-        "quantity": "60.00",
-        "limit": "0.24",
-        "est": "13.71",
-        "max": "15.60",
-        "avg": "0.2167"
-      }
-    },
-    {
       "symbol": "GEMI-BTC2610122100-HI82750",
       "label": "$82,750 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "5070fdf81fb7248d3a1cc331db875cf300982795a749e891d1b73b86145e9309",
-      "observedAt": "2026-10-11T23:16:42.624Z",
+      "observedAt": "2026-10-11T23:32:30.729Z",
       "lastUpdateId": "1790796213259648",
       "asksTop": [],
       "bidsTop": [],
@@ -370,7 +38,7 @@
       "label": "$83,000 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "c85bc1bdc241be6db8dce84e49b6a1eb441e4ad9dbb6e6e4ca3f632bf109713b",
-      "observedAt": "2026-10-11T23:16:42.691Z",
+      "observedAt": "2026-10-11T23:32:30.887Z",
       "lastUpdateId": "1790796213259951",
       "asksTop": [],
       "bidsTop": [],
@@ -383,7 +51,7 @@
       "label": "$83,250 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "5d86ffc9a7e8f2980fe7612d7d9cffd65150b0ceffd7200f3a82b196f79e66f4",
-      "observedAt": "2026-10-11T23:16:42.757Z",
+      "observedAt": "2026-10-11T23:32:30.954Z",
       "lastUpdateId": "1790796213260200",
       "asksTop": [],
       "bidsTop": [],
@@ -396,7 +64,7 @@
       "label": "$83,500 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "486bd45b6f37b4c2992ae21661d54184c434630c6121a691829496d73bac535d",
-      "observedAt": "2026-10-11T23:16:42.824Z",
+      "observedAt": "2026-10-11T23:32:31.078Z",
       "lastUpdateId": "1790796213260419",
       "asksTop": [],
       "bidsTop": [],
@@ -409,7 +77,7 @@
       "label": "$83,750 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "1cb2fb1749dcc0e519a66609c986de06b3b018d91fc782591da60bb1700dcfc1",
-      "observedAt": "2026-10-11T23:16:42.892Z",
+      "observedAt": "2026-10-11T23:32:31.145Z",
       "lastUpdateId": "1790796213260629",
       "asksTop": [],
       "bidsTop": [],
@@ -422,7 +90,7 @@
       "label": "$84,000 or above",
       "expiry": "2026-10-12T21:00:00.000Z",
       "rulesHash": "e9ddf88043fd784b918b502fe3c6cff2ae3d5822633b9297ed9793afbd274c59",
-      "observedAt": "2026-10-11T23:16:43.014Z",
+      "observedAt": "2026-10-11T23:32:31.210Z",
       "lastUpdateId": "1790796213261061",
       "asksTop": [],
       "bidsTop": [],
@@ -435,8 +103,8 @@
       "label": "$80,500 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "a3e117eff82a7e126671881c33fe74fa9c525c058b215a7208d151212d10eb3d",
-      "observedAt": "2026-10-11T23:16:43.081Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.278Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -448,7 +116,7 @@
       "label": "$81,000 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "2044391adf2e41b5487860a3f9fc7e812c7027fe09fe3c09b9831efa50118687",
-      "observedAt": "2026-10-11T23:16:43.149Z",
+      "observedAt": "2026-10-11T23:32:31.413Z",
       "lastUpdateId": "1790796213753332",
       "asksTop": [],
       "bidsTop": [],
@@ -461,8 +129,8 @@
       "label": "$81,500 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "5b3980e17053dcc863a1bb4b0c0551b09fb3b967dcf077620732ac0e47ea78f4",
-      "observedAt": "2026-10-11T23:16:43.215Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.480Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -474,8 +142,8 @@
       "label": "$82,000 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "39a21232aa4169837f79c77d9ed6ee10430281bf33aaa075fd68e3c3538b1300",
-      "observedAt": "2026-10-11T23:16:43.282Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.603Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -487,8 +155,8 @@
       "label": "$82,500 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "3d3c6b85e43a6cd31c79d3e07efce79b1ae6f1609dfb5c5176dc9bcdce430537",
-      "observedAt": "2026-10-11T23:16:43.349Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.670Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -500,8 +168,8 @@
       "label": "$83,000 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "a37d12a9f1e190652b5572e9630afb6afbea9969796f13342aaa1789f6d94311",
-      "observedAt": "2026-10-11T23:16:43.416Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.736Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -513,8 +181,8 @@
       "label": "$83,500 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "34ff0e13f20c448428958d29a73e9e1fb38290a56255bf1903bcfd7f7cb16855",
-      "observedAt": "2026-10-11T23:16:43.537Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.804Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -526,8 +194,8 @@
       "label": "$84,000 or above",
       "expiry": "2026-10-16T21:00:00.000Z",
       "rulesHash": "e21717e2e53a29b3a31b0c9c84a7a853eeba89cba9ef02bfc4201eada06b3b41",
-      "observedAt": "2026-10-11T23:16:43.603Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:31.936Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -539,8 +207,8 @@
       "label": "$72,500 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "5f74a5f74aceaf5e858d8e144e2714fd194de7b579aa249504cc9bba4f1812bf",
-      "observedAt": "2026-10-11T23:16:43.670Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.004Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -552,8 +220,8 @@
       "label": "$75,000 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "0fad18b4489be00b16fca79b7ecc30040d7cdbb42c4034900f62c0bdbd7d5d11",
-      "observedAt": "2026-10-11T23:16:43.737Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.126Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -565,8 +233,8 @@
       "label": "$77,500 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "8a7669eab86815663e04e0282fb6383c7d4d4f6c548b873ed8ca405e8002a30f",
-      "observedAt": "2026-10-11T23:16:43.802Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.192Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -578,8 +246,8 @@
       "label": "$80,000 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "351c9370c9ad4b4841d0b8fdb66f3be7b4eb8f3a7cb23bbdeeb27c5a1aef35b9",
-      "observedAt": "2026-10-11T23:16:43.869Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.259Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -591,8 +259,8 @@
       "label": "$82,500 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "d5f3a0581e887005696b84adb0b7562687dde72b7c0f8b8f84fff5afb0bc248b",
-      "observedAt": "2026-10-11T23:16:43.951Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.326Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -604,8 +272,8 @@
       "label": "$85,000 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "e7b807d3dce23e5ceebd7e723a122b167a4fcca577030f2f70a317f4cd58d884",
-      "observedAt": "2026-10-11T23:16:44.060Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.459Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -617,8 +285,8 @@
       "label": "$87,500 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "23467ca88c95eda906794aba2b8455e0f43c5c2794cb87602fcc2629007323cc",
-      "observedAt": "2026-10-11T23:16:44.127Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.527Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -630,8 +298,8 @@
       "label": "$90,000 or above",
       "expiry": "2026-10-31T21:00:00.000Z",
       "rulesHash": "2b8a2365ef2845083c61ed752025300ffb21592ba6b26ab903f8c7668a0f7144",
-      "observedAt": "2026-10-11T23:16:44.196Z",
-      "lastUpdateId": "1790796198512652",
+      "observedAt": "2026-10-11T23:32:32.651Z",
+      "lastUpdateId": "1790796198515570",
       "asksTop": [],
       "bidsTop": [],
       "entitlements": 0,
@@ -639,46 +307,26 @@
       "quote": null
     }
   ],
-  "selected": {
-    "symbol": "GEMI-BTC2610120000-HI83200",
-    "label": "$83,200 or above",
-    "expiry": "2026-10-12T00:00:00.000Z",
-    "rulesHash": "30f5289b27b91f9fcf3b0862d75b08e09a1a449a9751d3dc4041b2c99834e509",
-    "observedAt": "2026-10-11T23:16:42.034Z",
-    "lastUpdateId": "1790796214508502",
-    "asksTop": [
-      {
-        "price": "0.0900",
-        "quantity": "5.00"
-      },
-      {
-        "price": "0.1100",
-        "quantity": "5.00"
-      },
-      {
-        "price": "0.2300",
-        "quantity": "25.00"
-      }
-    ],
-    "bidsTop": [
-      {
-        "price": "0.0300",
-        "quantity": "30.00"
-      },
-      {
-        "price": "0.0100",
-        "quantity": "30.00"
-      }
-    ],
-    "entitlements": 3,
-    "reason": "depth",
-    "quote": {
-      "quantity": "60.00",
-      "limit": "0.24",
-      "est": "13.45",
-      "max": "15.60",
-      "avg": "0.2125"
+  "selected": null,
+  "account": {
+    "terms": {
+      "hasAcceptedLatest": true,
+      "acceptedVersion": 2,
+      "latestVersion": 2
+    },
+    "balance": {
+      "available": "100000.00",
+      "total": "100000.00"
     }
   },
-  "manifestHash": "f0678575acd7600f6c3c95709de5ce28f99a918413c5d2e2f4460ceea447d8f5"
+  "context": {
+    "url": "https://www.gemini.com/predictions?status=active",
+    "requestId": "19429200-4981-4d5e-af50-70ebcad18af2",
+    "credits": 2,
+    "markdown": true,
+    "highlights": 1,
+    "screenshot": "image/png 226713 bytes",
+    "termsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/btc_398860b3-ea2f-47a7-b167-a8c6ad03d6d7.pdf"
+  },
+  "manifestHash": "ec54f1e6356ea0bfc54685c9f9c2f350a6e851ea6f36c93e477f560d3226daf9"
 }
