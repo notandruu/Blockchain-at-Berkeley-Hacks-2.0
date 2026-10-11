@@ -17,6 +17,7 @@ export const StrikeType = z.enum([
   "under",
   "under_or_equal",
 ]);
+export type StrikeType = z.infer<typeof StrikeType>;
 
 // One tradable contract normalized from a Gemini event. Everything the matcher and the
 // executor need is here so neither has to reread the raw provider payload.
