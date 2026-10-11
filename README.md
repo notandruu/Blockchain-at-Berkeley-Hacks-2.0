@@ -25,6 +25,7 @@ A character bobs while its request is in flight, leans when it is waiting on you
 - Market discovery, depth and orders hit Gemini. Discovery reads sandbox and production; only sandbox can be bought, and the service refuses to start otherwise.
 - Quotes are built from observed book levels and never extrapolate. On 2026-10-11 a scan of all 304 sandbox contracts found depth on 38; the engine sizes to that.
 - Holdings come from Gemini's order history and positions, not from the submit response.
+- First live fill, 2026-10-11 23:40:52 UTC: Gemini sandbox order `145853902277682301`, 10 YES on `GEMI-BTC2610120000-HI83500` at 0.10, fill-or-kill. Booked as 1.00 principal plus 0.07 fee, the plan's estimate to the cent, and it opened a 10 reward campaign that took its first claim.
 - Customer claims are test entitlements. No real money, alcohol offer or insurance is involved.
 
 Nothing in the flow is a hardcoded symbol, price or ticker. `fixtures/` holds captured API payloads for tests only.
@@ -56,7 +57,7 @@ Before a demo, check what the sandbox can actually fill right now:
 pnpm preflight -- --reward 20 --entitlements 10 --budget 350 --ceiling 0.65 --min-hours 0.25
 ```
 
-Real output from 2026-10-11 23:16 UTC (no account keys yet, so the account step was skipped):
+Real output from 2026-10-11 23:16 UTC, before account keys were added (the account step now reports terms v2 and the test USD balance):
 
 ```
 ▸ sandbox inventory
@@ -98,7 +99,8 @@ docs                     PRD, architecture, decisions
 ## Known limits
 
 - Sandbox liquidity is thin and mostly in contracts settling within the hour, so campaigns are small (3 rewards in the run above). The UI says so instead of hiding it.
-- Fees for REST-reconciled orders use the published formula unless the private order stream reported them; the receipt labels which.
+- Fees for REST-reconciled orders use the published formula unless the private order stream reported them; the receipt labels which. Gemini's websocket rejects master API keys outright, so with a master key every fee is formula-booked.
+- The sandbox book on hourly contracts requotes every few seconds. A plan quoted 20 seconds ago is often no longer fillable, and the approve button stays disabled until a new plan fits the book. There is no one-click re-quote yet.
 - Weather and sports matches are analysis only until those categories appear in sandbox
 
 ## Credits
