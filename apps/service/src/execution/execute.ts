@@ -68,7 +68,7 @@ export function executeOrderHandler(deps: ExecutionDeps) {
     // finds 'submitting' or later and goes to reconciliation instead.
     if (!o) return;
     if (o.state !== "pending") {
-      if (o.state === "submitting" || o.state === "unknown") await enqueue(db, "reconcile_order", o.run_id, { orderId }, { lane: ACCOUNT_LANE, maxAttempts: 30 });
+      if (o.state === "submitting" || o.state === "unknown" || o.state === "accepted") await enqueue(db, "reconcile_order", o.run_id, { orderId }, { lane: ACCOUNT_LANE, maxAttempts: 30 });
       return;
     }
     const plan = TradePlan.parse(o.body.plan);
@@ -124,7 +124,13 @@ export function executeOrderHandler(deps: ExecutionDeps) {
         update exchange_orders set state = 'accepted', exchange_order_id = ${res.orderId}, exchange_status = ${res.status},
           response = ${db.json(res.raw as never)} where id = ${orderId}`;
       await transition(db, o.run_id, "RECONCILING", "Confirming fills with the exchange", { exchangeOrderId: res.orderId });
-      await reconcileOrder(deps, orderId);
+      // Order history can trail the submit response by a few seconds. A miss here must not
+      // fail execute_order (it never retries, by design), so hand off to a retrying job.
+      try {
+        await reconcileOrder(deps, orderId);
+      } catch {
+        await enqueue(db, "reconcile_order", o.run_id, { orderId }, { lane: ACCOUNT_LANE, maxAttempts: 30, runAfter: new Date(Date.now() + 2000) });
+      }
       return;
     }
     if (res.kind === "rejected") {
