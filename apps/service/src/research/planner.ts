@@ -153,7 +153,8 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
   }
 
   const ranked = rankMatches(options.map((o) => o.match)).map((m) => options.find((o) => o.match === m)!);
-  const executable = ranked.filter((o) => o.quote && (raw.mode !== "promotion" || o.entitlements > 0));
+  const enrollable = (o: Option) => !o.candidate.expiryDate || Date.parse(o.candidate.expiryDate) - ENROLLMENT_BUFFER_MS > Date.now();
+  const executable = ranked.filter((o) => o.quote && (raw.mode !== "promotion" || (o.entitlements > 0 && enrollable(o))));
   // Among quotable options: most covered rewards (or units), then odds nearest a coin flip.
   executable.sort((a, b) => {
     const cap = raw.mode === "promotion" ? b.entitlements - a.entitlements : dec(b.quote!.quantity).comparedTo(dec(a.quote!.quantity));
@@ -286,6 +287,11 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
   return { riskId: risk!.id, planId: planRow!.id, executable: true };
 }
 
+// Enrollment shuts this long before the contract observes its outcome, so nobody can sign up
+// once the answer is effectively known. An hour was too long: it closed every promotion on
+// the hourly sandbox contracts before it opened.
+export const ENROLLMENT_BUFFER_MS = 5 * 60 * 1000;
+
 export function buildPlan(a: { planGroupId: string; version: number; riskId: string; quoteId: string; best: Option; raw: Proposal; ttlMs: number }): TradePlan {
   const q = a.best.quote!;
   const expiry = a.best.candidate.expiryDate ? Date.parse(a.best.candidate.expiryDate) : Date.now() + a.ttlMs;
@@ -313,7 +319,7 @@ export function buildPlan(a: { planGroupId: string; version: number; riskId: str
           maxEntitlements: a.best.entitlements,
           headline: campaignHeadline(a.best, promo.rewardUsd),
           qualification: promo.qualification,
-          enrollmentClosesAt: new Date(Math.min(Date.parse(promo.enrollmentClosesAt), expiry - 60 * 60 * 1000)).toISOString(),
+          enrollmentClosesAt: new Date(Math.min(Date.parse(promo.enrollmentClosesAt), expiry - ENROLLMENT_BUFFER_MS)).toISOString(),
         }
       : null,
     // A plan cannot outlive its approval window or the contract.
