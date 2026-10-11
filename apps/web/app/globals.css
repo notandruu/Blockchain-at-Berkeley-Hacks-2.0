@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* Design tokens. Surfaces, radii and the tool-card language follow OpenMuse (MIT); money
+   controls use the PRD's sober palette: a dark primary for purchases, teal only for
+   confirmed states, always with a text label. */
+@theme {
+  --color-canvas: #fcfcfc;
+  --color-surface: #ffffff;
+  --color-well: #eeeef0;
+  --color-well-soft: #f4f4f6;
+  --color-ink: #11191c;
+  --color-muted: #697176;
+  --color-faint: #9aa1a6;
+  --color-line: #ececef;
+  --color-sky: #edf7fd;
+  --color-blue: #c8e7ff;
+  --color-blue-ink: #1473c8;
+  --color-lavender: #f0eefa;
+  --color-ok: #087f6d;
+  --color-ok-soft: #e3f3ee;
+  --color-warn: #a65e00;
+  --color-warn-soft: #fdf0df;
+  --color-bad: #b42318;
+  --color-bad-soft: #fbefed;
+  --color-chrome: #1b1f24;
+  --color-chrome-2: #262b31;
+
+  --radius-control: 12px;
+  --radius-card: 23px;
+  --radius-browser: 20px;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-float: 0 1px 2px rgb(17 25 28 / 0.04), 0 12px 32px -12px rgb(17 25 28 / 0.16);
+  --shadow-browser: 0 2px 4px rgb(17 25 28 / 0.06), 0 24px 60px -24px rgb(17 25 28 / 0.35);
+
+  --animate-breathe: breathe 1.6s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+  --animate-indeterminate: indeterminate 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.82); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200px 0; }
+    to { background-position: 200px 0; }
+  }
+  @keyframes indeterminate {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(250%); }
+  }
+}
+
+html, body { background: var(--color-canvas); color: var(--color-ink); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+.tabular { font-variant-numeric: tabular-nums; }
+.label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-muted); }
+
+.skeleton {
+  background: linear-gradient(90deg, #e9edf0 0%, #f4f6f8 50%, #e9edf0 100%);
+  background-size: 400px 100%;
+  animation: var(--animate-shimmer);
+}
+
+.scroll-quiet { scrollbar-width: thin; scrollbar-color: #dfe2e5 transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
