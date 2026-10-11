@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowRight, LayoutGrid } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Mascot, Sparks } from "@/components/crew";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, ErrorNotice } from "@/components/ui/primitives";
@@ -26,14 +27,12 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-canvas px-4">
       <form onSubmit={submit} className="w-full max-w-[360px] space-y-5">
-        <div className="flex items-center gap-2">
-          <div className="flex size-8 items-center justify-center rounded-[10px] bg-ink text-white">
-            <LayoutGrid className="size-4" strokeWidth={2.2} />
-          </div>
-          <span className="text-lg font-semibold tracking-[-0.02em]">Beagle</span>
+        <div className="relative mx-auto h-[150px] w-[160px]">
+          <Sparks />
+          <Mascot who="scout" size={140} state="idle" className="absolute left-2 top-1 rotate-[3deg]" big />
         </div>
         <div>
-          <h1 className="text-[23px] font-semibold tracking-[-0.03em]">Sign in</h1>
+          <h1 className="text-[23px] font-semibold tracking-[-0.03em]">Sign in to Beagle</h1>
           <p className="mt-1 text-sm text-muted">Operator access to the Gemini sandbox account.</p>
         </div>
         <div className="space-y-3">

@@ -1,11 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import { Briefcase, LayoutGrid, Megaphone, Plus, ShieldCheck } from "lucide-react";
+import { Briefcase, Megaphone, Plus, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { SERVICE_URL, supabase } from "@/lib/api";
+import { CREW, Mascot, type CrewMember } from "./crew";
 
 interface Health {
   providers: { context: boolean; gemini: boolean; agent: boolean };
@@ -37,12 +38,12 @@ export function useSession() {
   return { ready, email };
 }
 
-function Dot({ ok, label }: { ok: boolean; label: string }) {
+function CrewSlot({ who, ok, detail }: { who: CrewMember; ok: boolean; detail: string }) {
   return (
-    <div className="flex items-center gap-2 text-[12px] text-muted">
-      <span className={clsx("size-1.5 rounded-full", ok ? "bg-ok" : "bg-faint")} />
-      <span>{label}</span>
-      <span className="ml-auto text-[11px] text-faint">{ok ? "connected" : "not set"}</span>
+    <div className="group relative flex flex-col items-center" title={`${CREW[who].name}: ${detail}`}>
+      <Mascot who={who} size={34} state={ok ? "idle" : "paused"} />
+      <span className={clsx("mt-0.5 text-[9.5px] font-semibold", ok ? "text-muted" : "text-faint")}>{CREW[who].name}</span>
+      <span className={clsx("absolute right-0.5 top-0 size-2 rounded-full ring-2 ring-well-soft", ok ? "bg-ok" : "bg-faint")} />
     </div>
   );
 }
@@ -65,10 +66,10 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
     <div className="flex min-h-dvh bg-canvas">
       <aside className="sticky top-0 hidden h-dvh w-[208px] shrink-0 flex-col border-r border-line bg-canvas px-3 py-4 lg:flex">
         <Link href="/" className="mb-6 flex items-center gap-2 px-2">
-          <div className="flex size-7 items-center justify-center rounded-[9px] bg-ink text-white">
-            <LayoutGrid className="size-4" strokeWidth={2.2} />
-          </div>
-          <span className="text-[15px] font-semibold tracking-[-0.02em]">Beagle</span>
+          <span className="flex size-8 items-end justify-center overflow-hidden rounded-[10px] bg-[#e7eefc]">
+            <Mascot who="scout" size={36} className="-mb-1.5" />
+          </span>
+          <span className="text-[16px] font-semibold tracking-[-0.025em]">Beagle</span>
         </Link>
         <nav className="space-y-0.5">
           {NAV.map(({ href, label, icon: Icon }) => {
@@ -88,13 +89,16 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
             );
           })}
         </nav>
-        <div className="mt-auto space-y-2 rounded-[14px] bg-well-soft p-3">
-          <div className="label mb-1">Connections</div>
-          <Dot ok={!!health?.providers.context} label="Context.dev" />
-          <Dot ok={!!health?.providers.gemini && !health?.accountStream?.stale} label="Gemini sandbox" />
-          <Dot ok={!!health?.providers.agent} label="Agent model" />
-          <Link href="/settings/connections" className="block pt-1 text-[11px] font-semibold text-blue-ink">
-            Manage
+        <div className="mt-auto rounded-[16px] bg-well-soft p-3">
+          <div className="label mb-2">Crew</div>
+          <div className="grid grid-cols-4 gap-1">
+            <CrewSlot who="scout" ok={!!health?.providers.context && !!health?.providers.agent} detail={health?.providers.context ? "Context.dev connected" : "needs CONTEXT_DEV_API_KEY"} />
+            <CrewSlot who="nova" ok={!!health} detail="Gemini market data" />
+            <CrewSlot who="penny" ok={!!health?.providers.gemini && !health?.accountStream?.stale} detail={health?.providers.gemini ? "sandbox account connected" : "needs Gemini sandbox keys"} />
+            <CrewSlot who="sprout" ok={!!health} detail="campaigns" />
+          </div>
+          <Link href="/settings/connections" className="mt-2 block text-[11px] font-semibold text-blue-ink">
+            Connections
           </Link>
         </div>
         {email && <div className="mt-3 truncate px-2 text-[11px] text-faint">{email}</div>}
