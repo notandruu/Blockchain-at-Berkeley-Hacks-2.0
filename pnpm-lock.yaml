@@ -24,6 +24,15 @@ importers:
         specifier: 4.6.6
         version: 4.6.6
 
+  packages/risk-engine:
+    dependencies:
+      '@riskpilot/domain':
+        specifier: workspace:*
+        version: link:../domain
+      decimal.js:
+        specifier: ^10.6.0
+        version: 10.6.0
+
 packages:
 
   '@esbuild/aix-ppc64@0.28.2':
@@ -491,6 +500,9 @@ packages:
     resolution: {integrity: sha512-XWAtwJ6OHO+tj0EKCs0Y2UamnyOxseZWltU4x2U2wh8g4AigdjwvtUjvLP2tqkA/avxHEtzxNaqGq/YGNwckKg==}
     engines: {node: '>=18'}
 
+  decimal.js@10.6.0:
+    resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
+
   es-module-lexer@2.3.2:
     resolution: {integrity: sha512-poHGpORABojJJucnV9KbOavETW8lBVnphkW77ER5/BQ5Fz7oXSoCNek7IH3vR5nRjdsEz926ibFYX8KtLQmdyw==}
 
@@ -918,6 +930,8 @@ snapshots:
   assertion-error@2.0.1: {}
 
   chai@6.3.0: {}
+
+  decimal.js@10.6.0: {}
 
   es-module-lexer@2.3.2: {}
 

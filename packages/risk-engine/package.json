@@ -1,0 +1,16 @@
+{
+  "name": "@riskpilot/risk-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@riskpilot/domain": "workspace:*",
+    "decimal.js": "10.6.0"
+  }
+}
