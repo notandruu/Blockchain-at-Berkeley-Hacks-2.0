@@ -4,21 +4,29 @@ an agent that understands your business, finds a matching prediction market, and
 
 ## the problem
 
-businesses take on financial risks every day. a heat wave delays jobs. a sudden price change eats into margins. traditional insurance can leave gaps.
+a business can do everything right and still lose money because something outside its control changes.
 
-prediction markets put prices on those events. but a business owner still has to find the right contract, understand the settlement rules, and figure out whether it actually helps.
+a heat wave delays a week of jobs. prices move before a supplier gets paid. revenue disappears, but wages and rent keep coming etc.
 
-that’s where beagle comes in.
+traditional insurance doesn't always cover those losses.
 
-## what beagle does
+prediction markets put prices on some of these events. but finding a market is only the first step. someone still has to read the settlement rules, check the liquidity, calculate the payout, and figure out how closely it matches the business's actual risk.
 
-you describe your business, the risk, and your budget.
+business owners already know what could hurt them. turning that into a useful hedge is the hard part.
 
-beagle researches the situation, finds a matching market, calculates the potential payout, and explains what remains exposed.
+## the pitch
 
-you get a plan with the cost, coverage gaps, and a clear spending limit. after you approve, beagle executes the hedge in Gemini’s sandbox.
+beagle does that work.
 
-## an example
+you explain what could go wrong and how much you're willing to spend. beagle researches your business, finds a relevant prediction market, and works out how its payout could offset your exposure.
+
+you see the cost, what triggers the payout, and where the coverage falls short.
+
+then you decide. one approval, a clear spending limit, and an order sized to what the market can actually fill.
+
+we're building a way for a business owner to go from “this could cost us money” to “here's what we can do about it.”
+
+## Example
 
 a painting company has $8,000 worth of outdoor jobs booked for next week.
 
