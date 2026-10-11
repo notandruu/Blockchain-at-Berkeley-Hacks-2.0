@@ -10,9 +10,14 @@ const Env = z.object({
   CONTEXT_WEBHOOK_SECRET: z.string().default(""),
   GEMINI_API_KEY: z.string().default(""),
   GEMINI_API_SECRET: z.string().default(""),
+  // Master keys only: the account in the group to trade from. Leave empty for account keys.
+  GEMINI_ACCOUNT: z.string().default(""),
+  GEMINI_NONCE_MODE: z.enum(["monotonic", "time-based"]).default("monotonic"),
   GEMINI_ENV: z.string(),
   ANTHROPIC_API_KEY: z.string().default(""),
   AGENT_MODEL: z.string().default(""),
+  // Needed when the key is not bound to a workspace (user-scoped keys).
+  ANTHROPIC_WORKSPACE_ID: z.string().default(""),
   SERVICE_PORT: z.coerce.number().int().default(4000),
   WEB_ORIGIN: z.string().default("http://localhost:3100"),
   PUBLIC_SERVICE_URL: z.string().default(""),
@@ -45,5 +50,14 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
       gemini: parsed.GEMINI_API_KEY.length > 0 && parsed.GEMINI_API_SECRET.length > 0,
       agent: parsed.ANTHROPIC_API_KEY.length > 0 && parsed.AGENT_MODEL.length > 0,
     },
+  };
+}
+
+export function geminiCredentials(cfg: Config) {
+  return {
+    apiKey: cfg.GEMINI_API_KEY,
+    apiSecret: cfg.GEMINI_API_SECRET,
+    nonceMode: cfg.GEMINI_NONCE_MODE,
+    ...(cfg.GEMINI_ACCOUNT ? { account: cfg.GEMINI_ACCOUNT } : {}),
   };
 }

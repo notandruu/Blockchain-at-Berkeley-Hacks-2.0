@@ -12,7 +12,7 @@ import {
   getUsdBalance,
 } from "@beagle/provider-gemini";
 import { matchCandidate, PUBLISHED_FEE_SCHEDULE, quotePromotion } from "@beagle/risk-engine";
-import { loadConfig } from "../config.js";
+import { loadConfig, geminiCredentials } from "../config.js";
 
 // Phase 0 of the PRD: prove both sponsor integrations against the same sandbox the demo
 // will use, and write a manifest of what was actually observed. The manifest is config,
@@ -81,7 +81,7 @@ manifest.selected = viable[0] ?? null;
 
 // 4. Account readiness, only when credentials exist.
 if (cfg.providers.gemini) {
-  const trading = await createTradingClient(cfg.GEMINI_ENV, { apiKey: cfg.GEMINI_API_KEY, apiSecret: cfg.GEMINI_API_SECRET });
+  const trading = await createTradingClient(cfg.GEMINI_ENV, geminiCredentials(cfg));
   const [terms, balance] = await Promise.all([getTermsStatus(trading), getUsdBalance(trading)]);
   log("sandbox account", { terms, balance });
   manifest.account = { terms, balance };

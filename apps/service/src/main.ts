@@ -1,6 +1,6 @@
 import { createTradingClient, type GeminiClient } from "@beagle/provider-gemini";
 import { supabaseAdmin } from "./auth.js";
-import { loadConfig } from "./config.js";
+import { loadConfig, geminiCredentials } from "./config.js";
 import { connect } from "./db.js";
 import { AccountStream } from "./execution/account-stream.js";
 import { ACCOUNT_LANE } from "./execution/approve.js";
@@ -15,7 +15,7 @@ const admin = supabaseAdmin(cfg.SUPABASE_URL, cfg.SUPABASE_SECRET_KEY);
 
 let tradingClient: Promise<GeminiClient> | null = null;
 const trading = cfg.providers.gemini
-  ? () => (tradingClient ??= createTradingClient(cfg.GEMINI_ENV, { apiKey: cfg.GEMINI_API_KEY, apiSecret: cfg.GEMINI_API_SECRET }))
+  ? () => (tradingClient ??= createTradingClient(cfg.GEMINI_ENV, geminiCredentials(cfg)))
   : null;
 const accountStream = trading ? new AccountStream(trading) : null;
 
