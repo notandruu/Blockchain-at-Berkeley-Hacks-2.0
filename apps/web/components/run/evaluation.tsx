@@ -5,6 +5,7 @@ import { Check, CircleHelp, Minus, X } from "lucide-react";
 import { motion } from "motion/react";
 import type { FieldCheck, RunEvent, RunView } from "@/lib/types";
 import { Chip, Label } from "../ui/primitives";
+import { CrewBadge, Mascot } from "../crew";
 import { reasonText } from "./feed";
 
 export function CheckIcon({ status }: { status: FieldCheck["status"] }) {
@@ -49,8 +50,9 @@ export function Evaluation({ view, events }: { view: RunView; events: RunEvent[]
         <div className="grid grid-cols-2 gap-3">
           {(candidates.payload.summary as { environment: string; contracts: number; eventsScanned: number; categoriesMissing: string[] }[]).map((s) => (
             <div key={s.environment} className="rounded-[18px] bg-surface p-4 ring-1 ring-line">
-              <div className="flex items-center justify-between">
-                <Label>{s.environment === "sandbox" ? "Gemini sandbox" : "Gemini production"}</Label>
+              <div className="flex items-center gap-2">
+                <CrewBadge who="nova" size={26} state="done" />
+                <Label className="flex-1">{s.environment === "sandbox" ? "Gemini sandbox" : "Gemini production"}</Label>
                 <Chip tone={s.environment === "sandbox" ? "ok" : "neutral"}>{s.environment === "sandbox" ? "executable" : "reference only"}</Chip>
               </div>
               <div className="tabular mt-2 text-[24px] font-semibold tracking-[-0.03em]">{s.contracts}</div>
@@ -64,6 +66,7 @@ export function Evaluation({ view, events }: { view: RunView; events: RunEvent[]
       {accepted ? (
         <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="space-y-3 rounded-[23px] bg-surface p-5 ring-1 ring-line">
           <div className="flex items-center gap-2">
+            <Mascot who="nova" size={34} state="done" />
             <Chip tone="ok">{accepted.payload.matchType === "exact" ? "Exact match" : "Proxy match"}</Chip>
             <span className="font-mono text-[11px] text-faint">{accepted.payload.instrumentSymbol}</span>
           </div>
@@ -80,7 +83,13 @@ export function Evaluation({ view, events }: { view: RunView; events: RunEvent[]
         </motion.div>
       ) : (
         <div className="rounded-[23px] bg-well-soft p-5">
-          <div className="skeleton mb-3 h-4 w-1/3 rounded" />
+          <div className="mb-4 flex items-center gap-3">
+            <Mascot who="nova" size={56} state="working" />
+            <div>
+              <div className="text-[14px] font-semibold">Nova is checking contracts field by field</div>
+              <div className="text-[12px] text-muted">Asset, settlement time, index and threshold, then the live book</div>
+            </div>
+          </div>
           <div className="space-y-2">
             {[0, 1, 2, 3].map((i) => (
               <div key={i} className="skeleton h-8 rounded-[10px]" />

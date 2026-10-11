@@ -1,10 +1,11 @@
 "use client";
 
 import clsx from "clsx";
-import { FileText, ImageOff, Lock } from "lucide-react";
+import { FileText, Lock } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { RunEvent, RunView, SourceRow } from "@/lib/types";
 import { Chip, SkeletonLines } from "../ui/primitives";
+import { Mascot } from "../crew";
 
 // A captured page, not a live iframe. Shows the real Context.dev screenshot when one exists,
 // a text reader when only text succeeded, and an explicit error when neither did.
@@ -58,7 +59,13 @@ export function SourceBrowser({
           <AnimatePresence mode="sync" initial={false}>
             {loading ? (
               <motion.div key={`loading-${loading.sequence}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.16 }} className="absolute inset-0 flex flex-col justify-center gap-5 bg-white p-10">
-                <div className="text-[15px] font-semibold text-ink">{loading.title}</div>
+                <div className="flex items-center gap-3">
+                  <Mascot who="scout" size={52} state="working" />
+                  <div>
+                    <div className="text-[15px] font-semibold text-ink">{loading.title}</div>
+                    <div className="text-[12px] text-muted">Scout is reading {loading.payload.domain} through Context.dev</div>
+                  </div>
+                </div>
                 <SkeletonLines widths={["92%", "70%", "84%", "60%"]} />
                 <div className="h-1 overflow-hidden rounded bg-well">
                   <div className="h-full w-1/3 bg-blue-ink/40" style={{ animation: "var(--animate-indeterminate)" }} />
@@ -86,12 +93,13 @@ export function SourceBrowser({
               </motion.div>
             ) : current?.capture_status === "failed" ? (
               <motion.div key={`fail-${current.id}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white text-muted">
-                <ImageOff className="size-6" />
+                <Mascot who="scout" size={72} state="paused" />
                 <div className="text-[13px]">Capture failed for {current.domain}. Nothing from this page is used as evidence.</div>
               </motion.div>
             ) : (
-              <motion.div key="empty" className="absolute inset-0 flex items-center justify-center bg-white text-[13px] text-faint">
-                Pages the agent reads appear here.
+              <motion.div key="empty" className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white text-[13px] text-faint">
+                <Mascot who="scout" size={88} state="idle" />
+                Pages Scout reads appear here.
               </motion.div>
             )}
           </AnimatePresence>

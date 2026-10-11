@@ -11,14 +11,15 @@ import { PlanCard } from "@/components/run/plan-card";
 import { SourceBrowser } from "@/components/run/source-browser";
 import { stateLabel } from "@/components/run/state-label";
 import { Chip, ErrorNotice } from "@/components/ui/primitives";
+import { Mascot, type CrewMember } from "@/components/crew";
 import { phaseOf, useRun, type Phase } from "@/lib/use-run";
 
-const STEPS: { key: Phase[]; label: string }[] = [
-  { key: ["starting", "input", "researching"], label: "Research" },
-  { key: ["evaluating", "no_match"], label: "Match" },
-  { key: ["approval"], label: "Approve" },
-  { key: ["executing"], label: "Execute" },
-  { key: ["operating"], label: "Operate" },
+const STEPS: { key: Phase[]; label: string; who: CrewMember }[] = [
+  { key: ["starting", "input", "researching"], label: "Research", who: "scout" },
+  { key: ["evaluating", "no_match"], label: "Match", who: "nova" },
+  { key: ["approval"], label: "Approve", who: "penny" },
+  { key: ["executing"], label: "Execute", who: "penny" },
+  { key: ["operating"], label: "Operate", who: "sprout" },
 ];
 
 function Stepper({ phase }: { phase: Phase }) {
@@ -27,8 +28,9 @@ function Stepper({ phase }: { phase: Phase }) {
     <LayoutGroup>
       <div className="flex items-center gap-1 rounded-full bg-well-soft p-1">
         {STEPS.map((s, i) => (
-          <div key={s.label} className={clsx("relative rounded-full px-3 py-1 text-[12px] font-semibold transition-colors", i === idx ? "text-ink" : i < idx ? "text-muted" : "text-faint")}>
+          <div key={s.label} className={clsx("relative flex items-center gap-1.5 rounded-full py-1 pl-1.5 pr-3 text-[12px] font-semibold transition-colors", i === idx ? "text-ink" : i < idx ? "text-muted" : "text-faint")}>
             {i === idx && <motion.span layoutId="step" className="absolute inset-0 rounded-full bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.06)]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
+            <Mascot who={s.who} size={20} state={i === idx && phase !== "approval" && phase !== "operating" ? "working" : i < idx ? "done" : i === idx ? "idle" : "paused"} className="relative" />
             <span className="relative">{s.label}</span>
           </div>
         ))}
@@ -127,7 +129,12 @@ export default function RunPage({ params }: { params: Promise<{ id: string }> })
             </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div key={phase === "approval" ? `approval-${plan?.id}` : phase} initial={{ opacity: 0, y: reduce ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduce ? 0 : -4 }} transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}>
-                {workspace ?? <div className="skeleton h-[420px] rounded-[var(--radius-browser)]" />}
+                {workspace ?? (
+                  <div className="flex h-[420px] flex-col items-center justify-center gap-3 rounded-[var(--radius-browser)] bg-well-soft">
+                    <Mascot who="scout" size={96} state="working" />
+                    <span className="text-[13px] text-muted">Opening the run</span>
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
