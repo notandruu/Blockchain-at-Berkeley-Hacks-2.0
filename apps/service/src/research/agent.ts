@@ -20,8 +20,8 @@ export interface RunInputs {
   answers: Record<string, string>;
 }
 
-export function anthropicModel(apiKey: string, modelId: string): LanguageModel {
-  return createAnthropic({ apiKey })(modelId);
+export function anthropicModel(apiKey: string, modelId: string, workspaceId = ""): LanguageModel {
+  return createAnthropic({ apiKey, ...(workspaceId ? { headers: { "anthropic-workspace-id": workspaceId } } : {}) })(modelId);
 }
 
 const Intake = z.object({

@@ -20,7 +20,7 @@ export function researchHandler(db: Sql, admin: SupabaseClient, cfg: Config) {
 
     try {
       if (!cfg.providers.agent) throw new DomainError("PROVIDER_UNAVAILABLE", "agent model not configured (ANTHROPIC_API_KEY / AGENT_MODEL)");
-      const model = anthropicModel(cfg.ANTHROPIC_API_KEY, cfg.AGENT_MODEL);
+      const model = anthropicModel(cfg.ANTHROPIC_API_KEY, cfg.AGENT_MODEL, cfg.ANTHROPIC_WORKSPACE_ID);
       const inputs: RunInputs = {
         goal: run.goal,
         businessUrl: run.business_url,
