@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
-/* Design tokens. Surfaces, radii and the tool-card language follow OpenMuse (MIT); money
-   controls use the PRD's sober palette: a dark primary for purchases, teal only for
-   confirmed states, always with a text label. */
+/* Design tokens. Warm canvas, periwinkle accent and the crew characters come from OpenDots
+   (MIT); the tool-card language follows OpenMuse (MIT). Money controls stay sober: a dark
+   primary for purchases, teal only for confirmed states, always with a text label. */
 @theme {
-  --color-canvas: #fcfcfc;
+  --color-canvas: #f8f7f4;
   --color-surface: #ffffff;
-  --color-well: #eeeef0;
-  --color-well-soft: #f4f4f6;
-  --color-ink: #11191c;
-  --color-muted: #697176;
-  --color-faint: #9aa1a6;
-  --color-line: #ececef;
-  --color-sky: #edf7fd;
-  --color-blue: #c8e7ff;
-  --color-blue-ink: #1473c8;
-  --color-lavender: #f0eefa;
+  --color-well: #efeee9;
+  --color-well-soft: #f3f2ee;
+  --color-ink: #333641;
+  --color-muted: #7c7d88;
+  --color-faint: #a8a9b4;
+  --color-line: #e9e8e6;
+  --color-sky: #eef1fc;
+  --color-blue: #dfe5fb;
+  --color-blue-ink: #5269bb;
+  --color-lavender: #eeeffa;
   --color-ok: #087f6d;
   --color-ok-soft: #e3f3ee;
   --color-warn: #a65e00;
   --color-warn-soft: #fdf0df;
   --color-bad: #b42318;
   --color-bad-soft: #fbefed;
-  --color-chrome: #1b1f24;
-  --color-chrome-2: #262b31;
+  --color-chrome: #2b2d36;
+  --color-chrome-2: #363945;
 
   --radius-control: 12px;
   --radius-card: 23px;
@@ -47,6 +47,14 @@
     from { background-position: -200px 0; }
     to { background-position: 200px 0; }
   }
+  @keyframes bob {
+    50% { transform: translateY(-5px); }
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-4deg); }
+    75% { transform: rotate(4deg); }
+  }
   @keyframes indeterminate {
     from { transform: translateX(-100%); }
     to { transform: translateX(250%); }
@@ -60,10 +68,20 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 .label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-muted); }
 
 .skeleton {
-  background: linear-gradient(90deg, #e9edf0 0%, #f4f6f8 50%, #e9edf0 100%);
+  background: linear-gradient(90deg, #ecebe6 0%, #f6f5f1 50%, #ecebe6 100%);
   background-size: 400px 100%;
   animation: var(--animate-shimmer);
 }
+
+/* Crew states, after OpenDots' Mascot: bob while working, a small tilt when done, a lean
+   when waiting on you, desaturated when paused. */
+.mascot-body { transition: transform 0.25s ease, filter 0.25s ease; transform-origin: 50% 90%; }
+.mascot-working .mascot-body { animation: bob 2s ease-in-out infinite; }
+.mascot-done .mascot-body { transform: rotate(-3deg); }
+.mascot-waiting .mascot-body { transform: rotate(6deg); }
+.mascot-paused .mascot-body { filter: saturate(0.35) opacity(0.75); }
+.mascot:hover .mascot-body { animation: wiggle 0.5s ease-in-out; }
+.spark { color: #bec6df; }
 
 .scroll-quiet { scrollbar-width: thin; scrollbar-color: #dfe2e5 transparent; }
 

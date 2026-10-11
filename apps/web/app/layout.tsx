@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Research a business risk, match it to a prediction market contract, and buy an approved hedge on Gemini's sandbox.",
 };
 
-export const viewport: Viewport = { themeColor: "#fcfcfc", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#f8f7f4", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

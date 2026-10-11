@@ -21,7 +21,7 @@ export function Button({
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement> & { icon?: LucideIcon; variant?: "primary" | "secondary" | "money" | "ghost" | "danger"; busy?: boolean; size?: "sm" | "md" | "lg" }) {
   const styles = {
-    primary: "bg-blue text-ink hover:bg-[#b9dffd]",
+    primary: "bg-blue text-blue-ink hover:bg-[#d3dbf9]",
     secondary: "bg-well-soft text-ink hover:bg-well",
     money: "bg-ink text-white hover:bg-[#24303a]",
     ghost: "bg-transparent text-muted hover:bg-well-soft hover:text-ink",
