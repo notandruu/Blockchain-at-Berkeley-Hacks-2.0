@@ -48,7 +48,7 @@ const events = [...new Map([...kit.candidates.values()]
   .map((c) => [c.eventTicker, c])).values()].sort((a, b) => Date.parse(a.expiryDate!) - Date.parse(b.expiryDate!));
 let chosen = null as (typeof events)[number] | null;
 for (const e of events) {
-  const rows = await kit.depthSummary(kit.eventCandidates(e.eventTicker, "sandbox").map((c) => c.instrumentSymbol), `Reading the live sandbox book for ${e.eventTitle}`);
+  const rows = await kit.depthSummary(kit.eventCandidates(e.eventTicker, "sandbox").map((c) => c.instrumentSymbol), `Reading the live order book for ${e.eventTitle}`);
   if (rows.some((r) => r.yesAskSize > 0)) {
     chosen = e;
     break;

@@ -33,7 +33,6 @@ export default function LoginPage() {
         </div>
         <div>
           <h1 className="text-[23px] font-semibold tracking-[-0.03em]">Sign in to Beagle</h1>
-          <p className="mt-1 text-sm text-muted">Sign in to run Beagle.</p>
         </div>
         <div className="space-y-3">
           <input className="h-12 w-full rounded-[19px] border border-line bg-surface px-4 text-[15px] outline-none focus:border-blue-ink/40" type="email" autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />

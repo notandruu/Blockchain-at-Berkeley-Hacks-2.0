@@ -230,7 +230,7 @@ export async function buildServer(deps: ServerDeps) {
       where ru.merchant_id = any(${p.merchantIds}) and o.state in ('pending', 'submitting', 'accepted', 'unknown')`;
     const proposals = await db`
       select pl.id, pl.version, pl.max_debit_usd, pl.status, pl.run_id, pl.body->'plan'->>'instrumentSymbol' as symbol
-      from plans pl join runs ru on ru.id = pl.run_id where ru.merchant_id = any(${p.merchantIds}) and pl.status = 'proposed'`;
+      from plans pl join runs ru on ru.id = pl.run_id where ru.merchant_id = any(${p.merchantIds}) and pl.status = 'proposed' and pl.expires_at > now() and ru.state = 'AWAITING_APPROVAL'`;
     let exchange: { positions: unknown[]; balance: unknown; reconciledAt: string } | null = null;
     if (deps.trading) {
       try {

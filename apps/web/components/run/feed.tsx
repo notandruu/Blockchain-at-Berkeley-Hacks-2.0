@@ -153,7 +153,7 @@ function ToolCard({ item, onSelectSource }: { item: FeedItem; onSelectSource?: (
 }
 
 const REASON: Record<string, string> = {
-  NOT_EXECUTABLE_IN_ENV: "Production only",
+  NOT_EXECUTABLE_IN_ENV: "Not tradable here",
   WRONG_THRESHOLD: "Different threshold",
   WRONG_DATE: "Different date",
   WRONG_STATION: "Different station",

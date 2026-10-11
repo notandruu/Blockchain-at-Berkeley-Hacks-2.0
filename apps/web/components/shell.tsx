@@ -10,7 +10,7 @@ import { CREW, Mascot, type CrewMember } from "./crew";
 
 interface Health {
   providers: { context: boolean; gemini: boolean; agent: boolean };
-  accountStream: { connected: boolean; stale: boolean } | null;
+  accountStream: { connected: boolean; stale: boolean; skipped?: boolean } | null;
 }
 
 const NAV = [
@@ -94,7 +94,7 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
           <div className="grid grid-cols-4 gap-1">
             <CrewSlot who="scout" ok={!!health?.providers.context && !!health?.providers.agent} detail={health?.providers.context ? "Context.dev connected" : "needs CONTEXT_DEV_API_KEY"} />
             <CrewSlot who="nova" ok={!!health} detail="Gemini market data" />
-            <CrewSlot who="penny" ok={!!health?.providers.gemini && !health?.accountStream?.stale} detail={health?.providers.gemini ? "Gemini account connected" : "needs Gemini keys"} />
+            <CrewSlot who="penny" ok={!!health?.providers.gemini && (!health?.accountStream?.stale || !!health?.accountStream?.skipped)} detail={health?.providers.gemini ? "Gemini account connected" : "needs Gemini keys"} />
             <CrewSlot who="sprout" ok={!!health} detail="campaigns" />
           </div>
           <Link href="/settings/connections" className="mt-2 block text-[11px] font-semibold text-blue-ink">

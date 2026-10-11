@@ -15,3 +15,4 @@ playwright-report/
 test-results/
 .claude/
 next-env.d.ts
+docs/media/.video/

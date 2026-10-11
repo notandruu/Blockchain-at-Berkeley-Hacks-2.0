@@ -206,7 +206,7 @@ export class ResearchToolkit {
         type: "market.candidates",
         provider: "gemini_markets",
         mode: "sandbox_exchange",
-        title: summary.map((s) => `${s.environment}: ${s.contracts} contracts`).join(" · "),
+        title: summary.map((s) => `${s.contracts} ${s.environment === "sandbox" ? "tradable" : "reference"}`).join(" · "),
         payload: { startedSequence: started.sequence, summary },
       });
       return summary;

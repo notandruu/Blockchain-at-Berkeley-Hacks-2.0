@@ -10,6 +10,8 @@ export interface AccountStreamStatus {
   lastError: string | null;
   // Set on disconnect; buying is disabled until a reconnect and a REST reconcile clear it.
   stale: boolean;
+  // True when the stream is off by design (master keys); fees come from the formula.
+  skipped?: boolean;
 }
 
 export class AccountStream {
@@ -25,6 +27,7 @@ export class AccountStream {
   async start(): Promise<void> {
     if (this.masterKey) {
       this.status.lastError = "master keys cannot open the account websocket; fees are booked from the published schedule";
+      this.status.skipped = true;
       return;
     }
     try {

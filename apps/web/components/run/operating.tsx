@@ -105,11 +105,11 @@ export function CampaignPanel({ campaign, onChange }: { campaign: CampaignRow; o
       <div className="min-w-0 space-y-3">
         <div className="flex items-center gap-2">
           <Mascot who="sprout" size={36} state={remaining === 0 ? "waiting" : "idle"} />
-          <Label>Test campaign</Label>
+          <Label>Campaign</Label>
           <Chip tone={campaign.status === "active" ? "ok" : "warn"}>{campaign.status}</Chip>
         </div>
         <div className="text-[17px] font-semibold leading-snug tracking-[-0.02em]">{campaign.headline}</div>
-        <div className="text-[12.5px] text-muted">{campaign.qualification}. Test reward only, no real payment.</div>
+        <div className="text-[12.5px] text-muted">{campaign.qualification}.</div>
         <div>
           <div className="tabular mb-1.5 flex justify-between text-[12.5px]">
             <span className="font-semibold">{claimed} claimed</span>

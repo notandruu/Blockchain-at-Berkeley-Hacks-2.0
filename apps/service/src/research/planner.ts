@@ -281,7 +281,7 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
     type: "approval.required",
     provider: "app",
     mode: "sandbox_exchange",
-    title: `Approve up to $${plan.maxDebitUsd} on Gemini sandbox`,
+    title: `Approve up to $${plan.maxDebitUsd} on Gemini`,
     payload: { planId: planRow!.id, version: 1, planHash: planHash(plan), plan, presentation },
   });
   return { riskId: risk!.id, planId: planRow!.id, executable: true };
