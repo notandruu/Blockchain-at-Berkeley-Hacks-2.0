@@ -1,23 +1,23 @@
 {
-  "id": "331013",
-  "title": "Highest temperature in San Francisco on October 11, 2026?",
-  "slug": "highest-temperature-in-san-francisco-on-october-11-2026",
+  "id": "335652",
+  "title": "Highest temperature in San Francisco on October 12, 2026?",
+  "slug": "highest-temperature-in-san-francisco-on-october-12-2026",
   "type": "categorical",
   "category": "Weather",
-  "ticker": "WXHIGH-SFO-2610120359",
+  "ticker": "WXHIGH-SFO-2610130359",
   "status": "active",
-  "createdAt": "2026-10-10T12:59:26.421Z",
+  "createdAt": "2026-10-11T12:58:52.355Z",
   "contracts": [
     {
-      "id": "331013-793232",
-      "label": "62\u00b0F or below",
+      "id": "335652-800979",
+      "label": "63\u00b0F or below",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -28,19 +28,19 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "LO62",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-LO62",
+      "ticker": "LO63",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-LO63",
       "marketState": "open",
-      "abbreviatedName": "62\u00b0 or below",
+      "abbreviatedName": "63\u00b0 or below",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 1,
       "strike": {
         "type": "below",
-        "value": "62"
+        "value": "63"
       },
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -50,15 +50,15 @@
       "priceMinimum": "0.01"
     },
     {
-      "id": "331013-793233",
-      "label": "63\u00b0F to 64\u00b0F",
+      "id": "335652-800980",
+      "label": "64\u00b0F to 65\u00b0F",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -69,15 +69,15 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "63TO64",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-63TO64",
+      "ticker": "64TO65",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-64TO65",
       "marketState": "open",
-      "abbreviatedName": "63\u00b0 to 64\u00b0",
+      "abbreviatedName": "64\u00b0 to 65\u00b0",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 2,
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -87,15 +87,15 @@
       "priceMinimum": "0.01"
     },
     {
-      "id": "331013-793234",
-      "label": "65\u00b0F to 66\u00b0F",
+      "id": "335652-800981",
+      "label": "66\u00b0F to 67\u00b0F",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -106,15 +106,15 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "65TO66",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-65TO66",
+      "ticker": "66TO67",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-66TO67",
       "marketState": "open",
-      "abbreviatedName": "65\u00b0 to 66\u00b0",
+      "abbreviatedName": "66\u00b0 to 67\u00b0",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 3,
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -124,15 +124,15 @@
       "priceMinimum": "0.01"
     },
     {
-      "id": "331013-793235",
-      "label": "67\u00b0F to 68\u00b0F",
+      "id": "335652-800982",
+      "label": "68\u00b0F to 69\u00b0F",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -143,15 +143,15 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "67TO68",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-67TO68",
+      "ticker": "68TO69",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-68TO69",
       "marketState": "open",
-      "abbreviatedName": "67\u00b0 to 68\u00b0",
+      "abbreviatedName": "68\u00b0 to 69\u00b0",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 4,
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -161,15 +161,15 @@
       "priceMinimum": "0.01"
     },
     {
-      "id": "331013-793236",
-      "label": "69\u00b0F to 70\u00b0F",
+      "id": "335652-800983",
+      "label": "70\u00b0F to 71\u00b0F",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -180,15 +180,15 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "69TO70",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-69TO70",
+      "ticker": "70TO71",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-70TO71",
       "marketState": "open",
-      "abbreviatedName": "69\u00b0 to 70\u00b0",
+      "abbreviatedName": "70\u00b0 to 71\u00b0",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 5,
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -198,15 +198,15 @@
       "priceMinimum": "0.01"
     },
     {
-      "id": "331013-793237",
-      "label": "71\u00b0F or above",
+      "id": "335652-800984",
+      "label": "72\u00b0F or above",
       "description": {
         "data": {},
         "content": [
           {
             "data": {},
             "marks": [],
-            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 11, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 11, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 11, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
+            "value": "This market will resolve based on the highest temperature recorded at San Francisco Airport, CA on October 12, 2026. The resolution source for this market will be the National Weather Service (\"NWS\") Climatological Report (Daily) for San Francisco Airport, CA.\n\nSpecifically, this contract will resolve to Yes if the highest temperature recorded at San Francisco Airport on October 12, 2026, as reported in the first published version of the applicable NWS Climatological Report (Daily), satisfies the temperature range specified in this contract. Otherwise, this contract will resolve to No. The Expiration Value shall be the maximum temperature for October 12, 2026 as documented by the NWS. If the Expiration Value cannot be determined by the latest Expiration Date, the contract will resolve to No. Each temperature range listed for this event is mutually exclusive, and only one contract will resolve to Yes. View the [full rules](https://assets.gemini.com/predictions/terms_and_conditions/Weather_Terms_and_Conditions_67323dd4-5775-48d5-bea0-c33d672d1f74.pdf).",
             "nodeType": "text"
           }
         ],
@@ -217,19 +217,19 @@
         "sell": {}
       },
       "status": "active",
-      "createdAt": "2026-10-10T12:59:26.421Z",
+      "createdAt": "2026-10-11T12:58:52.355Z",
       "termsAndConditionsUrl": "",
-      "ticker": "HI71",
-      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610120359-HI71",
+      "ticker": "HI72",
+      "instrumentSymbol": "GEMI-WXHIGH-SFO-2610130359-HI72",
       "marketState": "open",
-      "abbreviatedName": "71\u00b0 or above",
+      "abbreviatedName": "72\u00b0 or above",
       "color": "#4CAF50",
-      "expiryDate": "2026-10-12T03:59:59.000Z",
-      "effectiveDate": "2026-10-10T13:59:59.000Z",
+      "expiryDate": "2026-10-13T03:59:59.000Z",
+      "effectiveDate": "2026-10-11T13:59:59.000Z",
       "sortOrder": 6,
       "strike": {
         "type": "above",
-        "value": "71"
+        "value": "72"
       },
       "isCombo": false,
       "quantityIncrement": "0.01",
@@ -239,10 +239,10 @@
       "priceMinimum": "0.01"
     }
   ],
-  "effectiveDate": "2026-10-10T12:59:26.421Z",
+  "effectiveDate": "2026-10-11T12:58:52.355Z",
   "isLive": false,
   "participants": [],
-  "description": "Highest temperature in San Francisco on October 11, 2026?",
+  "description": "Highest temperature in San Francisco on October 12, 2026?",
   "imageUrl": "https://assets.gemini.com/predictions/images/San_Francisco_779957ee-7ecb-4a0b-ae41-93f69bed6605.avif",
   "series": "WXHIGH",
   "volume": "0",
@@ -250,7 +250,7 @@
   "tags": [
     "Daily Temperature"
   ],
-  "expiryDate": "2026-10-12T03:59:59.000Z",
+  "expiryDate": "2026-10-13T03:59:59.000Z",
   "termsLink": "",
   "subcategory": {
     "id": 153,
