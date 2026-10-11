@@ -1,0 +1,29 @@
+{
+  "name": "@riskpilot/service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=../../.env --import tsx --watch src/main.ts",
+    "start": "node --env-file=../../.env --import tsx src/main.ts",
+    "preflight": "node --env-file=../../.env --import tsx src/scripts/preflight.ts",
+    "seed": "node --env-file=../../.env --import tsx src/scripts/seed.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "4.0.78",
+    "@fastify/cors": "11.3.1",
+    "@riskpilot/domain": "workspace:*",
+    "@riskpilot/provider-context": "workspace:*",
+    "@riskpilot/provider-gemini": "workspace:*",
+    "@riskpilot/risk-engine": "workspace:*",
+    "@supabase/supabase-js": "2.117.3",
+    "ai": "7.0.137",
+    "fastify": "5.12.5",
+    "postgres": "3.4.9",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
+  }
+}
