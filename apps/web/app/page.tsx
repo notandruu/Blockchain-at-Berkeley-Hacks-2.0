@@ -1,19 +1,20 @@
 "use client";
 
 import clsx from "clsx";
-import { ArrowUp, CloudSun, Globe, Megaphone, Wallet } from "lucide-react";
+import { ArrowUp, Globe, Wallet } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { stateLabel } from "@/components/run/state-label";
-import { Chip, ErrorNotice, IconBox } from "@/components/ui/primitives";
+import { Chip, ErrorNotice } from "@/components/ui/primitives";
+import { CREW, CrewBadge, Mascot, Sparks, type CrewMember } from "@/components/crew";
 import { api, newKey } from "@/lib/api";
 
 const STARTERS = [
   {
-    icon: Megaphone,
+    who: "sprout" as CrewMember,
     title: "Run an event promotion",
     body: "Offer customers money back if something happens, with the payout covered.",
     goal: "We're a bar near campus. Help us bring people in this week with a promotion: customers get $20 back on their tab if something exciting happens, like a big game or Bitcoin breaking a level. Research a relevant offer and prepare a hedge for my approval.",
@@ -21,7 +22,7 @@ const STARTERS = [
     budget: "350",
   },
   {
-    icon: CloudSun,
+    who: "penny" as CrewMember,
     title: "Protect an existing risk",
     body: "An outdoor job, a weather threshold, a cost you already carry.",
     goal: "I run an exterior painting crew in San Francisco. We have a $3,000 job booked for tomorrow; if the high goes above 71°F the paint won't cure and we reschedule. If cancelled we avoid about $1,200 in materials and labor. Is there a contract that protects the rest?",
@@ -29,6 +30,21 @@ const STARTERS = [
     budget: "250",
   },
 ];
+
+const CREW_JOBS: Record<CrewMember, string> = {
+  scout: "Reads the web with Context.dev",
+  nova: "Checks Gemini contracts field by field",
+  penny: "Sizes the hedge and holds the budget",
+  sprout: "Runs the campaign and its claims",
+};
+
+// Who is holding the work in this state.
+function ownerOf(state: string): CrewMember {
+  if (["MATCHING", "QUOTING", "NO_EXECUTABLE_MATCH"].includes(state)) return "nova";
+  if (["AWAITING_APPROVAL", "APPROVED", "SUBMITTING", "RECONCILING", "EXECUTION_UNKNOWN", "NO_FILL"].includes(state)) return "penny";
+  if (["ACTIVE", "MONITORING", "PAUSED"].includes(state)) return "sprout";
+  return "scout";
+}
 
 interface RecentRun {
   id: string;
@@ -78,7 +94,12 @@ export default function Home() {
 
   return (
     <AppShell title="New task">
-      <div className="mx-auto flex max-w-[760px] flex-col px-4 pb-20 pt-[10vh] sm:px-6">
+      <div className="mx-auto flex max-w-[760px] flex-col px-4 pb-20 pt-[5vh] sm:px-6">
+        <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 22 }} className="relative mx-auto mb-2 h-[176px] w-[190px]">
+          <Sparks />
+          <Mascot who="scout" size={168} state={busy ? "working" : "idle"} className="absolute left-2 top-0 rotate-[3deg]" big />
+          <span className="absolute bottom-0 left-9 -rotate-3 text-[10px] tracking-[0.02em] text-faint">{busy ? "Scout is on it" : "Scout is listening"}</span>
+        </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-center text-[30px] font-semibold tracking-[-0.035em] sm:text-[36px]">
           What would you like to protect?
         </motion.h1>
@@ -134,9 +155,11 @@ export default function Home() {
                 setBudget(s.budget);
                 area.current?.focus();
               }}
-              className="group flex gap-3 rounded-[23px] bg-well-soft p-4 text-left transition-colors hover:bg-well"
+              className="group flex items-center gap-3 rounded-[23px] bg-surface p-4 text-left ring-1 ring-line transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-[#fdfdfb]"
             >
-              <IconBox icon={s.icon} tone={i === 0 ? "sky" : "lavender"} />
+              <span className="flex size-[58px] shrink-0 items-end justify-center overflow-hidden rounded-[18px]" style={{ background: CREW[s.who].tint }}>
+                <Mascot who={s.who} size={64} className="-mb-2 transition-transform duration-200 group-hover:-translate-y-0.5" />
+              </span>
               <div>
                 <div className="text-[15px] font-semibold tracking-[-0.01em]">{s.title}</div>
                 <div className="mt-0.5 text-[13px] leading-5 text-muted">{s.body}</div>
@@ -145,12 +168,26 @@ export default function Home() {
           ))}
         </div>
 
+        <div className="mt-10">
+          <div className="label mb-3 text-center">The crew</div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {(Object.keys(CREW) as CrewMember[]).map((k, i) => (
+              <motion.div key={k} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.04 }} className="flex flex-col items-center rounded-[20px] bg-well-soft px-3 pb-3 pt-2 text-center">
+                <Mascot who={k} size={64} />
+                <div className="mt-1 text-[13px] font-semibold">{CREW[k].name}</div>
+                <div className="text-[11.5px] leading-4 text-muted">{CREW_JOBS[k]}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
         {recent.length > 0 && (
           <div className="mt-12">
             <div className="label mb-3">Recent</div>
             <div className="divide-y divide-line overflow-hidden rounded-[23px] bg-surface ring-1 ring-line">
               {recent.slice(0, 6).map((r) => (
                 <Link key={r.id} href={`/runs/${r.id}`} className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-well-soft">
+                  <CrewBadge who={ownerOf(r.state)} state={stateLabel(r.state).tone === "sky" ? "working" : "idle"} />
                   <div className="min-w-0 flex-1">
                     <div className="truncate text-[14px] font-medium">{r.risk_title ?? r.goal}</div>
                     <div className="text-[12px] text-faint">{new Date(r.created_at).toLocaleString()}</div>
