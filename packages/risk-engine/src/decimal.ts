@@ -1,4 +1,4 @@
-import Decimal from "decimal.js";
+import { Decimal } from "decimal.js";
 
 // One configured Decimal constructor for the whole engine. 40 significant digits is far
 // beyond any cent amount we handle, and ROUND_HALF_EVEN is only the default; every money
