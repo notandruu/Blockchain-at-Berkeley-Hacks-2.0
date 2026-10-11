@@ -1,4 +1,4 @@
-import { DomainError, planHash, TradePlan, type RunState } from "@riskpilot/domain";
+import { DomainError, planHash, TradePlan, type RunState } from "@beagle/domain";
 import type { Principal } from "../auth.js";
 import type { Sql } from "../db.js";
 import { appendEventTx, publish } from "../events.js";

@@ -1,10 +1,10 @@
-# RiskPilot
+# Beagle
 
 An agent that researches a business risk, finds a prediction market contract that pays on the same event, explains what it does and does not cover, and buys the hedge on Gemini's sandbox after one explicit approval.
 
 Built for Blockchain at Berkeley Hacks 2.0, Gemini Predictions API track and the Context.dev bonus.
 
-The demo: a bar wants to tell customers "if Bitcoin is above $83,200 at 8pm, $20 back on your tab" without taking on unlimited exposure. RiskPilot reads the bar's site through Context.dev, scans Gemini inventory in sandbox and production, rejects the 49ers game because sandbox has no sports listings, sizes a hedge against the live sandbox book, and after approval buys it with a fill-or-kill order. The campaign then publishes exactly as many test rewards as the confirmed fill can pay. A second workflow, a painting crew worried about heat, runs through the same engine and ends with an honest "this contract settles at SFO airport, not your job site".
+The demo: a bar wants to tell customers "if Bitcoin is above $83,200 at 8pm, $20 back on your tab" without taking on unlimited exposure. Beagle reads the bar's site through Context.dev, scans Gemini inventory in sandbox and production, rejects the 49ers game because sandbox has no sports listings, sizes a hedge against the live sandbox book, and after approval buys it with a fill-or-kill order. The campaign then publishes exactly as many test rewards as the confirmed fill can pay. A second workflow, a painting crew worried about heat, runs through the same engine and ends with an honest "this contract settles at SFO airport, not your job site".
 
 ## What is real
 
@@ -24,9 +24,9 @@ Prerequisites: Node 22.4+, pnpm 10, Docker, the Supabase CLI.
 pnpm install
 supabase start                      # local Postgres, Auth, Storage on ports 553xx
 cp .env.example .env                # then fill in the provider keys
-pnpm --filter @riskpilot/service seed
-pnpm --filter @riskpilot/service dev
-pnpm --filter @riskpilot/web dev    # http://localhost:3100
+pnpm --filter @beagle/service seed
+pnpm --filter @beagle/service dev
+pnpm --filter @beagle/web dev    # http://localhost:3100
 ```
 
 Keys you need in `.env`: `CONTEXT_DEV_API_KEY`, a Gemini **sandbox** `GEMINI_API_KEY` / `GEMINI_API_SECRET`, `ANTHROPIC_API_KEY` and `AGENT_MODEL`. The Supabase values come from `supabase start`.

@@ -3,7 +3,7 @@ import type {
   MatchType,
   Outcome,
   Trigger,
-} from "@riskpilot/domain";
+} from "@beagle/domain";
 import { dec, type Dec } from "./decimal.js";
 
 // Field-by-field compatibility between what the merchant needs and what a contract pays on.

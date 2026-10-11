@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { DomainError } from "@riskpilot/domain";
-import { ContextResearch } from "@riskpilot/provider-context";
+import { DomainError } from "@beagle/domain";
+import { ContextResearch } from "@beagle/provider-context";
 import type { Config } from "../config.js";
 import type { Sql } from "../db.js";
 import { appendEvent } from "../events.js";

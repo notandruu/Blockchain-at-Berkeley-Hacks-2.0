@@ -10,7 +10,7 @@ let reachable = true;
 
 async function fixture(db: Sql, opts: { confirmedUnits: string; reward: string; maxEntitlements: number }) {
   const userId = randomUUID();
-  await db`insert into auth.users (id, email, aud, role) values (${userId}, ${`t-${userId}@riskpilot.test`}, 'authenticated', 'authenticated')`;
+  await db`insert into auth.users (id, email, aud, role) values (${userId}, ${`t-${userId}@beagle.test`}, 'authenticated', 'authenticated')`;
   const [m] = await db<{ id: string }[]>`insert into merchants (name) values ('Invariant Test Bar') returning id`;
   const [run] = await db<{ id: string }[]>`insert into runs (merchant_id, created_by, goal, research_credit_ceiling) values (${m!.id}, ${userId}, 'test', 40) returning id`;
   const [risk] = await db<{ id: string }[]>`insert into risks (merchant_id, run_id, mode, title, spec) values (${m!.id}, ${run!.id}, 'promotion', 't', '{}') returning id`;

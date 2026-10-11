@@ -1,5 +1,5 @@
 import { EventEmitter } from "node:events";
-import type { NewRunEvent, RunEvent } from "@riskpilot/domain";
+import type { NewRunEvent, RunEvent } from "@beagle/domain";
 import type { Sql, Tx } from "./db.js";
 
 // Persist, then broadcast. The SSE route replays from the table by sequence, so a

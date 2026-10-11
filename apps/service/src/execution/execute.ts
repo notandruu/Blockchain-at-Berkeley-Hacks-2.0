@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { TradePlan, type RunState } from "@riskpilot/domain";
-import { dec, fillFee, PUBLISHED_FEE_SCHEDULE, usd, ZERO } from "@riskpilot/risk-engine";
+import { TradePlan, type RunState } from "@beagle/domain";
+import { dec, fillFee, PUBLISHED_FEE_SCHEDULE, usd, ZERO } from "@beagle/risk-engine";
 import {
   findSubmittedOrder,
   getTermsStatus,
@@ -10,7 +10,7 @@ import {
   type ExchangeOrder,
   type FillLedger,
   type GeminiClient,
-} from "@riskpilot/provider-gemini";
+} from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
 import { appendEvent } from "../events.js";
 import { enqueue, type Job } from "../jobs.js";

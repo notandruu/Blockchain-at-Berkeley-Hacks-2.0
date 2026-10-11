@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { Trigger } from "@riskpilot/domain";
-import { matchCandidate, rankMatches } from "@riskpilot/risk-engine";
+import type { Trigger } from "@beagle/domain";
+import { matchCandidate, rankMatches } from "@beagle/risk-engine";
 import { normalizeEvent, type RawEvent } from "./normalize.js";
 
 const fixture = (name: string) =>

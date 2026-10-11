@@ -30,7 +30,7 @@ export default function LoginPage() {
           <div className="flex size-8 items-center justify-center rounded-[10px] bg-ink text-white">
             <LayoutGrid className="size-4" strokeWidth={2.2} />
           </div>
-          <span className="text-lg font-semibold tracking-[-0.02em]">RiskPilot</span>
+          <span className="text-lg font-semibold tracking-[-0.02em]">Beagle</span>
         </div>
         <div>
           <h1 className="text-[23px] font-semibold tracking-[-0.03em]">Sign in</h1>

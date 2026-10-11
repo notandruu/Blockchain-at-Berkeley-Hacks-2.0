@@ -1,5 +1,5 @@
-import { DomainError } from "@riskpilot/domain";
-import { promotionScenarios } from "@riskpilot/risk-engine";
+import { DomainError } from "@beagle/domain";
+import { promotionScenarios } from "@beagle/risk-engine";
 import type { Sql } from "./db.js";
 import { appendEvent } from "./events.js";
 

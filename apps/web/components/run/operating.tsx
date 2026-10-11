@@ -162,7 +162,7 @@ export function NoMatch({ events }: { events: RunEvent[] }) {
     <div className="space-y-4 rounded-[23px] bg-surface p-6 ring-1 ring-line">
       <Chip>No executable match</Chip>
       <div className="text-[20px] font-semibold tracking-[-0.02em]">{e?.payload.summary ?? "No listed contract pays on this trigger."}</div>
-      <p className="text-[13.5px] text-muted">RiskPilot does not substitute a different contract or a production quote to complete the plan. Here is the closest contract and exactly where it differs.</p>
+      <p className="text-[13.5px] text-muted">Beagle does not substitute a different contract or a production quote to complete the plan. Here is the closest contract and exactly where it differs.</p>
       {closest && (
         <div className="space-y-2">
           <div className="font-mono text-[11px] text-faint">{closest.instrumentSymbol} · {closest.environment}</div>

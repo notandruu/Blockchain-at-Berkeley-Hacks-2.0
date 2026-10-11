@@ -1,5 +1,5 @@
 {
-  "name": "@riskpilot/provider-gemini",
+  "name": "@beagle/provider-gemini",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@gemini-markets/sdk": "0.1.1",
-    "@riskpilot/domain": "workspace:*",
-    "@riskpilot/risk-engine": "workspace:*",
+    "@beagle/domain": "workspace:*",
+    "@beagle/risk-engine": "workspace:*",
     "ws": "8.22.0"
   },
   "devDependencies": {

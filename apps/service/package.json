@@ -1,5 +1,5 @@
 {
-  "name": "@riskpilot/service",
+  "name": "@beagle/service",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,10 +13,10 @@
   "dependencies": {
     "@ai-sdk/anthropic": "4.0.78",
     "@fastify/cors": "11.3.1",
-    "@riskpilot/domain": "workspace:*",
-    "@riskpilot/provider-context": "workspace:*",
-    "@riskpilot/provider-gemini": "workspace:*",
-    "@riskpilot/risk-engine": "workspace:*",
+    "@beagle/domain": "workspace:*",
+    "@beagle/provider-context": "workspace:*",
+    "@beagle/provider-gemini": "workspace:*",
+    "@beagle/risk-engine": "workspace:*",
     "@supabase/supabase-js": "2.117.3",
     "ai": "7.0.137",
     "fastify": "5.12.5",

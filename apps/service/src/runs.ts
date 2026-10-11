@@ -1,4 +1,4 @@
-import { assertTransition, DomainError, type NewRunEvent, type RunState } from "@riskpilot/domain";
+import { assertTransition, DomainError, type NewRunEvent, type RunState } from "@beagle/domain";
 import type { Sql } from "./db.js";
 import { appendEventTx, publish } from "./events.js";
 

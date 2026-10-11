@@ -26,21 +26,21 @@ importers:
       '@ai-sdk/anthropic':
         specifier: 4.0.78
         version: 4.0.78(zod@4.6.6)
+      '@beagle/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@beagle/provider-context':
+        specifier: workspace:*
+        version: link:../../packages/provider-context
+      '@beagle/provider-gemini':
+        specifier: workspace:*
+        version: link:../../packages/provider-gemini
+      '@beagle/risk-engine':
+        specifier: workspace:*
+        version: link:../../packages/risk-engine
       '@fastify/cors':
         specifier: 11.3.1
         version: 11.3.1
-      '@riskpilot/domain':
-        specifier: workspace:*
-        version: link:../../packages/domain
-      '@riskpilot/provider-context':
-        specifier: workspace:*
-        version: link:../../packages/provider-context
-      '@riskpilot/provider-gemini':
-        specifier: workspace:*
-        version: link:../../packages/provider-gemini
-      '@riskpilot/risk-engine':
-        specifier: workspace:*
-        version: link:../../packages/risk-engine
       '@supabase/supabase-js':
         specifier: 2.117.3
         version: 2.117.3
@@ -109,7 +109,7 @@ importers:
 
   packages/provider-context:
     dependencies:
-      '@riskpilot/domain':
+      '@beagle/domain':
         specifier: workspace:*
         version: link:../domain
       context.dev:
@@ -118,15 +118,15 @@ importers:
 
   packages/provider-gemini:
     dependencies:
+      '@beagle/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@beagle/risk-engine':
+        specifier: workspace:*
+        version: link:../risk-engine
       '@gemini-markets/sdk':
         specifier: 0.1.1
         version: 0.1.1(ws@8.22.0)
-      '@riskpilot/domain':
-        specifier: workspace:*
-        version: link:../domain
-      '@riskpilot/risk-engine':
-        specifier: workspace:*
-        version: link:../risk-engine
       ws:
         specifier: 8.22.0
         version: 8.22.0
@@ -137,7 +137,7 @@ importers:
 
   packages/risk-engine:
     dependencies:
-      '@riskpilot/domain':
+      '@beagle/domain':
         specifier: workspace:*
         version: link:../domain
       decimal.js:

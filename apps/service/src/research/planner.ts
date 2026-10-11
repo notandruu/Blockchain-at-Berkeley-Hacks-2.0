@@ -5,7 +5,7 @@ import {
   TradePlan,
   Trigger,
   type MarketCandidate,
-} from "@riskpilot/domain";
+} from "@beagle/domain";
 import {
   dec,
   matchCandidate,
@@ -17,8 +17,8 @@ import {
   rankMatches,
   type MatchResult,
   type Quote,
-} from "@riskpilot/risk-engine";
-import { createPublicClient, fetchDepth, getEventCandidates } from "@riskpilot/provider-gemini";
+} from "@beagle/risk-engine";
+import { createPublicClient, fetchDepth, getEventCandidates } from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
 import { transition } from "../runs.js";
 import type { ResearchToolkit } from "./toolkit.js";

@@ -1,4 +1,4 @@
-import { dec, type Dec, ZERO } from "@riskpilot/risk-engine";
+import { dec, type Dec, ZERO } from "@beagle/risk-engine";
 
 // Order stream semantics, from developer.gemini.com/prediction-markets/websocket/streams:
 //   - On FILLED / PARTIALLY_FILLED events, Z is the quantity of *that execution*, n is its fee,

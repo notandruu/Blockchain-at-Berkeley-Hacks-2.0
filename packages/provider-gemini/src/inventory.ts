@@ -1,4 +1,4 @@
-import type { DepthSnapshot, ExchangeEnvironment, MarketCandidate } from "@riskpilot/domain";
+import type { DepthSnapshot, ExchangeEnvironment, MarketCandidate } from "@beagle/domain";
 import type { GeminiClient } from "./client.js";
 import { normalizeEvent, type RawEvent } from "./normalize.js";
 

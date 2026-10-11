@@ -1,4 +1,4 @@
-import { FillLedger, idToString, type GeminiClient, type OrderStreamEvent } from "@riskpilot/provider-gemini";
+import { FillLedger, idToString, type GeminiClient, type OrderStreamEvent } from "@beagle/provider-gemini";
 
 // Authenticated order stream for the sandbox account. It stays on the server. Its only job
 // here is to capture per-execution fees (field n), which REST order history does not carry.

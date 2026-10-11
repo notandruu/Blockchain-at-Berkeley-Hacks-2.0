@@ -1,5 +1,5 @@
 import { createClient, HmacAuth } from "@gemini-markets/sdk/server";
-import type { ExchangeEnvironment } from "@riskpilot/domain";
+import type { ExchangeEnvironment } from "@beagle/domain";
 
 export type GeminiClient = Awaited<ReturnType<typeof createClient>>;
 

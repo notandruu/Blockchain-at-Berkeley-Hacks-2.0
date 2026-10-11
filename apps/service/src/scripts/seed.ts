@@ -9,7 +9,7 @@ const cfg = loadConfig();
 const db = connect(cfg.DATABASE_URL);
 const admin = supabaseAdmin(cfg.SUPABASE_URL, cfg.SUPABASE_SECRET_KEY);
 
-const email = process.env.DEMO_USER_EMAIL ?? "operator@riskpilot.test";
+const email = process.env.DEMO_USER_EMAIL ?? "operator@beagle.test";
 const password = process.env.DEMO_USER_PASSWORD;
 if (!password) {
   console.error("set DEMO_USER_PASSWORD in .env");

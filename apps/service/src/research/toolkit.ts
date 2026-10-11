@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { DomainError, type MarketCandidate, type NewRunEvent, type RunEvent } from "@riskpilot/domain";
-import type { ContextResearch, ProviderReceipt, ScrapeResult } from "@riskpilot/provider-context";
-import { createPublicClient, discoverInventory, fetchDepth, type GeminiClient } from "@riskpilot/provider-gemini";
+import { DomainError, type MarketCandidate, type NewRunEvent, type RunEvent } from "@beagle/domain";
+import type { ContextResearch, ProviderReceipt, ScrapeResult } from "@beagle/provider-context";
+import { createPublicClient, discoverInventory, fetchDepth, type GeminiClient } from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
 import { appendEvent } from "../events.js";
 import { storeScreenshot } from "../storage.js";

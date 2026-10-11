@@ -1,5 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { DomainError } from "@riskpilot/domain";
+import { DomainError } from "@beagle/domain";
 import type { Sql } from "./db.js";
 
 export interface Principal {

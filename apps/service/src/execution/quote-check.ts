@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { planHash, TradePlan } from "@riskpilot/domain";
-import { dec, executableAsks, fillFee, PUBLISHED_FEE_SCHEDULE, usd, walkBook, ZERO } from "@riskpilot/risk-engine";
-import { createPublicClient, fetchDepth, getEventCandidates, type GeminiClient } from "@riskpilot/provider-gemini";
+import { planHash, TradePlan } from "@beagle/domain";
+import { dec, executableAsks, fillFee, PUBLISHED_FEE_SCHEDULE, usd, walkBook, ZERO } from "@beagle/risk-engine";
+import { createPublicClient, fetchDepth, getEventCandidates, type GeminiClient } from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
 import { appendEvent } from "../events.js";
 

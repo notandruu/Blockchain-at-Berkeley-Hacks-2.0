@@ -1,6 +1,6 @@
 import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
-import { DomainError } from "@riskpilot/domain";
+import { DomainError } from "@beagle/domain";
 
 // Merchant-supplied URLs go to Context.dev, not to our own fetcher, but we still refuse
 // anything that is not a public web page: the same URL is shown in the source browser and

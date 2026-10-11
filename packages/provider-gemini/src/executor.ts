@@ -1,5 +1,5 @@
 import { AcceptTermsRequired, ApiError, InsufficientFunds, ValidationError } from "@gemini-markets/sdk/server";
-import type { Outcome } from "@riskpilot/domain";
+import type { Outcome } from "@beagle/domain";
 import type { GeminiClient } from "./client.js";
 
 // The only path in the codebase that sends a financial write to Gemini. It takes an order

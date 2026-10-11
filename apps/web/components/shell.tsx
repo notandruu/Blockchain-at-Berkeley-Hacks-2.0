@@ -68,7 +68,7 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
           <div className="flex size-7 items-center justify-center rounded-[9px] bg-ink text-white">
             <LayoutGrid className="size-4" strokeWidth={2.2} />
           </div>
-          <span className="text-[15px] font-semibold tracking-[-0.02em]">RiskPilot</span>
+          <span className="text-[15px] font-semibold tracking-[-0.02em]">Beagle</span>
         </Link>
         <nav className="space-y-0.5">
           {NAV.map(({ href, label, icon: Icon }) => {

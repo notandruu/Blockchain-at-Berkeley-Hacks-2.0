@@ -1,4 +1,4 @@
-import { canonicalJson, MarketCandidate, sha256, type ExchangeEnvironment, type StrikeType } from "@riskpilot/domain";
+import { canonicalJson, MarketCandidate, sha256, type ExchangeEnvironment, type StrikeType } from "@beagle/domain";
 
 // Subset of the Gemini Event/Contract payload we read. Typed loosely on purpose: the public
 // endpoint returns fields (participants, startTime, sourceDetails) that the generated SDK

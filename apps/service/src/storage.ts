@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { DecodedScreenshot } from "@riskpilot/provider-context";
+import type { DecodedScreenshot } from "@beagle/provider-context";
 import type { Sql } from "./db.js";
 
 const BUCKET = "captures";

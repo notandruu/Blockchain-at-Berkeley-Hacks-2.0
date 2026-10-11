@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { DepthSnapshot } from "@riskpilot/domain";
+import type { DepthSnapshot } from "@beagle/domain";
 import { isQuoteFresh, quoteOperational, quotePromotion, type QuoteInput } from "./quote.js";
 import { PUBLISHED_FEE_SCHEDULE } from "./fees.js";
 import { dec } from "./decimal.js";

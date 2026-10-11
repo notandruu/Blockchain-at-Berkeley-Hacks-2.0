@@ -1,5 +1,5 @@
 {
-  "name": "@riskpilot/provider-context",
+  "name": "@beagle/provider-context",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
-    "@riskpilot/domain": "workspace:*",
+    "@beagle/domain": "workspace:*",
     "context.dev": "3.5.0"
   }
 }

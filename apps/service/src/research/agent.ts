@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { generateText, hasToolCall, isStepCount, Output, tool, type LanguageModel } from "ai";
 import { z } from "zod";
-import { DomainError, Trigger } from "@riskpilot/domain";
+import { DomainError, Trigger } from "@beagle/domain";
 import type { Sql } from "../db.js";
 import { transition } from "../runs.js";
 import { planFromProposal, type PlannerConfig, type Proposal } from "./planner.js";
@@ -49,7 +49,7 @@ Rules:
 - List in "missing" only inputs that are material and absent. Ask in one short sentence each.
 - categories: which prediction-market categories could express the event behind this goal.`;
 
-const SYSTEM_RESEARCH = `You are RiskPilot's research agent. You help a small business turn a real-world event into a bounded, approved hedge on Gemini's prediction-market sandbox.
+const SYSTEM_RESEARCH = `You are Beagle's research agent. You help a small business turn a real-world event into a bounded, approved hedge on Gemini's prediction-market sandbox.
 
 Work in this order, and keep it short (aim for 6 to 9 tool calls):
 1. read_source on the merchant's website with a screenshot to learn what they sell and who they serve.

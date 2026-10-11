@@ -1,6 +1,6 @@
 # Architecture
 
-RiskPilot is two processes and a database.
+Beagle is two processes and a database.
 
 ```mermaid
 flowchart LR

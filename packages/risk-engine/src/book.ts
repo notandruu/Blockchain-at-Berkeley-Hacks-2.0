@@ -1,4 +1,4 @@
-import type { BookLevel, DepthSnapshot, Outcome } from "@riskpilot/domain";
+import type { BookLevel, DepthSnapshot, Outcome } from "@beagle/domain";
 import { D, dec, type Dec, floorTo, ZERO } from "./decimal.js";
 
 export interface PricedLevel {

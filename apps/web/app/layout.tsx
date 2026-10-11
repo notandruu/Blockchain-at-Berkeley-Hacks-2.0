@@ -6,7 +6,7 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
-  title: "RiskPilot",
+  title: "Beagle",
   description: "Research a business risk, match it to a prediction market contract, and buy an approved hedge on Gemini's sandbox.",
 };
 

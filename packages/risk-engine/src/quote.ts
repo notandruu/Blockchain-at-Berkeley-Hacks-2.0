@@ -1,4 +1,4 @@
-import type { DepthSnapshot, Outcome } from "@riskpilot/domain";
+import type { DepthSnapshot, Outcome } from "@beagle/domain";
 import { CENT, ceilTo, D, dec, type Dec, floorTo, fmtOnGrid, usd, ZERO } from "./decimal.js";
 import { executableAsks, walkBook, type BookWalk } from "./book.js";
 import { type FeeSchedule, fillFee, takerFeeCeiling, type FeeCeiling } from "./fees.js";

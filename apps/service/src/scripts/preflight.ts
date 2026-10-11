@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { canonicalJson, sha256, type Trigger } from "@riskpilot/domain";
-import { ContextResearch } from "@riskpilot/provider-context";
+import { canonicalJson, sha256, type Trigger } from "@beagle/domain";
+import { ContextResearch } from "@beagle/provider-context";
 import {
   createPublicClient,
   createTradingClient,
@@ -10,8 +10,8 @@ import {
   fetchDepth,
   getTermsStatus,
   getUsdBalance,
-} from "@riskpilot/provider-gemini";
-import { matchCandidate, PUBLISHED_FEE_SCHEDULE, quotePromotion } from "@riskpilot/risk-engine";
+} from "@beagle/provider-gemini";
+import { matchCandidate, PUBLISHED_FEE_SCHEDULE, quotePromotion } from "@beagle/risk-engine";
 import { loadConfig } from "../config.js";
 
 // Phase 0 of the PRD: prove both sponsor integrations against the same sandbox the demo

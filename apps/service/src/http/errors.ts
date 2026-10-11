@@ -1,6 +1,6 @@
 import type { FastifyReply } from "fastify";
 import { ZodError } from "zod";
-import { DomainError, type ErrorCode } from "@riskpilot/domain";
+import { DomainError, type ErrorCode } from "@beagle/domain";
 
 const STATUS: Partial<Record<ErrorCode, number>> = {
   VALIDATION_FAILED: 400,

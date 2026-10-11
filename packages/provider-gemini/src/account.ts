@@ -1,4 +1,4 @@
-import type { Outcome } from "@riskpilot/domain";
+import type { Outcome } from "@beagle/domain";
 import type { GeminiClient } from "./client.js";
 import { idToString } from "./executor.js";
 

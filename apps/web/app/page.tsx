@@ -83,7 +83,7 @@ export default function Home() {
           What would you like to protect?
         </motion.h1>
         <p className="mx-auto mt-2 max-w-[520px] text-center text-[15px] text-muted">
-          Describe the goal. RiskPilot researches it, finds a matching prediction market contract, and brings back one plan for you to approve.
+          Describe the goal. Beagle researches it, finds a matching prediction market contract, and brings back one plan for you to approve.
         </p>
 
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.05 }} className="mt-8 rounded-[32px] bg-surface p-2 shadow-[var(--shadow-float)] ring-1 ring-line">

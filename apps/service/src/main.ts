@@ -1,4 +1,4 @@
-import { createTradingClient, type GeminiClient } from "@riskpilot/provider-gemini";
+import { createTradingClient, type GeminiClient } from "@beagle/provider-gemini";
 import { supabaseAdmin } from "./auth.js";
 import { loadConfig } from "./config.js";
 import { connect } from "./db.js";
@@ -49,7 +49,7 @@ async function main(): Promise<void> {
 
   const app = await buildServer({ db, admin, cfg, trading, accountStream });
   await app.listen({ port: cfg.SERVICE_PORT, host: "0.0.0.0" });
-  app.log.info({ providers: cfg.providers, environment: "sandbox" }, "riskpilot service up");
+  app.log.info({ providers: cfg.providers, environment: "sandbox" }, "beagle service up");
 
   const shutdown = async () => {
     worker.stop();

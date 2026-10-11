@@ -1,5 +1,5 @@
 import ContextDev from "context.dev";
-import { DomainError } from "@riskpilot/domain";
+import { DomainError } from "@beagle/domain";
 import { assertPublicUrl, type UrlCheckOptions } from "./url-safety.js";
 import { decodeScreenshot, ScreenshotRejected, type DecodedScreenshot } from "./screenshot.js";
 
@@ -111,7 +111,7 @@ export class ContextResearch {
       ...(opts.freshness ? { freshness: opts.freshness } : {}),
       ...(opts.highlights ? { highlightsOptions: { enabled: true, maxCharacters: 900 } } : {}),
       timeoutOpts: { milliseconds: 30_000, behavior: "return-partial" },
-      tags: ["riskpilot"],
+      tags: ["beagle"],
     });
     const credits = this.charge(res.key_metadata, opts.highlights ? 2 : 1);
     return {
@@ -155,7 +155,7 @@ export class ContextResearch {
       ...(opts.jsonSchema ? { jsonParams: { schema: opts.jsonSchema, ...(opts.jsonInstructions ? { instructions: opts.jsonInstructions } : {}) } } : {}),
       maxAgeMs: opts.maxAgeMs ?? 0,
       timeoutOpts: { milliseconds: 60_000 },
-      tags: ["riskpilot"],
+      tags: ["beagle"],
     } as never);
     const credits = this.charge(res.key_metadata, estimate);
 
@@ -222,7 +222,7 @@ export class ContextResearch {
       mode: "web",
       schedule: { type: "interval", frequency: everyHours, unit: "hours" },
       webhook: { url: webhookUrl, retry: {} },
-      tags: ["riskpilot"],
+      tags: ["beagle"],
     } as never)) as unknown as { id?: string; monitor_id?: string; webhook?: { secret?: string } };
     return { id: res.id ?? res.monitor_id ?? "", secret: res.webhook?.secret ?? null };
   }
