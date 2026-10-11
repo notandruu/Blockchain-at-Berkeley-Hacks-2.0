@@ -31,7 +31,7 @@ function Stepper({ phase }: { phase: Phase }) {
           <div key={s.label} className={clsx("relative flex items-center gap-1.5 rounded-full py-1 pl-1.5 pr-3 text-[12px] font-semibold transition-colors", i === idx ? "text-ink" : i < idx ? "text-muted" : "text-faint")}>
             {i === idx && <motion.span layoutId="step" className="absolute inset-0 rounded-full bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.06)]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
             <Mascot who={s.who} size={20} state={i === idx && phase !== "approval" && phase !== "operating" ? "working" : i < idx ? "done" : i === idx ? "idle" : "paused"} className="relative" />
-            <span className="relative">{s.label}</span>
+            <span className={clsx("relative", i !== idx && "hidden sm:inline")}>{s.label}</span>
           </div>
         ))}
       </div>
