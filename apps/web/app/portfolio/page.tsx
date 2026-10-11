@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { Chip, Label, Money } from "@/components/ui/primitives";
 import { api } from "@/lib/api";
+import { Mascot } from "@/components/crew";
 
 interface Portfolio {
   holdings: { id: string; symbol: string; outcome: string; confirmed_units: string; allocated_units: string; held_units: string; principal_usd: string; fees_usd: string; fees_source: string; avg_price: string; exchange_order_id: string; reconciled_at: string; risk_title: string; run_id: string; lifecycle: string }[];
@@ -42,7 +43,7 @@ export default function PortfolioPage() {
         <section className="space-y-2">
           <Label>Holdings (reconciled)</Label>
           <div className="divide-y divide-line overflow-hidden rounded-[23px] bg-surface ring-1 ring-line">
-            {p?.holdings.length === 0 && <div className="p-5 text-[14px] text-muted">No confirmed holdings.</div>}
+            {p?.holdings.length === 0 && <div className="flex items-center gap-3 p-5 text-[14px] text-muted"><Mascot who="penny" size={56} />No confirmed holdings. Penny only lists fills the exchange has reconciled.</div>}
             {p?.holdings.map((h) => (
               <Link key={h.id} href={`/runs/${h.run_id}`} className="grid grid-cols-[1fr_auto] gap-2 px-5 py-4 hover:bg-well-soft sm:grid-cols-[1.4fr_repeat(4,auto)] sm:items-center sm:gap-6">
                 <div className="min-w-0">

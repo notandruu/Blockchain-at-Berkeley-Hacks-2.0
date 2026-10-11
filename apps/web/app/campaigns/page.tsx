@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { Chip, Money } from "@/components/ui/primitives";
 import { api } from "@/lib/api";
+import { Mascot } from "@/components/crew";
 
 interface Campaign { id: string; slug: string; venue_name: string; headline: string; reward_usd: string; max_entitlements: number; status: string; closes_at: string; run_id: string; claimed: number }
 
@@ -17,7 +18,7 @@ export default function CampaignsPage() {
         <h1 className="text-[24px] font-semibold tracking-[-0.03em]">Campaigns</h1>
         <p className="mt-1 text-[14px] text-muted">A campaign exists only after its hedge filled. Capacity is the confirmed payout divided by the reward.</p>
         <div className="mt-6 grid gap-3">
-          {rows?.length === 0 && <div className="rounded-[23px] bg-well-soft p-6 text-[14px] text-muted">No campaigns yet.</div>}
+          {rows?.length === 0 && <div className="flex flex-col items-center gap-2 rounded-[23px] bg-well-soft p-10 text-[14px] text-muted"><Mascot who="sprout" size={88} />No campaigns yet. Sprout opens one once a hedge fills.</div>}
           {rows?.map((c) => {
             const left = Math.max(0, c.max_entitlements - c.claimed);
             return (

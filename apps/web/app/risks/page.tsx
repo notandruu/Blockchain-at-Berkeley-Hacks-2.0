@@ -6,6 +6,7 @@ import { AppShell } from "@/components/shell";
 import { stateLabel } from "@/components/run/state-label";
 import { Chip } from "@/components/ui/primitives";
 import { api } from "@/lib/api";
+import { Mascot } from "@/components/crew";
 
 interface Risk { id: string; title: string; mode: string; status: string; created_at: string; run_id: string; run_state: string; best_match: string | null }
 
@@ -19,7 +20,7 @@ export default function RisksPage() {
         <p className="mt-1 text-[14px] text-muted">Proposed and active exposures. Proposals are not positions until a fill is reconciled.</p>
         <div className="mt-6 divide-y divide-line overflow-hidden rounded-[23px] bg-surface ring-1 ring-line">
           {rows === null && <div className="skeleton h-16" />}
-          {rows?.length === 0 && <div className="p-6 text-[14px] text-muted">No risks yet. Start from New task.</div>}
+          {rows?.length === 0 && <div className="flex flex-col items-center gap-2 p-10 text-[14px] text-muted"><Mascot who="scout" size={88} />No risks yet. Start from New task.</div>}
           {rows?.map((r) => {
             const s = stateLabel(r.run_state);
             return (
