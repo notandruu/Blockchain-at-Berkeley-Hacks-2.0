@@ -1,23 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import {
-  AlertTriangle,
-  Check,
-  CircleDollarSign,
-  FileSearch,
-  Globe2,
-  Landmark,
-  Quote as QuoteIcon,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { Check, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import type { RunEvent } from "@/lib/types";
-import { Chip, IconBox } from "../ui/primitives";
+import { Chip } from "../ui/primitives";
+import { CrewBadge, crewFor, Mascot, type CrewMember } from "../crew";
 
 // The conversation column renders persisted events only. A tool card spins while its
 // tool.started has no matching completion, and stops the moment one arrives.
@@ -28,8 +17,6 @@ export interface FeedItem {
   start: RunEvent;
   end?: RunEvent;
 }
-
-const TOOL_ICON: Record<string, typeof Search> = { search: Search, scrape: Globe2, list_market_candidates: Landmark };
 
 export function buildFeed(events: RunEvent[]): FeedItem[] {
   const items: FeedItem[] = [];
@@ -106,7 +93,6 @@ function Row({ children }: { children: ReactNode }) {
 
 function ToolCard({ item, onSelectSource }: { item: FeedItem; onSelectSource?: (sourceId: string) => void }) {
   const p = item.start.payload;
-  const Icon = TOOL_ICON[p.tool] ?? FileSearch;
   const done = !!item.end;
   const failed = item.end?.type === "tool.failed" || item.end?.type === "source.capture_failed";
   const subtitle = !done
@@ -114,7 +100,9 @@ function ToolCard({ item, onSelectSource }: { item: FeedItem; onSelectSource?: (
       ? `Searching: ${p.query}`
       : p.tool === "scrape"
         ? `${p.domain} · capturing`
-        : "Reading Gemini inventory"
+        : p.tool === "depth"
+          ? "Reading live order books"
+          : "Reading Gemini inventory"
     : failed
       ? item.end!.title
       : item.end!.type === "source.captured"
@@ -129,7 +117,7 @@ function ToolCard({ item, onSelectSource }: { item: FeedItem; onSelectSource?: (
       className={clsx("relative w-full overflow-hidden rounded-[18px] bg-well p-3 text-left transition-colors", sourceId && "hover:bg-[#e7e7ea]")}
     >
       <div className="flex items-center gap-2.5">
-        <IconBox icon={Icon} tone={item.start.provider === "gemini_markets" ? "lavender" : "sky"} size={30} />
+        <CrewBadge who={crewFor(item.start.provider)} state={!done ? "working" : failed ? "paused" : "done"} size={32} />
         <div className="min-w-0 flex-1">
           <div className="truncate text-[13.5px] font-semibold">{item.start.title}</div>
           <div className={clsx("truncate text-[12px]", failed ? "text-bad" : "text-muted")}>{subtitle}</div>
@@ -154,7 +142,7 @@ function ToolCard({ item, onSelectSource }: { item: FeedItem; onSelectSource?: (
         </div>
       )}
       {done && !failed && typeof item.end?.payload.latencyMs === "number" && (
-        <div className="mt-2 flex gap-1.5 pl-[40px]">
+        <div className="mt-2 flex gap-1.5 pl-[42px]">
           <Chip>{(item.end.payload.latencyMs / 1000).toFixed(1)}s</Chip>
           {item.end.payload.credits != null && <Chip>{item.end.payload.credits} credits</Chip>}
           {item.end.providerRequestId && <Chip className="font-mono">{String(item.end.providerRequestId).slice(0, 8)}</Chip>}
@@ -178,10 +166,23 @@ const REASON: Record<string, string> = {
   UNSUPPORTED_TRIGGER: "No verifier",
   NO_SETTLEMENT_RULES: "No settlement rules",
   BUDGET: "Over budget",
+  BELOW_MINIMUM: "Too thin for one reward",
+  NO_DEPTH: "No offers under ceiling",
 };
 
 export function reasonText(code: string): string {
   return REASON[code] ?? code.replaceAll("_", " ").toLowerCase();
+}
+
+// A crew member speaking: small avatar, then a soft bubble.
+function Said({ who, tone = "plain", children }: { who: CrewMember; tone?: "plain" | "warn" | "ok" | "lavender" | "bad" | "sky"; children: ReactNode }) {
+  const bg = { plain: "bg-surface ring-1 ring-line", warn: "bg-warn-soft/70", ok: "bg-ok-soft", lavender: "bg-lavender", bad: "bg-bad-soft text-bad", sky: "bg-sky" }[tone];
+  return (
+    <div className="flex items-end gap-2">
+      <Mascot who={who} size={30} className="mb-0.5" />
+      <div className={clsx("min-w-0 flex-1 rounded-[18px] rounded-bl-[6px] px-3.5 py-2.5", bg)}>{children}</div>
+    </div>
+  );
 }
 
 export function Feed({ items, onSelectSource }: { items: FeedItem[]; onSelectSource?: (id: string) => void }) {
@@ -192,10 +193,9 @@ export function Feed({ items, onSelectSource }: { items: FeedItem[]; onSelectSou
           <Row key={it.key}>
             {it.kind === "tool" && <ToolCard item={it} onSelectSource={onSelectSource} />}
             {it.kind === "note" && (
-              <div className="flex gap-2 px-1 py-1 text-[14px] leading-[22px] text-ink">
-                <Sparkles className="mt-1 size-3.5 shrink-0 text-blue-ink" />
-                <span>{it.start.title}</span>
-              </div>
+              <Said who="scout">
+                <div className="text-[14px] leading-[22px]">{it.start.title}</div>
+              </Said>
             )}
             {it.kind === "evidence" && (
               <div className="ml-1 border-l-2 border-blue pl-3">
@@ -207,8 +207,7 @@ export function Feed({ items, onSelectSource }: { items: FeedItem[]; onSelectSou
               </div>
             )}
             {it.kind === "rejected" && (
-              <div className="flex items-start gap-2.5 rounded-[16px] bg-warn-soft/60 px-3 py-2.5">
-                <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warn" />
+              <Said who="nova" tone="warn">
                 <div className="min-w-0">
                   <div className="text-[13px] font-medium leading-5">{it.start.title}</div>
                   {it.start.payload.summary && <div className="text-[12px] leading-5 text-muted">{it.start.payload.summary}</div>}
@@ -218,43 +217,48 @@ export function Feed({ items, onSelectSource }: { items: FeedItem[]; onSelectSou
                     ))}
                   </div>
                 </div>
-              </div>
+              </Said>
             )}
             {it.kind === "accepted" && (
-              <div className="flex items-start gap-2.5 rounded-[16px] bg-ok-soft px-3 py-2.5">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-ok" />
+              <Said who="nova" tone="ok">
                 <div className="text-[13px] font-medium leading-5">{it.start.title}</div>
-              </div>
+              </Said>
             )}
             {it.kind === "quote" && (
-              <div className={clsx("flex items-start gap-2.5 rounded-[16px] px-3 py-2.5", it.start.type === "quote.stale" ? "bg-warn-soft" : "bg-well-soft")}>
-                <QuoteIcon className="mt-0.5 size-4 shrink-0 text-muted" />
+              <Said who="penny" tone={it.start.type === "quote.stale" ? "warn" : "plain"}>
                 <div className="tabular text-[13px] leading-5">{it.start.title}</div>
-              </div>
+              </Said>
             )}
             {it.kind === "approval" && (
-              <div className={clsx("rounded-[18px] px-3.5 py-3", it.start.type === "approval.recorded" ? "bg-well-soft" : "bg-lavender")}>
-                <div className="text-[13.5px] font-semibold">{it.start.type === "approval.recorded" ? "Approved" : "Ready for your review"}</div>
+              <Said who="penny" tone={it.start.type === "approval.recorded" ? "plain" : "lavender"}>
+                <div className="text-[13.5px] font-semibold">{it.start.type === "approval.recorded" ? "Approved. Funds reserved." : "Ready for your review"}</div>
                 <div className="tabular text-[12.5px] text-muted">{it.start.title}</div>
-              </div>
+              </Said>
             )}
             {it.kind === "order" && (
-              <div className="flex items-start gap-2.5 rounded-[16px] bg-well-soft px-3 py-2.5">
-                <CircleDollarSign className={clsx("mt-0.5 size-4 shrink-0", it.start.type === "order.reconciled" ? "text-ok" : it.start.type === "order.unknown" ? "text-bad" : "text-muted")} />
+              <Said who="penny" tone={it.start.type === "order.reconciled" ? "ok" : it.start.type === "order.unknown" ? "bad" : "plain"}>
                 <div className="tabular text-[13px] leading-5">{it.start.title}</div>
-              </div>
+              </Said>
             )}
-            {it.kind === "capacity" && <div className="px-1 text-[12.5px] text-muted">{it.start.title}</div>}
+            {it.kind === "capacity" && (
+              <Said who="sprout">
+                <div className="text-[13px] leading-5">{it.start.title}</div>
+              </Said>
+            )}
             {it.kind === "simulation" && (
               <div className="rounded-[16px] border border-dashed border-line px-3 py-2.5 text-[12.5px]">
                 <Chip tone="dark">Simulation</Chip> <span className="ml-1">{it.start.title}</span>
               </div>
             )}
-            {it.kind === "failed" && <div className="rounded-[16px] bg-bad-soft px-3 py-2.5 text-[13px] text-bad">{it.start.title}</div>}
+            {it.kind === "failed" && (
+              <Said who="scout" tone="bad">
+                <div className="text-[13px]">{it.start.title}</div>
+              </Said>
+            )}
             {it.kind === "input" && (
-              <div className="rounded-[16px] bg-sky px-3 py-2.5 text-[13px]">
-                <div className="font-semibold">{it.start.title}</div>
-              </div>
+              <Said who="scout" tone="sky">
+                <div className="text-[13px] font-semibold">{it.start.title}</div>
+              </Said>
             )}
           </Row>
         ))}
