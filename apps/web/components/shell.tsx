@@ -94,7 +94,7 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
           <div className="grid grid-cols-4 gap-1">
             <CrewSlot who="scout" ok={!!health?.providers.context && !!health?.providers.agent} detail={health?.providers.context ? "Context.dev connected" : "needs CONTEXT_DEV_API_KEY"} />
             <CrewSlot who="nova" ok={!!health} detail="Gemini market data" />
-            <CrewSlot who="penny" ok={!!health?.providers.gemini && !health?.accountStream?.stale} detail={health?.providers.gemini ? "sandbox account connected" : "needs Gemini sandbox keys"} />
+            <CrewSlot who="penny" ok={!!health?.providers.gemini && !health?.accountStream?.stale} detail={health?.providers.gemini ? "Gemini account connected" : "needs Gemini keys"} />
             <CrewSlot who="sprout" ok={!!health} detail="campaigns" />
           </div>
           <Link href="/settings/connections" className="mt-2 block text-[11px] font-semibold text-blue-ink">
@@ -107,10 +107,6 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
         <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-3 border-b border-line bg-canvas/85 px-6 backdrop-blur">
           <div className="min-w-0 flex-1 truncate text-[14px] font-semibold">{title}</div>
           {actions}
-          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted">
-            <span className="size-1.5 rounded-full bg-ok" />
-            Gemini sandbox
-          </span>
         </header>
         <main className="min-h-0 flex-1">{children}</main>
       </div>

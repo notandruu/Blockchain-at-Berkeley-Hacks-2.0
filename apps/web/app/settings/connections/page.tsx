@@ -43,7 +43,7 @@ export default function ConnectionsPage() {
         <ErrorNotice error={error} />
         {c && (
           <div className="divide-y divide-line overflow-hidden rounded-[23px] bg-surface ring-1 ring-line">
-            <Row name="Gemini Predictions (sandbox)" ok={!!c.gemini.reachable}>
+            <Row name="Gemini Predictions" ok={!!c.gemini.reachable}>
               {!c.gemini.configured && <div>Not configured. Set GEMINI_API_KEY and GEMINI_API_SECRET for a sandbox key.</div>}
               {c.gemini.error && <div className="text-bad">{c.gemini.error}</div>}
               {c.gemini.terms && (

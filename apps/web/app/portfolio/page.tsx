@@ -25,14 +25,14 @@ export default function PortfolioPage() {
       <div className="mx-auto max-w-[980px] space-y-6 px-4 py-8 sm:px-6">
         <div>
           <h1 className="text-[24px] font-semibold tracking-[-0.03em]">Portfolio</h1>
-          <p className="mt-1 text-[14px] text-muted">Only reconciled sandbox fills and app records. Proposals are listed separately and are not positions.</p>
+          <p className="mt-1 text-[14px] text-muted">Only reconciled fills and app records. Proposals are listed separately and are not positions.</p>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
             ["Cash spent", <Money key="a" value={spent} />],
             ["Conditional payout", <Money key="b" value={payout} />],
             ["Allocated to rewards", <Money key="c" value={allocated} />],
-            ["Sandbox USD available", p?.exchange?.balance ? <Money key="d" value={p.exchange.balance.available} /> : <span key="d" className="text-faint">n/a</span>],
+            ["USD available", p?.exchange?.balance ? <Money key="d" value={p.exchange.balance.available} /> : <span key="d" className="text-faint">n/a</span>],
           ].map(([l, v]) => (
             <div key={l as string} className="rounded-[20px] bg-surface p-4 ring-1 ring-line">
               <Label>{l}</Label>
@@ -62,7 +62,7 @@ export default function PortfolioPage() {
           <section className="space-y-2">
             <Label>Exchange positions · reconciled {new Date(p.exchange.reconciledAt).toLocaleTimeString()}</Label>
             <div className="divide-y divide-line overflow-hidden rounded-[23px] bg-surface ring-1 ring-line">
-              {p.exchange.positions.length === 0 && <div className="p-5 text-[14px] text-muted">The sandbox account reports no open positions.</div>}
+              {p.exchange.positions.length === 0 && <div className="p-5 text-[14px] text-muted">The exchange reports no open positions.</div>}
               {p.exchange.positions.map((x) => (
                 <div key={`${x.symbol}${x.outcome}`} className="tabular flex items-center gap-4 px-5 py-3 text-[13px]">
                   <span className="min-w-0 flex-1 truncate font-mono text-[12px]">{x.symbol}</span>

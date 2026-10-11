@@ -106,14 +106,13 @@ export function PlanCard({ view, plan, onApproved }: { view: RunView; plan: Plan
         <div className="flex items-center gap-3 rounded-[18px] bg-[#fdeee3]/70 px-3 py-2">
           <Mascot who="penny" size={44} state="waiting" />
           <div className="min-w-0 text-[12.5px] leading-[18px]">
-            <span className="font-semibold">Penny sized this against the live sandbox book.</span>{" "}
+            <span className="font-semibold">Penny sized this against the live order book.</span>{" "}
             <span className="text-muted">Nothing is bought until you approve this exact version.</span>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Chip tone="sky">Plan v{p.version}</Chip>
           <Chip tone={p.matchType === "exact" ? "ok" : "warn"}>{p.matchType === "exact" ? "Exact match" : "Proxy match"}</Chip>
-          <Chip tone="dark">Gemini sandbox</Chip>
           <span className="ml-auto font-mono text-[11px] text-faint">{p.instrumentSymbol}</span>
         </div>
         <div>
@@ -140,7 +139,7 @@ export function PlanCard({ view, plan, onApproved }: { view: RunView; plan: Plan
           <div className="flex gap-2.5 rounded-[14px] bg-warn-soft px-3.5 py-3 text-[13px]">
             <ShieldAlert className="mt-0.5 size-4 shrink-0 text-warn" />
             <span>
-              You asked for {pres.requestedEntitlements} rewards. The {pres.limitingFactor === "depth" ? "sandbox book only shows enough contracts under your price ceiling" : "budget only covers"} for <b>{pres.entitlements}</b>. The campaign will publish {pres.entitlements} slots and stop there.
+              You asked for {pres.requestedEntitlements} rewards. The {pres.limitingFactor === "depth" ? "order book only shows enough contracts under your price ceiling" : "budget only covers"} for <b>{pres.entitlements}</b>. The campaign will publish {pres.entitlements} slots and stop there.
             </span>
           </div>
         )}
@@ -198,7 +197,7 @@ export function PlanCard({ view, plan, onApproved }: { view: RunView; plan: Plan
             {check ? `Book checked ${Math.max(0, Math.round(age / 1000))}s ago` : "Checking the live book"}
             {check?.estimatedDebitUsd && fresh && <span className="text-faint">· now ${check.estimatedDebitUsd}</span>}
           </div>
-          <div className="mt-0.5 text-faint">Authorizes this version only. Up to <Money value={p.maxDebitUsd} /> of sandbox funds, one fill-or-kill order.</div>
+          <div className="mt-0.5 text-faint">Authorizes this version only. Up to <Money value={p.maxDebitUsd} />, one fill-or-kill order.</div>
         </div>
         <Button variant="money" size="lg" icon={Lock} disabled={!canBuy} busy={busy} onClick={() => void approve()} title={blocked ?? undefined}>
           Approve and buy

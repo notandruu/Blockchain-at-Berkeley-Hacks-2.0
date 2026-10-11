@@ -38,7 +38,6 @@ export function Executing({ order, events }: { order: OrderRow | null; events: R
       <Mascot who="penny" size={84} state={unknown ? "waiting" : "working"} className="mb-2" />
       <div className="flex items-center gap-2">
         <Chip tone={unknown ? "bad" : "neutral"}>{unknown ? "Execution status unknown" : submitted ? "Order submitted" : "Funds reserved"}</Chip>
-        <Chip tone="dark">Gemini sandbox</Chip>
       </div>
       <div className="mt-4 text-[20px] font-semibold tracking-[-0.02em]">
         {unknown ? "Waiting for the exchange to confirm what happened" : submitted ? "Waiting for confirmed fills" : "Revalidating the quote before sending"}
@@ -132,7 +131,7 @@ export function CampaignPanel({ campaign, onChange }: { campaign: CampaignRow; o
       </div>
       <div className="flex flex-col items-center gap-2 rounded-[18px] bg-well-soft p-4">
         {origin ? <QRCodeSVG value={link} size={132} bgColor="transparent" fgColor="#11191c" level="M" /> : <QrCode className="size-10 text-faint" />}
-        <span className="text-[11px] text-muted">Scan to claim a test reward</span>
+        <span className="text-[11px] text-muted">Scan to claim</span>
       </div>
     </div>
   );

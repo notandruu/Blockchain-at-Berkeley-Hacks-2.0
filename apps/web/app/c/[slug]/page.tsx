@@ -83,7 +83,6 @@ function ClaimPage({ slug }: { slug: string }) {
       <div className="mx-auto max-w-[420px]">
         <div className="mb-2 flex items-center justify-between">
           <div className="text-[15px] font-semibold tracking-[-0.01em]">{c.venueName}</div>
-          <span className="text-[12px] font-medium text-muted">Test reward only</span>
         </div>
         <motion.div initial={{ opacity: 0, scale: 0.9, y: 8 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} className="relative mx-auto h-[178px] w-[190px]">
           <Sparks />
@@ -109,7 +108,7 @@ function ClaimPage({ slug }: { slug: string }) {
             <motion.div key="v" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="mt-6 rounded-[24px] bg-white p-6 text-ink shadow-[var(--shadow-float)] ring-1 ring-line">
               <div className="flex items-center gap-2 text-[13px] font-semibold text-ok"><Ticket className="size-4" /> You're in</div>
               <div className="mt-3 font-mono text-[28px] font-semibold tracking-[0.12em]">{voucher.code}</div>
-              <p className="mt-2 text-[13px] text-muted">If the contract settles YES, this test voucher is worth ${Number(c.rewardUsd)} on your tab. Test reward only. No real payment or credit.</p>
+              <p className="mt-2 text-[13px] text-muted">If the contract settles YES, this voucher is worth ${Number(c.rewardUsd)} on your tab.</p>
             </motion.div>
           ) : (
             <motion.div key="f" className="mt-6 space-y-3">
@@ -125,15 +124,12 @@ function ClaimPage({ slug }: { slug: string }) {
                 onClick={() => void claim()}
                 className="h-13 w-full rounded-[14px] bg-[#5fbf98] py-3.5 text-[15px] font-semibold text-white transition-[opacity,transform] active:scale-[0.99] disabled:opacity-40"
               >
-                {busy ? "Claiming…" : open ? "Claim test reward" : "Enrollment closed"}
+                {busy ? "Claiming…" : open ? "Claim reward" : "Enrollment closed"}
               </button>
               {error && <div className="rounded-[14px] bg-white px-4 py-3 text-[13px] ring-1 ring-line">{error}</div>}
             </motion.div>
           )}
         </AnimatePresence>
-        <p className="mt-8 text-[11px] leading-5 text-faint">
-          Demo campaign on Gemini's sandbox with test funds. {c.venueName} is a fictional venue. Rewards are simulated merchant obligations, not financial instruments, and no payment or credit is issued.
-        </p>
       </div>
     </div>
   );

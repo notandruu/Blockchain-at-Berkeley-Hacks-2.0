@@ -52,8 +52,7 @@ export function Evaluation({ view, events }: { view: RunView; events: RunEvent[]
             <div key={s.environment} className="rounded-[18px] bg-surface p-4 ring-1 ring-line">
               <div className="flex items-center gap-2">
                 <CrewBadge who="nova" size={26} state="done" />
-                <Label className="flex-1">{s.environment === "sandbox" ? "Gemini sandbox" : "Gemini production"}</Label>
-                <Chip tone={s.environment === "sandbox" ? "ok" : "neutral"}>{s.environment === "sandbox" ? "executable" : "reference only"}</Chip>
+                <Label className="flex-1">{s.environment === "sandbox" ? "Tradable" : "Reference"}</Label>
               </div>
               <div className="tabular mt-2 text-[24px] font-semibold tracking-[-0.03em]">{s.contracts}</div>
               <div className="text-[12px] text-muted">contracts across {s.eventsScanned} active events</div>
