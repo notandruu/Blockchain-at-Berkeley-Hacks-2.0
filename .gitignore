@@ -13,3 +13,4 @@ supabase/.temp/
 artifacts/
 playwright-report/
 test-results/
+.claude/
