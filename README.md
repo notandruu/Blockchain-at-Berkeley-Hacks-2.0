@@ -14,7 +14,7 @@ prediction markets put prices on some of these events. but finding a market is o
 
 business owners already know what could hurt them. turning that into a useful hedge is the hard part.
 
-## the pitch
+## how beagle helps
 
 beagle does that work.
 
