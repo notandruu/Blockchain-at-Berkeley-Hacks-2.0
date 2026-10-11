@@ -68,12 +68,12 @@ export function Receipt({ order, plan }: { order: OrderRow; plan: PlanRow }) {
   const total = Number(order.principal_usd) + Number(order.fees_usd);
   return (
     <motion.div layout initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="rounded-[23px] bg-surface p-6 shadow-[var(--shadow-float)] ring-1 ring-line">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <Mascot who="penny" size={40} state="done" />
         <DrawnCheck />
-        <span className="text-[15px] font-semibold">Hedge confirmed</span>
+        <span className="whitespace-nowrap text-[15px] font-semibold">Hedge confirmed</span>
         <Chip tone="ok">reconciled</Chip>
-        <span className="ml-auto font-mono text-[11px] text-faint">order {order.exchange_order_id}</span>
+        <span className="w-full font-mono text-[11px] text-faint sm:ml-auto sm:w-auto">order {order.exchange_order_id}</span>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
         <div><Label>Held</Label><div className="tabular mt-1 text-[22px] font-semibold tracking-[-0.03em]">{Number(order.filled_quantity).toLocaleString()} {order.outcome.toUpperCase()}</div></div>
