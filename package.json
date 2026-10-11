@@ -15,7 +15,9 @@
     "dev:web": "pnpm --filter @riskpilot/web dev",
     "db:start": "supabase start",
     "db:reset": "supabase db reset",
-    "preflight": "pnpm --filter @riskpilot/service preflight"
+    "preflight": "pnpm --filter @riskpilot/service preflight",
+    "test:db": "DB_TESTS=1 vitest run apps/service/src/invariants.test.ts",
+    "test:live": "LIVE_GEMINI=1 vitest run packages/provider-gemini"
   },
   "devDependencies": {
     "@types/node": "26.6.5",
