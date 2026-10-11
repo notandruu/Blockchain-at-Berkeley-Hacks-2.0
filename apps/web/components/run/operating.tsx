@@ -9,6 +9,7 @@ import { api } from "@/lib/api";
 import type { CampaignRow, OrderRow, PlanRow, RunEvent, RunView } from "@/lib/types";
 import { Button, Chip, Label, Money, SkeletonLines } from "../ui/primitives";
 import { ScenarioTable } from "./plan-card";
+import { Mascot } from "../crew";
 
 function CountUp({ value }: { value: number }) {
   const reduce = useReducedMotion();
@@ -34,6 +35,7 @@ export function Executing({ order, events }: { order: OrderRow | null; events: R
   const submitted = events.some((e) => e.type === "order.submitted");
   return (
     <div className="rounded-[23px] bg-surface p-6 shadow-[var(--shadow-float)] ring-1 ring-line">
+      <Mascot who="penny" size={84} state={unknown ? "waiting" : "working"} className="mb-2" />
       <div className="flex items-center gap-2">
         <Chip tone={unknown ? "bad" : "neutral"}>{unknown ? "Execution status unknown" : submitted ? "Order submitted" : "Funds reserved"}</Chip>
         <Chip tone="dark">Gemini sandbox</Chip>
@@ -68,6 +70,7 @@ export function Receipt({ order, plan }: { order: OrderRow; plan: PlanRow }) {
   return (
     <motion.div layout initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="rounded-[23px] bg-surface p-6 shadow-[var(--shadow-float)] ring-1 ring-line">
       <div className="flex items-center gap-2">
+        <Mascot who="penny" size={40} state="done" />
         <DrawnCheck />
         <span className="text-[15px] font-semibold">Hedge confirmed</span>
         <Chip tone="ok">reconciled</Chip>
@@ -102,6 +105,7 @@ export function CampaignPanel({ campaign, onChange }: { campaign: CampaignRow; o
     <div className="grid gap-4 rounded-[23px] bg-surface p-6 ring-1 ring-line sm:grid-cols-[1fr_auto]">
       <div className="min-w-0 space-y-3">
         <div className="flex items-center gap-2">
+          <Mascot who="sprout" size={36} state={remaining === 0 ? "waiting" : "idle"} />
           <Label>Test campaign</Label>
           <Chip tone={campaign.status === "active" ? "ok" : "warn"}>{campaign.status}</Chip>
         </div>
@@ -140,6 +144,7 @@ export function SimulationPanel({ runId, events }: { runId: string; events: RunE
   return (
     <div className="rounded-[23px] border border-dashed border-line p-5">
       <div className="flex items-center gap-2">
+        <Mascot who="nova" size={28} />
         <Chip tone="dark">Simulation</Chip>
         <span className="text-[12px] text-muted">Hypothetical outcomes from the saved plan. Never touches the exchange or the reward ledger.</span>
       </div>
@@ -160,7 +165,10 @@ export function NoMatch({ events }: { events: RunEvent[] }) {
   const closest = e?.payload.closest;
   return (
     <div className="space-y-4 rounded-[23px] bg-surface p-6 ring-1 ring-line">
-      <Chip>No executable match</Chip>
+      <div className="flex items-center gap-3">
+        <Mascot who="nova" size={64} state="waiting" />
+        <Chip>No executable match</Chip>
+      </div>
       <div className="text-[20px] font-semibold tracking-[-0.02em]">{e?.payload.summary ?? "No listed contract pays on this trigger."}</div>
       <p className="text-[13.5px] text-muted">Beagle does not substitute a different contract or a production quote to complete the plan. Here is the closest contract and exactly where it differs.</p>
       {closest && (
@@ -188,7 +196,10 @@ export function InputRequest({ runId, event, onDone }: { runId: string; event: R
   const [busy, setBusy] = useState(false);
   return (
     <div className="space-y-4 rounded-[23px] bg-sky p-6">
-      <div className="text-[17px] font-semibold">{event.title}</div>
+      <div className="flex items-center gap-3">
+        <Mascot who="scout" size={56} state="waiting" />
+        <div className="text-[17px] font-semibold">{event.title}</div>
+      </div>
       {missing.map((m) => (
         <label key={m.field} className="block space-y-1">
           <span className="text-[13.5px] font-medium">{m.question}</span>

@@ -8,6 +8,7 @@ import { api, ApiError, newKey } from "@/lib/api";
 import type { PlanRow, QuoteCheck, RunView } from "@/lib/types";
 import { Button, Chip, ErrorNotice, Label, Money } from "../ui/primitives";
 import { ChecksTable } from "./evaluation";
+import { Mascot } from "../crew";
 
 function Stat({ label, children, strong }: { label: string; children: React.ReactNode; strong?: boolean }) {
   return (
@@ -101,7 +102,14 @@ export function PlanCard({ view, plan, onApproved }: { view: RunView; plan: Plan
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22, ease: "easeOut" }} className="overflow-hidden rounded-[23px] bg-surface shadow-[var(--shadow-float)] ring-1 ring-line">
-      <div className="space-y-4 p-6">
+      <div className="relative space-y-4 p-6">
+        <div className="flex items-center gap-3 rounded-[18px] bg-[#fdeee3]/70 px-3 py-2">
+          <Mascot who="penny" size={44} state="waiting" />
+          <div className="min-w-0 text-[12.5px] leading-[18px]">
+            <span className="font-semibold">Penny sized this against the live sandbox book.</span>{" "}
+            <span className="text-muted">Nothing is bought until you approve this exact version.</span>
+          </div>
+        </div>
         <div className="flex flex-wrap items-center gap-2">
           <Chip tone="sky">Plan v{p.version}</Chip>
           <Chip tone={p.matchType === "exact" ? "ok" : "warn"}>{p.matchType === "exact" ? "Exact match" : "Proxy match"}</Chip>
@@ -124,8 +132,8 @@ export function PlanCard({ view, plan, onApproved }: { view: RunView; plan: Plan
           <Stat label="Limit price">${p.limitPrice}</Stat>
           {p.campaign && <Stat label="Rewards covered">{p.campaign.maxEntitlements} × <Money value={p.campaign.rewardPerEntitlementUsd} /></Stat>}
           <Stat label="Order type">{p.timeInForce}</Stat>
-          <Stat label="Settles">{pres.expiryDate ? new Date(pres.expiryDate).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "n/a"}</Stat>
-          <Stat label="Plan expires">{new Date(p.expiresAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</Stat>
+          <Stat label="Settles">{pres.expiryDate ? new Date(pres.expiryDate).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }) : "n/a"}</Stat>
+          <Stat label="Plan expires">{new Date(p.expiresAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", timeZoneName: "short" })}</Stat>
         </div>
 
         {capacityShort && (
