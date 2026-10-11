@@ -14,7 +14,7 @@ const Env = z.object({
   ANTHROPIC_API_KEY: z.string().default(""),
   AGENT_MODEL: z.string().default(""),
   SERVICE_PORT: z.coerce.number().int().default(4000),
-  WEB_ORIGIN: z.string().default("http://localhost:3000"),
+  WEB_ORIGIN: z.string().default("http://localhost:3100"),
   PUBLIC_SERVICE_URL: z.string().default(""),
   DEMO_MODE: z.enum(["true", "false"]).default("true"),
   ALLOW_PRODUCTION_TRADING: z.enum(["true", "false"]).default("false"),
