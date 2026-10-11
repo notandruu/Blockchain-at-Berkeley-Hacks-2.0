@@ -27,6 +27,15 @@ importers:
         specifier: 4.6.6
         version: 4.6.6
 
+  packages/provider-context:
+    dependencies:
+      '@riskpilot/domain':
+        specifier: workspace:*
+        version: link:../domain
+      context.dev:
+        specifier: 3.5.0
+        version: 3.5.0
+
   packages/provider-gemini:
     dependencies:
       '@gemini-markets/sdk':
@@ -537,6 +546,9 @@ packages:
     resolution: {integrity: sha512-XWAtwJ6OHO+tj0EKCs0Y2UamnyOxseZWltU4x2U2wh8g4AigdjwvtUjvLP2tqkA/avxHEtzxNaqGq/YGNwckKg==}
     engines: {node: '>=18'}
 
+  context.dev@3.5.0:
+    resolution: {integrity: sha512-/IArn/lGw7evs/1pblXFLjiyZEpntq3oL2Fs0KrZDgpHWH4YRoKAIauu7uJcjP+gJsZRJbT1KPcSoodxpanagA==}
+
   decimal.js@10.6.0:
     resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
 
@@ -992,6 +1004,8 @@ snapshots:
   assertion-error@2.0.1: {}
 
   chai@6.3.0: {}
+
+  context.dev@3.5.0: {}
 
   decimal.js@10.6.0: {}
 
