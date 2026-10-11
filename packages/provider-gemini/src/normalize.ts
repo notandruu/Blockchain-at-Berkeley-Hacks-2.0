@@ -71,6 +71,7 @@ export function rulesHash(c: Pick<MarketCandidate, "instrumentSymbol" | "rulesTe
   );
 }
 
+const MARKET_STATES = new Set(["open", "closed", "post_only"]);
 const STRIKE_TYPES = new Set(["reference", "above", "below", "spread", "over", "over_or_equal", "under", "under_or_equal"]);
 
 export function normalizeEvent(event: RawEvent, environment: ExchangeEnvironment): MarketCandidate[] {
@@ -93,7 +94,7 @@ export function normalizeEvent(event: RawEvent, environment: ExchangeEnvironment
         contractTicker: c.ticker ?? "",
         label: c.label ?? c.abbreviatedName ?? "",
         contractStatus: c.status ?? "unknown",
-        marketState: c.marketState ?? null,
+        marketState: c.marketState == null ? null : MARKET_STATES.has(c.marketState) ? (c.marketState as MarketCandidate["marketState"]) : "unknown",
         strike: c.strike ? { type: strikeType as StrikeType | null, value: c.strike.value ?? null } : null,
         effectiveDate: c.effectiveDate ?? null,
         expiryDate: c.expiryDate ?? event.expiryDate ?? null,

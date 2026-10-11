@@ -162,6 +162,7 @@ const REASON: Record<string, string> = {
   PERIOD_MISMATCH: "Different period",
   EXPIRED: "Expired",
   MARKET_CLOSED: "Market closed",
+  POST_ONLY: "Maker orders only",
   INSUFFICIENT_DEPTH: "No depth under ceiling",
   UNSUPPORTED_TRIGGER: "No verifier",
   NO_SETTLEMENT_RULES: "No settlement rules",

@@ -32,7 +32,9 @@ export const MarketCandidate = z.object({
   contractTicker: z.string(),
   label: z.string(),
   contractStatus: z.string(),
-  marketState: z.enum(["open", "closed"]).nullable(),
+  // post_only books accept resting maker orders only, so a taker FOK can never fill there.
+  // Anything Gemini adds later normalizes to "unknown" and is treated as not takeable.
+  marketState: z.enum(["open", "closed", "post_only", "unknown"]).nullable(),
   strike: z
     .object({ type: StrikeType.nullable(), value: DecimalString.nullable() })
     .nullable(),
@@ -66,3 +68,8 @@ export const DepthSnapshot = z.object({
   lastUpdateId: z.string().nullable(),
 });
 export type DepthSnapshot = z.infer<typeof DepthSnapshot>;
+
+// Whether a taker order can execute against this contract right now.
+export function isTakeable(c: Pick<MarketCandidate, "marketState" | "contractStatus">): boolean {
+  return c.contractStatus === "active" && (c.marketState === "open" || c.marketState === null);
+}

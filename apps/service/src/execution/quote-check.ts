@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { planHash, TradePlan } from "@beagle/domain";
+import { isTakeable, planHash, TradePlan } from "@beagle/domain";
 import { dec, executableAsks, fillFee, PUBLISHED_FEE_SCHEDULE, usd, walkBook, ZERO } from "@beagle/risk-engine";
 import { createPublicClient, fetchDepth, getEventCandidates, type GeminiClient } from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
@@ -32,7 +32,7 @@ export async function checkPlanAgainstBook(plan: TradePlan): Promise<QuoteCheck>
   ]);
   const c = candidates.find((k) => k.instrumentSymbol === plan.instrumentSymbol);
   const rulesHashMatches = !!c && c.rulesHash === plan.rulesHash;
-  const marketOpen = !!c && c.marketState !== "closed" && c.contractStatus === "active";
+  const marketOpen = !!c && isTakeable(c);
   const walk = walkBook(executableAsks(depth, plan.outcome), dec(plan.quantity), dec(plan.limitPrice), dec(c?.quantityIncrement ?? "0.01"));
   const fillable = walk.filledQuantity.gte(dec(plan.quantity));
   const fees = walk.fills.reduce((s, f) => s.plus(fillFee(f.quantity, f.price, PUBLISHED_FEE_SCHEDULE)), ZERO);

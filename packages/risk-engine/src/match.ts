@@ -1,3 +1,4 @@
+import { isTakeable } from "@beagle/domain";
 import type {
   MarketCandidate,
   MatchType,
@@ -23,6 +24,7 @@ export interface FieldCheck {
 export type RejectionCode =
   | "EXPIRED"
   | "MARKET_CLOSED"
+  | "POST_ONLY"
   | "NOT_EXECUTABLE_IN_ENV"
   | "WRONG_EVENT"
   | "WRONG_DATE"
@@ -149,7 +151,8 @@ function common(candidate: MarketCandidate, now: Date): { rejections: RejectionC
   const checks: FieldCheck[] = [];
   const caveats: string[] = [];
   if (candidate.expiryDate && new Date(candidate.expiryDate) <= now) rejections.push("EXPIRED");
-  if (candidate.marketState === "closed" || candidate.contractStatus !== "active") rejections.push("MARKET_CLOSED");
+  if (candidate.marketState === "post_only" && candidate.contractStatus === "active") rejections.push("POST_ONLY");
+  else if (!isTakeable(candidate)) rejections.push("MARKET_CLOSED");
   if (!candidate.rulesText.trim()) rejections.push("NO_SETTLEMENT_RULES");
   checks.push({
     field: "environment",

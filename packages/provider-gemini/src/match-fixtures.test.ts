@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { Trigger } from "@beagle/domain";
+import { isTakeable, type Trigger } from "@beagle/domain";
 import { matchCandidate, rankMatches } from "@beagle/risk-engine";
 import { normalizeEvent, type RawEvent } from "./normalize.js";
 
@@ -89,5 +89,26 @@ describe("matching real Gemini listings", () => {
     const m = matchCandidate(trigger, btc[0]!, now);
     expect(m.executable).toBe(false);
     expect(m.rejections).toContain("UNSUPPORTED_TRIGGER");
+  });
+});
+
+describe("market state", () => {
+  const event = (marketState: string) => ({
+    ticker: "BTC2610120000",
+    title: "BTC price today at 8pm EDT",
+    category: "Crypto",
+    contracts: [{ instrumentSymbol: "BTC2610120000-HI83000", ticker: "HI83000", status: "active", marketState, description: "Resolves YES at or above 83000.", strike: { type: "above", value: "83000" } }],
+  });
+
+  it("keeps post_only books visible but never takeable", () => {
+    const [c] = normalizeEvent(event("post_only") as never, "sandbox");
+    expect(c!.marketState).toBe("post_only");
+    expect(isTakeable(c!)).toBe(false);
+  });
+
+  it("does not throw on a state the schema has not seen", () => {
+    const [c] = normalizeEvent(event("halted") as never, "sandbox");
+    expect(c!.marketState).toBe("unknown");
+    expect(isTakeable(c!)).toBe(false);
   });
 });
