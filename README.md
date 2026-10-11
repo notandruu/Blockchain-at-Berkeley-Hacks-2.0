@@ -1,24 +1,36 @@
 # Beagle
 
-a little crew of agents that researches a business risk, finds a hedge, and buys it after you approve.
+an agent that understands your business, finds a matching prediction market, and puts together a hedge within your budget.
 
-## the idea
+## the problem
 
-say a painting company has $8,000 worth of outdoor jobs booked for next week.
+businesses take on financial risks every day. a heat wave delays jobs. a sudden price change eats into margins. traditional insurance can leave gaps.
 
-a heat wave could push those jobs back. the company still has crew wages and equipment rentals to pay.
+prediction markets put prices on those events. but a business owner still has to find the right contract, understand the settlement rules, and figure out whether it actually helps.
+
+that’s where beagle comes in.
+
+## what beagle does
+
+you describe your business, the risk, and your budget.
+
+beagle researches the situation, finds a matching market, calculates the potential payout, and explains what remains exposed.
+
+you get a plan with the cost, coverage gaps, and a clear spending limit. after you approve, beagle executes the hedge in Gemini’s sandbox.
+
+## an example
+
+a painting company has $8,000 worth of outdoor jobs booked for next week.
+
+a heat wave could force them to reschedule. crew wages and equipment rentals still need paying.
 
 they ask beagle: “we could be out $1,000 if Friday is too hot to work. can we hedge some of that with a $100 budget?”
 
-## what happens
+beagle looks for a weather contract and checks its temperature threshold, date, settlement location, and liquidity.
 
-beagle researches the risk and looks for a weather contract that pays if temperatures cross a certain threshold.
+if it settles at SFO airport while the jobs are inland, beagle flags the mismatch. the job sites could get much hotter than the airport.
 
-it checks the date, temperature, settlement location, price, and available liquidity. then it explains how much of the company’s exposure the contract could cover.
-
-the details matter. if the contract settles at SFO airport and the jobs are inland, beagle flags that gap. the temperature at the airport could stay below the threshold while the crew’s job sites get much hotter.
-
-the company gets a plan it can review, with the cost and coverage gaps spelled out.
+the company can see what the contract would pay, when it would pay, and where it could fall short.
 
 weather contracts are research-only in this build. purchases currently run through Gemini’s crypto sandbox.
 
@@ -26,20 +38,39 @@ weather contracts are research-only in this build. purchases currently run throu
 
 each card tells you who did the work.
 
-| | Who | Does |
-|---|---|---|
-| <img src="apps/web/public/crew/scout-192.png" width="48"> | Scout | Researches your business through Context.dev and talks to you |
-| <img src="apps/web/public/crew/nova-192.png" width="48"> | Nova | Searches Gemini markets, checks live books and contract terms |
-| <img src="apps/web/public/crew/penny-192.png" width="48"> | Penny | Sizes the hedge, handles the budget, sends the approved order, keeps the receipt |
-| <img src="apps/web/public/crew/sprout-192.png" width="48"> | Sprout | Runs the test campaign and customer claims |
+<p>
+  <img src="apps/web/public/crew/scout-192.png" width="48" alt="Scout">
+  <strong>Scout</strong><br>
+  researches your business through Context.dev and talks to you.
+</p>
+
+<p>
+  <img src="apps/web/public/crew/nova-192.png" width="48" alt="Nova">
+  <strong>Nova</strong><br>
+  searches Gemini markets, checks live books and contract terms.
+</p>
+
+<p>
+  <img src="apps/web/public/crew/penny-192.png" width="48" alt="Penny">
+  <strong>Penny</strong><br>
+  sizes the hedge, handles the budget, sends the approved order, and keeps the receipt.
+</p>
+
+<p>
+  <img src="apps/web/public/crew/sprout-192.png" width="48" alt="Sprout">
+  <strong>Sprout</strong><br>
+  runs the test campaign and customer claims.
+</p>
 
 they bob while working, lean when waiting on you, and grey out when a provider is disconnected.
 
 sandbox liquidity is thin, so campaigns stay small. all trades and rewards are for testing.
 
-## Demo
+## demo
 
-(link)
+watch the crew turn a business risk into a hedge plan.
+
+https://github.com/user-attachments/assets/YOUR_VIDEO_ID
 
 ## built with
 
