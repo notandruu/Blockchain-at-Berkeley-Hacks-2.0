@@ -16,9 +16,17 @@ export class AccountStream {
   readonly ledgers = new Map<string, FillLedger>();
   readonly status: AccountStreamStatus = { connected: false, lastMessageAt: null, lastError: null, stale: true };
 
-  constructor(private readonly client: () => Promise<GeminiClient>) {}
+  constructor(
+    private readonly client: () => Promise<GeminiClient>,
+    // Gemini's websocket accepts account-scoped keys only and answers master keys with 401.
+    private readonly masterKey = false,
+  ) {}
 
   async start(): Promise<void> {
+    if (this.masterKey) {
+      this.status.lastError = "master keys cannot open the account websocket; fees are booked from the published schedule";
+      return;
+    }
     try {
       const c = await this.client();
       const stream = c.websocket.private.orders({ scope: "account" });

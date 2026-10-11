@@ -17,7 +17,7 @@ let tradingClient: Promise<GeminiClient> | null = null;
 const trading = cfg.providers.gemini
   ? () => (tradingClient ??= createTradingClient(cfg.GEMINI_ENV, geminiCredentials(cfg)))
   : null;
-const accountStream = trading ? new AccountStream(trading) : null;
+const accountStream = trading ? new AccountStream(trading, cfg.GEMINI_API_KEY.startsWith("master-")) : null;
 
 // Recovery before new financial actions: any order left mid-flight by a crash is reconciled
 // from the exchange first. The account lane processes jobs in order, so these run before any
