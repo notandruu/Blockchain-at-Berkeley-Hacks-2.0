@@ -92,7 +92,7 @@ function ClaimPage({ slug }: { slug: string }) {
         <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-[30px] font-semibold leading-[1.1] tracking-[-0.035em]">
           {c.headline}
         </motion.h1>
-        {c.eventTitle && <p className="mt-3 text-[14px] text-muted">Based on Gemini contract: {c.eventTitle}{c.settlesAt ? `, settles ${new Date(c.settlesAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric" })}` : ""}.</p>}
+        {c.eventTitle && <p className="mt-3 text-[14px] text-muted">Based on Gemini contract: {c.eventTitle}{c.settlesAt ? `, settles ${new Date(c.settlesAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", timeZoneName: "short" })}` : ""}.</p>}
 
         <div className="mt-6 rounded-[24px] bg-white p-4 ring-1 ring-line">
           <div className="tabular flex items-baseline justify-between">
