@@ -37,6 +37,10 @@ they bob while working, lean when waiting on you, and grey out when a provider i
 
 sandbox liquidity is thin, so campaigns stay small. all trades and rewards are for testing.
 
+## Demo
+
+(link)
+
 ## built with
 
 Context.dev, Gemini Predictions API, Anthropic, Next.js, Fastify, and Supabase.
