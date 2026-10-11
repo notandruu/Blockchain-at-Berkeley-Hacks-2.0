@@ -23,7 +23,7 @@ const STARTERS = [
   },
   {
     who: "penny" as CrewMember,
-    title: "Protect an existing risk",
+    title: "Insure an existing risk",
     body: "An outdoor job, a weather threshold, a cost you already carry.",
     goal: "I run an exterior painting crew in San Francisco. We have a $3,000 job booked for tomorrow; if the high goes above 71°F the paint won't cure and we reschedule. If cancelled we avoid about $1,200 in materials and labor. Is there a contract that protects the rest?",
     url: "",
@@ -98,13 +98,12 @@ export default function Home() {
         <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 22 }} className="relative mx-auto mb-2 h-[176px] w-[190px]">
           <Sparks />
           <Mascot who="scout" size={168} state={busy ? "working" : "idle"} className="absolute left-2 top-0 rotate-[3deg]" big />
-          <span className="absolute bottom-0 left-9 -rotate-3 text-[10px] tracking-[0.02em] text-faint">{busy ? "Scout is on it" : "Scout is listening"}</span>
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-center text-[30px] font-semibold tracking-[-0.035em] sm:text-[36px]">
-          What would you like to protect?
+          What would you like to insure?
         </motion.h1>
         <p className="mx-auto mt-2 max-w-[520px] text-center text-[15px] text-muted">
-          Describe the goal. Beagle researches it, finds a matching prediction market contract, and brings back one plan for you to approve.
+          Describe the risk. Beagle researches it, finds a prediction market contract that pays out if it happens, and brings back one insurance plan for you to approve.
         </p>
 
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.05 }} className="mt-8 rounded-[32px] bg-surface p-2 shadow-[var(--shadow-float)] ring-1 ring-line">
@@ -120,11 +119,11 @@ export default function Home() {
             className="block w-full resize-none bg-transparent px-4 pt-3 text-[16px] leading-6 outline-none placeholder:text-faint"
           />
           <div className="flex flex-wrap items-center gap-2 px-2 pb-1 pt-2">
-            <label className="flex h-9 items-center gap-1.5 rounded-full bg-well-soft px-3 text-[13px] text-muted focus-within:ring-1 focus-within:ring-blue-ink/30">
+            <label className="flex h-9 items-center gap-1.5 rounded-[10px] bg-well-soft px-3 text-[13px] text-muted focus-within:ring-1 focus-within:ring-blue-ink/30">
               <Globe className="size-3.5" />
               <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Business URL" className="w-[180px] bg-transparent text-ink outline-none placeholder:text-faint" inputMode="url" />
             </label>
-            <label className="flex h-9 items-center gap-1.5 rounded-full bg-well-soft px-3 text-[13px] text-muted focus-within:ring-1 focus-within:ring-blue-ink/30">
+            <label className="flex h-9 items-center gap-1.5 rounded-[10px] bg-well-soft px-3 text-[13px] text-muted focus-within:ring-1 focus-within:ring-blue-ink/30">
               <Wallet className="size-3.5" />
               <span>$</span>
               <input value={budget} onChange={(e) => setBudget(e.target.value.replace(/[^\d.]/g, ""))} placeholder="Max spend" className="tabular w-[84px] bg-transparent text-ink outline-none placeholder:text-faint" inputMode="decimal" />

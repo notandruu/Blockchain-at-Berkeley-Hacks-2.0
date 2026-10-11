@@ -107,8 +107,8 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
         <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-3 border-b border-line bg-canvas/85 px-6 backdrop-blur">
           <div className="min-w-0 flex-1 truncate text-[14px] font-semibold">{title}</div>
           {actions}
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-chrome px-2.5 py-1 text-[11px] font-semibold text-white/90">
-            <span className="size-1.5 rounded-full bg-[#7dd3c0]" />
+          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted">
+            <span className="size-1.5 rounded-full bg-ok" />
             Gemini sandbox
           </span>
         </header>

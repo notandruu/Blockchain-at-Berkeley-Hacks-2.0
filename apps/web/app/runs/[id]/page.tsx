@@ -26,10 +26,10 @@ function Stepper({ phase }: { phase: Phase }) {
   const idx = Math.max(0, STEPS.findIndex((s) => s.key.includes(phase)));
   return (
     <LayoutGroup>
-      <div className="flex items-center gap-1 rounded-full bg-well-soft p-1">
+      <div className="flex items-center gap-1 rounded-[12px] bg-well-soft p-1">
         {STEPS.map((s, i) => (
-          <div key={s.label} className={clsx("relative flex items-center gap-1.5 rounded-full py-1 pl-1.5 pr-3 text-[12px] font-semibold transition-colors", i === idx ? "text-ink" : i < idx ? "text-muted" : "text-faint")}>
-            {i === idx && <motion.span layoutId="step" className="absolute inset-0 rounded-full bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.06)]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
+          <div key={s.label} className={clsx("relative flex items-center gap-1.5 rounded-[9px] py-1 pl-1.5 pr-3 text-[12px] font-semibold transition-colors", i === idx ? "text-ink" : i < idx ? "text-muted" : "text-faint")}>
+            {i === idx && <motion.span layoutId="step" className="absolute inset-0 rounded-[9px] bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.06)]" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
             <Mascot who={s.who} size={20} state={i === idx && phase !== "approval" && phase !== "operating" ? "working" : i < idx ? "done" : i === idx ? "idle" : "paused"} className="relative" />
             <span className={clsx("relative", i !== idx && "hidden sm:inline")}>{s.label}</span>
           </div>
@@ -84,7 +84,7 @@ export default function RunPage({ params }: { params: Promise<{ id: string }> })
     >
       <div className="flex gap-1 border-b border-line px-4 py-2 lg:hidden">
         {(["conversation", "work"] as const).map((t) => (
-          <button key={t} onClick={() => setTab(t)} className={clsx("rounded-full px-3 py-1 text-[13px] font-semibold capitalize", tab === t ? "bg-well text-ink" : "text-muted")}>
+          <button key={t} onClick={() => setTab(t)} className={clsx("rounded-[8px] px-3 py-1 text-[13px] font-semibold capitalize", tab === t ? "bg-well text-ink" : "text-muted")}>
             {t}
           </button>
         ))}

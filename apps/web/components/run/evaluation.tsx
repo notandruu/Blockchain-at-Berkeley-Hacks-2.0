@@ -18,7 +18,7 @@ export function CheckIcon({ status }: { status: FieldCheck["status"] }) {
 export function ChecksTable({ checks, compact }: { checks: FieldCheck[]; compact?: boolean }) {
   return (
     <div className="overflow-hidden rounded-[14px] ring-1 ring-line">
-      <div className="grid grid-cols-[110px_1fr_1fr_22px] gap-x-3 bg-well-soft px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
+      <div className="grid grid-cols-[110px_1fr_1fr_22px] gap-x-3 bg-well-soft px-3 py-1.5 text-[12px] font-semibold text-muted">
         <span>Field</span>
         <span>Your trigger</span>
         <span>Contract</span>

@@ -53,7 +53,7 @@ export function SourceBrowser({
             <span className="truncate">{loading ? loading.payload.domain : current ? current.domain : "No page yet"}</span>
             <span className="ml-auto shrink-0 text-white/35">{current ? `fetched ${ago(current.retrieved_at)}` : loading ? "fetching" : ""}</span>
           </div>
-          <span className="hidden shrink-0 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/40 sm:inline">Context.dev capture</span>
+          <span className="hidden shrink-0 text-[12px] font-medium text-white/50 sm:inline">Context.dev capture</span>
         </div>
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#f3f4f6]">
           <AnimatePresence mode="sync" initial={false}>

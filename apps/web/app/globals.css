@@ -65,7 +65,7 @@ html, body { background: var(--color-canvas); color: var(--color-ink); }
 body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 
 .tabular { font-variant-numeric: tabular-nums; }
-.label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-muted); }
+.label { font-size: 13px; font-weight: 600; color: var(--color-muted); }
 
 .skeleton {
   background: linear-gradient(90deg, #ecebe6 0%, #f6f5f1 50%, #ecebe6 100%);

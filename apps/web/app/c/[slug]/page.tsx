@@ -83,7 +83,7 @@ function ClaimPage({ slug }: { slug: string }) {
       <div className="mx-auto max-w-[420px]">
         <div className="mb-2 flex items-center justify-between">
           <div className="text-[15px] font-semibold tracking-[-0.01em]">{c.venueName}</div>
-          <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-muted ring-1 ring-line">Test reward only</span>
+          <span className="text-[12px] font-medium text-muted">Test reward only</span>
         </div>
         <motion.div initial={{ opacity: 0, scale: 0.9, y: 8 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ type: "spring", stiffness: 240, damping: 18 }} className="relative mx-auto h-[178px] w-[190px]">
           <Sparks />
@@ -123,7 +123,7 @@ function ClaimPage({ slug }: { slug: string }) {
               <button
                 disabled={!open || busy || !tab || (minimum ? Number(tab) < Number(minimum) : false)}
                 onClick={() => void claim()}
-                className="h-13 w-full rounded-full bg-[#5fbf98] py-3.5 text-[15px] font-semibold text-white transition-[opacity,transform] active:scale-[0.99] disabled:opacity-40"
+                className="h-13 w-full rounded-[14px] bg-[#5fbf98] py-3.5 text-[15px] font-semibold text-white transition-[opacity,transform] active:scale-[0.99] disabled:opacity-40"
               >
                 {busy ? "Claiming…" : open ? "Claim test reward" : "Enrollment closed"}
               </button>

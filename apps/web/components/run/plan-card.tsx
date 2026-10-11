@@ -22,7 +22,7 @@ function Stat({ label, children, strong }: { label: string; children: React.Reac
 export function ScenarioTable({ rows }: { rows: PlanRow["body"]["presentation"]["scenarios"] }) {
   return (
     <div className="overflow-hidden rounded-[14px] ring-1 ring-line">
-      <div className="grid grid-cols-[1.6fr_repeat(4,minmax(0,0.7fr))] gap-x-3 bg-well-soft px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
+      <div className="grid grid-cols-[1.6fr_repeat(4,minmax(0,0.7fr))] gap-x-3 bg-well-soft px-3 py-1.5 text-[12px] font-semibold text-muted">
         <span>Scenario</span>
         <span className="text-right">Owed</span>
         <span className="text-right">Cost</span>

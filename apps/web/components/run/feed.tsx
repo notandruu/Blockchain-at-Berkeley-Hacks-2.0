@@ -177,7 +177,7 @@ export function reasonText(code: string): string {
 
 // A crew member speaking: small avatar, then a soft bubble.
 function Said({ who, tone = "plain", children }: { who: CrewMember; tone?: "plain" | "warn" | "ok" | "lavender" | "bad" | "sky"; children: ReactNode }) {
-  const bg = { plain: "bg-surface ring-1 ring-line", warn: "bg-warn-soft/70", ok: "bg-ok-soft", lavender: "bg-lavender", bad: "bg-bad-soft text-bad", sky: "bg-sky" }[tone];
+  const bg = { plain: "bg-surface ring-1 ring-line", warn: "bg-warn-soft/70", ok: "bg-ok-soft", lavender: "bg-lavender", bad: "bg-bad-soft", sky: "bg-sky" }[tone];
   return (
     <div className="flex items-end gap-2">
       <Mascot who={who} size={30} className="mb-0.5" />
