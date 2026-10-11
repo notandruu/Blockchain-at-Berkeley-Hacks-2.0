@@ -1,0 +1,50 @@
+"use client";
+
+import { ArrowRight, LayoutGrid } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button, ErrorNotice } from "@/components/ui/primitives";
+import { supabase } from "@/lib/api";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    const { error } = await supabase().auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (error) setError(error.message);
+    else router.replace("/");
+  };
+
+  return (
+    <div className="flex min-h-dvh items-center justify-center bg-canvas px-4">
+      <form onSubmit={submit} className="w-full max-w-[360px] space-y-5">
+        <div className="flex items-center gap-2">
+          <div className="flex size-8 items-center justify-center rounded-[10px] bg-ink text-white">
+            <LayoutGrid className="size-4" strokeWidth={2.2} />
+          </div>
+          <span className="text-lg font-semibold tracking-[-0.02em]">RiskPilot</span>
+        </div>
+        <div>
+          <h1 className="text-[23px] font-semibold tracking-[-0.03em]">Sign in</h1>
+          <p className="mt-1 text-sm text-muted">Operator access to the Gemini sandbox account.</p>
+        </div>
+        <div className="space-y-3">
+          <input className="h-12 w-full rounded-[19px] border border-line bg-surface px-4 text-[15px] outline-none focus:border-blue-ink/40" type="email" autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input className="h-12 w-full rounded-[19px] border border-line bg-surface px-4 text-[15px] outline-none focus:border-blue-ink/40" type="password" autoComplete="current-password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </div>
+        <ErrorNotice error={error} />
+        <Button type="submit" variant="money" size="lg" className="w-full" busy={busy} icon={ArrowRight}>
+          Continue
+        </Button>
+      </form>
+    </div>
+  );
+}
