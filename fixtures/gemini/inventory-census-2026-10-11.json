@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-10-11T22:37:59.746976Z",
+  "sandbox": {
+    "total": 94,
+    "byCategory": {
+      "Crypto": 76,
+      "Commodities": 18
+    }
+  },
+  "production": {
+    "total": 962,
+    "byCategory": {
+      "Sports": 511,
+      "Weather": 98,
+      "Crypto": 91,
+      "Commodities": 18,
+      "Economics": 10,
+      "Politics": 221
+    }
+  }
+}
