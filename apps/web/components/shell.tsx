@@ -36,12 +36,15 @@ export function useSession() {
   return { ready, email };
 }
 
-function CrewSlot({ who, ok, detail }: { who: CrewMember; ok: boolean; detail: string }) {
+// ok is undefined until the first health check answers: no dot and no greyed character,
+// since "not checked yet" is not the same as "disconnected".
+function CrewSlot({ who, ok, detail }: { who: CrewMember; ok: boolean | undefined; detail: string }) {
+  const down = ok === false;
   return (
     <div className="group relative flex flex-col items-center" title={`${CREW[who].name}: ${detail}`}>
-      <Mascot who={who} size={34} state={ok ? "idle" : "paused"} />
-      <span className={clsx("mt-0.5 text-[9.5px] font-semibold", ok ? "text-muted" : "text-faint")}>{CREW[who].name}</span>
-      <span className={clsx("absolute right-0.5 top-0 size-2 rounded-full ring-2 ring-well-soft", ok ? "bg-ok" : "bg-faint")} />
+      <Mascot who={who} size={34} state={down ? "paused" : "idle"} />
+      <span className={clsx("mt-0.5 text-[9.5px] font-semibold", down ? "text-faint" : "text-muted")}>{CREW[who].name}</span>
+      {ok !== undefined && <span className={clsx("absolute right-0.5 top-0 size-2 rounded-full ring-2 ring-well-soft", ok ? "bg-ok" : "bg-faint")} />}
     </div>
   );
 }
@@ -49,7 +52,7 @@ function CrewSlot({ who, ok, detail }: { who: CrewMember; ok: boolean; detail: s
 export function AppShell({ children, title, actions }: { children: ReactNode; title?: ReactNode; actions?: ReactNode }) {
   const path = usePathname();
   const { ready, email } = useSession();
-  const [health, setHealth] = useState<Health | null>(null);
+  const [health, setHealth] = useState<Health | null | undefined>(undefined);
 
   useEffect(() => {
     const load = () => fetch(`${SERVICE_URL}/health`).then((r) => r.json()).then(setHealth).catch(() => setHealth(null));
@@ -90,10 +93,10 @@ export function AppShell({ children, title, actions }: { children: ReactNode; ti
         <div className="mt-auto rounded-[16px] bg-well-soft p-3">
           <div className="label mb-2">Crew</div>
           <div className="grid grid-cols-4 gap-1">
-            <CrewSlot who="scout" ok={!!health?.providers.context && !!health?.providers.agent} detail={health?.providers.context ? "Context.dev connected" : "needs CONTEXT_DEV_API_KEY"} />
-            <CrewSlot who="nova" ok={!!health} detail="Gemini market data" />
-            <CrewSlot who="penny" ok={!!health?.providers.gemini && (!health?.accountStream?.stale || !!health?.accountStream?.skipped)} detail={health?.providers.gemini ? "Gemini account connected" : "needs Gemini keys"} />
-            <CrewSlot who="sprout" ok={!!health} detail="campaigns" />
+            <CrewSlot who="scout" ok={health === undefined ? undefined : !!health?.providers.context && !!health?.providers.agent} detail={health?.providers.context ? "Context.dev connected" : "needs CONTEXT_DEV_API_KEY"} />
+            <CrewSlot who="nova" ok={health === undefined ? undefined : !!health} detail="Gemini market data" />
+            <CrewSlot who="penny" ok={health === undefined ? undefined : !!health?.providers.gemini && (!health?.accountStream?.stale || !!health?.accountStream?.skipped)} detail={health?.providers.gemini ? "Gemini account connected" : "needs Gemini keys"} />
+            <CrewSlot who="sprout" ok={health === undefined ? undefined : !!health} detail="campaigns" />
           </div>
           <Link href="/settings/connections" className="mt-2 block text-[11px] font-semibold text-blue-ink">
             Connections
