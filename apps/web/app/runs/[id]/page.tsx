@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
-import { use, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/shell";
 import { Evaluation } from "@/components/run/evaluation";
 import { buildFeed, Feed } from "@/components/run/feed";
@@ -45,7 +45,16 @@ export default function RunPage({ params }: { params: Promise<{ id: string }> })
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [tab, setTab] = useState<"conversation" | "work">("work");
   const reduce = useReducedMotion();
-  const phase = phaseOf(state);
+  const livePhase = phaseOf(state);
+  // A run can pass through two states in the same instant (matching, then no match). Two key
+  // changes inside one exit animation leave AnimatePresence(mode="wait") stuck on the old
+  // panel, so the panel follows the phase only once it has held for a moment.
+  const [phase, setPhase] = useState(livePhase);
+  useEffect(() => {
+    if (livePhase === phase) return;
+    const t = setTimeout(() => setPhase(livePhase), 160);
+    return () => clearTimeout(t);
+  }, [livePhase, phase]);
   const feed = useMemo(() => buildFeed(events), [events]);
   const plan = view?.plans.filter((p) => p.status === "proposed").at(-1) ?? null;
   const order = view?.orders.at(-1) ?? null;
