@@ -41,12 +41,12 @@ export async function discoverInventory(
 
   // The server-side `category` and `search` filters exceeded a 30s deadline on sandbox
   // (2026-10-11) while unfiltered pages return in ~0.5s. Paginate unfiltered and filter here.
-  const needle = q.search?.toLowerCase();
+  const matches = q.search ? searchMatcher(q.search) : null;
   for await (const ev of client.predictions.iterateEvents({ status: ["active"] } as never, { limit: 100, maxItems: q.maxEvents ?? 1500 })) {
     result.eventsScanned++;
     const raw = ev as unknown as RawEvent;
     if (categories.length && !categories.includes(raw.category ?? "")) continue;
-    if (needle && !(raw.title ?? "").toLowerCase().includes(needle) && !(raw.ticker ?? "").toLowerCase().includes(needle)) continue;
+    if (matches && !matches(raw)) continue;
     result.candidates.push(...normalizeEvent(raw, environment));
   }
   // A category can be listed by getCategories and still have zero active events.
@@ -79,5 +79,23 @@ export async function fetchDepth(client: GeminiClient, environment: ExchangeEnvi
     asks: (body.asks ?? []).map(([price, quantity]) => ({ price, quantity })),
     observedAt: new Date().toISOString(),
     lastUpdateId: body.lastUpdateId != null ? String(body.lastUpdateId) : null,
+  };
+}
+
+// Gemini titles games by city ("Minnesota vs New York"), while people and agents search by
+// team ("Knicks"). Look in the title, ticker, team names, abbreviations and category path, and
+// ignore filler words. An event matches when at least half the search terms appear.
+const SEARCH_FILLER = new Set(["vs", "v", "at", "the", "game", "match", "tonight", "and", "or", "of", "a", "in", "on"]);
+export function searchMatcher(search: string): (ev: RawEvent) => boolean {
+  const terms = search.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 1 && !SEARCH_FILLER.has(w));
+  return (ev) => {
+    if (!terms.length) return true;
+    const hay = [ev.title, ev.ticker, ...(ev.subcategory?.path ?? []), ...(ev.participants ?? []).flatMap((p) => [p.name, p.abbreviation])]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const words = new Set(hay.split(/[^a-z0-9]+/));
+    const hits = terms.filter((t) => words.has(t)).length;
+    return hits > 0 && hits * 2 >= terms.length;
   };
 }

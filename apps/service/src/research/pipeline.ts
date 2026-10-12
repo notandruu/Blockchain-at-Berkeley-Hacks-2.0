@@ -66,7 +66,12 @@ export function researchHandler(db: Sql, admin: SupabaseClient, cfg: Config) {
         inputs,
         intake,
       ).finally(() => kit.close());
-      const { usage: u2 } = cfg.RUN_DEADLINE_MS > 0 ? await withDeadline(research, cfg.RUN_DEADLINE_MS) : await research;
+      const { usage: u2, declined } = cfg.RUN_DEADLINE_MS > 0 ? await withDeadline(research, cfg.RUN_DEADLINE_MS) : await research;
+      if (declined) {
+        await transition(db, runId, "MATCHING", "Matching contracts field by field");
+        await appendEvent(db, runId, { type: "match.rejected", provider: "risk_engine", mode: "live_research", title: "No executable match", payload: { closest: null, summary: declined.split("\n")[0]!.slice(0, 280) } });
+        await transition(db, runId, "NO_EXECUTABLE_MATCH", "No executable match");
+      }
       await db`update runs set model_input_tokens = model_input_tokens + ${u2.input}, model_output_tokens = model_output_tokens + ${u2.output} where id = ${runId}`;
     } catch (err) {
       const code = err instanceof DomainError ? err.code : "PROVIDER_UNAVAILABLE";

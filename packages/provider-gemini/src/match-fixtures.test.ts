@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { isTakeable, type Trigger } from "@beagle/domain";
 import { matchCandidate, rankMatches } from "@beagle/risk-engine";
 import { normalizeEvent, type RawEvent } from "./normalize.js";
+import { searchMatcher } from "./inventory.js";
 
 const fixture = (name: string) =>
   JSON.parse(readFileSync(new URL(`../../../fixtures/gemini/${name}`, import.meta.url), "utf8")) as RawEvent;
@@ -171,5 +172,15 @@ describe("team names", () => {
       expect(matchCandidate(t(team), label, now).rejections).not.toContain("WRONG_TEAM");
     }
     expect(matchCandidate(t("San Francisco 49ers"), other, now).rejections).toContain("WRONG_TEAM");
+  });
+});
+
+describe("inventory search", () => {
+  it("finds a game by team name when Gemini titles it by city", () => {
+    const ev = { title: "Minnesota vs New York", ticker: "NBA-2610122330-MIN-NYK-M", subcategory: { path: ["Sports", "Basketball", "Pro Basketball"] }, participants: [{ name: "Minnesota Timberwolves", abbreviation: "MIN" }, { name: "New York Knicks", abbreviation: "NYK" }] } as RawEvent;
+    expect(searchMatcher("Knicks")(ev)).toBe(true);
+    expect(searchMatcher("Knicks vs Minnesota Timberwolves")(ev)).toBe(true);
+    expect(searchMatcher("Knicks game tonight")(ev)).toBe(true);
+    expect(searchMatcher("Lakers")(ev)).toBe(false);
   });
 });

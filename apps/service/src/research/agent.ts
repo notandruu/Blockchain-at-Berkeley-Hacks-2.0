@@ -122,7 +122,7 @@ export interface AgentDeps {
   planner: PlannerConfig;
 }
 
-export async function runResearch(deps: AgentDeps, inputs: RunInputs, intake: Intake): Promise<{ planId: string | null; usage: { input: number; output: number } }> {
+export async function runResearch(deps: AgentDeps, inputs: RunInputs, intake: Intake): Promise<{ planId: string | null; declined: string | null; usage: { input: number; output: number } }> {
   const { db, kit } = deps;
   let planResult: { planId: string | null } | null = null;
 
@@ -248,6 +248,9 @@ export async function runResearch(deps: AgentDeps, inputs: RunInputs, intake: In
     maxRetries: 2,
   });
 
-  if (!planResult) throw new DomainError("VALIDATION_FAILED", "research ended without a proposal");
-  return { planId: (planResult as { planId: string | null }).planId, usage: { input: res.totalUsage.inputTokens ?? 0, output: res.totalUsage.outputTokens ?? 0 } };
+  const usage = { input: res.totalUsage.inputTokens ?? 0, output: res.totalUsage.outputTokens ?? 0 };
+  // Declining to propose is a legitimate answer (the game is not listed, the event already
+  // happened). Report it as no match, with the agent's own reason, rather than a failure.
+  if (!planResult) return { planId: null, declined: res.text.trim() || "Research found no contract that pays on this event.", usage };
+  return { planId: (planResult as { planId: string | null }).planId, declined: null, usage };
 }
