@@ -87,14 +87,18 @@ Penny's plan is the only thing you approve. it shows the estimate and the hard m
 
 ![the plan](docs/media/live-plan.png)
 
-after the fill Sprout opens the campaign. it only publishes as many rewards as the confirmed contracts can pay, and customers claim from a QR code.
+after the fill Sprout opens the campaign. it only publishes as many rewards as the confirmed contracts can pay.
 
 ![hedge confirmed and campaign live](docs/media/live-operating.png)
 
+customers claim on their phone from a QR code at the bar.
+
 <p>
-  <img src="docs/media/claim.gif" width="280" alt="a customer claiming a reward">
-  <img src="docs/media/claim-phone.png" width="280" alt="customer claim page">
+  <img src="docs/media/claim-knicks-mockup.gif" width="280" alt="a customer claiming a knicks reward (mockup)">
+  <img src="docs/media/claim-knicks-mockup.png" width="280" alt="knicks claim page (mockup)">
 </p>
+
+*mockup: the real claim page with sample data for a knicks campaign. a real one only exists after a confirmed fill, and the sandbox can't fill sports yet.*
 
 the portfolio only counts reconciled fills, never the submit response.
 

@@ -243,20 +243,66 @@ async function visitorRun(browser: Browser, goal: string, budget: string) {
   console.log("gif live-run");
 }
 
+// Mockup: the real claim page rendered against sample data for a campaign the sandbox cannot
+// produce (it lists no sports). Both API calls the page makes are answered in the browser;
+// nothing reaches the service, the database or the exchange. Labeled as a mockup wherever used.
+const KNICKS_CAMPAIGN = {
+  slug: "knicks-game-night",
+  venueName: "Upper East Side sports bar",
+  headline: "If the Knicks beat Minnesota tonight, get $20 back on your tab",
+  qualification: "Be here by tip-off and open a tab",
+  rewardUsd: "20.00",
+  capacity: 40,
+  remaining: 31,
+  status: "active",
+  closesAt: new Date(Date.now() + 6 * 3600_000).toISOString(),
+  eventTitle: "Minnesota vs New York",
+  settlesAt: "2026-10-13T02:30:00.000Z",
+};
+
+async function mockClaim(browser: Browser) {
+  const wire = async (ctx: BrowserContext) => {
+    let remaining = KNICKS_CAMPAIGN.remaining;
+    await ctx.route("**/api/public/campaigns/knicks-game-night", (r) => r.fulfill({ json: { ...KNICKS_CAMPAIGN, remaining } }));
+    await ctx.route("**/api/public/campaigns/knicks-game-night/claims", (r) => {
+      remaining -= 1;
+      return r.fulfill({ json: { voucherCode: "7F3A9C1B2E", remaining } });
+    });
+  };
+  const { ctx, page } = await recording(browser, undefined, PHONE, true);
+  await wire(ctx);
+  await page.goto(`${ORIGIN}/c/knicks-game-night?t=mock`);
+  await settle(page, 1800);
+  await page.getByLabel("Test tab amount").pressSequentially("48", { delay: 160 });
+  await sleep(500);
+  await page.getByRole("button", { name: /claim/i }).click();
+  await page.getByText("You're in").waitFor({ timeout: 10_000 });
+  await sleep(2600);
+  await toGif(ctx, page, "claim-knicks-mockup", 390);
+  const still = await browser.newContext({ viewport: PHONE, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
+  await wire(still);
+  const s = await still.newPage();
+  await s.goto(`${ORIGIN}/c/knicks-game-night?t=mock`);
+  await settle(s, 1800);
+  await shot(s, "claim-knicks-mockup");
+  await still.close();
+}
+
 const [mode, ...args] = process.argv.slice(2);
 rmSync(TMP, { recursive: true, force: true });
 mkdirSync(TMP, { recursive: true });
 const browser = await chromium.launch();
 try {
-  const auth = mode === "claim" || mode === "visitor" || mode === "home" ? undefined : await signIn(browser);
+  const auth = ["claim", "visitor", "home", "mock-claim"].includes(mode ?? "") ? undefined : await signIn(browser);
   if (mode === "shots") {
     await shots(browser, auth!);
     await homeGif(browser, auth!);
   } else if (mode === "claim") await claimGif(browser, args[0]!, args[1]!);
   else if (mode === "live") await liveGif(browser, auth!, args[0]!);
   else if (mode === "home") await homeGif(browser, undefined);
+  else if (mode === "mock-claim") await mockClaim(browser);
   else if (mode === "visitor") await visitorRun(browser, args[0]!, args[1] ?? "40");
-  else throw new Error("mode: shots | claim | live | visitor | home");
+  else throw new Error("mode: shots | claim | live | visitor | home | mock-claim");
 } finally {
   await browser.close();
   for (const f of readdirSync(TMP)) if (f.endsWith(".json")) rmSync(join(TMP, f));
