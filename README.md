@@ -4,34 +4,36 @@
 
 businesses are exposed to financial risks that traditional insurance often doesn't cover. prediction markets have started putting prices on those events, but business owners don't know how to use them. beagle is the agent that understands the business, finds a matching market, calculates what's actually protected, and executes a bounded hedge.
 
-**try it: [beagle.andrewliu.org](https://beagle.andrewliu.org)**. no sign up. you get your own workspace, a real agent, and real Gemini sandbox orders (test money).
+**try it: [beagle.andrewliu.org](https://beagle.andrewliu.org)**. no sign up. you get your own workspace and a real agent.
+
+## why this is new
+
+insurance is built for risks that repeat across thousands of customers. a sports bar staking its margin on one game night, a builder whose financing gets worse if the Fed doesn't cut, a business whose next contract depends on how an election goes: these are too specific and too short-lived to underwrite. they usually just go uncovered.
+
+prediction markets already price exactly these events. Gemini lists 511 sports markets, 221 political ones and the Fed's next decisions right now. but a contract is not a policy. it pays on its own wording, on its own date, from its own resolution source, and the price on the screen is only good for the size on the book. a business owner can't tell from "Fed decision in October? / Cut 25bps" whether that covers them, or how much of it.
+
+that translation is what beagle does:
+
+- it reads the business and the contract rules and checks them field by field. when they don't line up it says so, like a promotion that pays on the final score against a contract that only counts regulation time, instead of selling a near-miss.
+- it sizes the hedge against the real order book with the real fees, so the number on the plan is what the market can actually fill.
+- it tells you what is protected and what is not before anything is spent. if the book only covers 3 of the 10 rewards you asked for, the plan says 3.
+- the downside is fixed. you approve one exact plan with a hard maximum, it goes out as a single fill-or-kill order, and nothing else is ever bought.
+
+## what that looks like
+
+**a game night promotion.** a sports bar in Baltimore wants to say "if Baltimore beats Atlanta Monday night, $20 back on your tab", without risking a busy night that turns into hundreds of dollars of payouts. beagle finds the Baltimore vs Atlanta market, checks that YES pays on Baltimore and on the official final result, flags what happens on a tie and on a cancelled game, and sizes a hedge so the bar only publishes as many $20 rewards as the payout can cover.
+
+**a rate decision.** a builder carrying a floating-rate construction loan loses money every month the Fed doesn't cut. beagle matches that to the "Cut 25bps" bucket of the Fed's October decision, reads that it is decided on October 28 and verified from the Federal Reserve, and warns that the buckets are mutually exclusive: a 50bp cut pays a different contract, and if the meeting is canceled only "maintains" pays.
+
+**an election.** a Texas business whose pipeline depends on who wins the Senate race can hedge the outcome it is exposed to. beagle matches the candidate, quotes the resolution source (the state election authority) and warns that the payout follows the certified result, which a recount can push well past election night.
+
+these markets list on Gemini's production exchange today. beagle reads and matches them there, and places orders on Gemini's sandbox, which only lists crypto right now, so that's where the live orders below come from.
+
+## see it run
 
 ![a live run on beagle.andrewliu.org, about 5x speed](docs/media/live-run.gif)
 
 *a first-time visitor on the public site, recorded unedited and played back at about 5x. research, plan, approval and a real sandbox fill in about two and a half minutes.*
-
-## why this is new
-
-insurance is built for risks that repeat across thousands of customers. a bar betting its margin on one game night, or a painting crew that has to cancel a $3,000 job if tomorrow's high goes above 71°F, is too small, too specific and too short-lived to underwrite. those risks usually just go uncovered.
-
-prediction markets already price a lot of these events, often by the hour. but a contract is not a policy. it pays on its own wording, at its own strike, from its own settlement source, and the price you see is only good for the size on the book. an owner reading "$83,500 or above, LS-LRRR-XBTUSD, 8pm ET" has no way to tell whether that covers their risk, or how much of it.
-
-that translation is what beagle does:
-
-- it reads your situation and the contract rules, and checks them field by field. when they don't line up it says so ("this settles at SFO airport, not your job site") instead of selling you a near-miss.
-- it sizes the hedge against the real order book with the real fees, so the number on the plan is what the market can actually fill.
-- it tells you what is protected and what is not before you spend anything. if the book only covers 3 of the 10 rewards you asked for, the plan says 3.
-- the downside is fixed. you approve one exact plan with a hard maximum, it goes out as a single fill-or-kill order, and nothing else is ever bought.
-
-## a real example
-
-a bar near campus wanted to tell customers: "if Bitcoin is above $83,000 at 9pm, everyone who opens a tab gets $1 back, up to 10 people."
-
-beagle searched the web through Context.dev for where BTC was trading, pulled every Gemini contract, and read the settlement terms. the 9pm event had no $83,000 strike (the lowest was $83,200), so it rewrote the customer promise to match the contract instead of hedging something that doesn't settle the same way. the $83,200 book was too thin, so it moved to the $83,900 strike and told the owner the hedge covers 3 rewards, not 10, for at most $0.66.
-
-the owner approved. beagle bought 3 YES for $0.43 including fees (Gemini order `145853902277805116`), and the campaign opened with exactly 3 rewards. a customer claimed one from their phone.
-
-the same flow works for sports and weather risks. Gemini's sandbox doesn't list those yet, so they run as research only for now, and the executable demo uses crypto.
 
 ## the crew
 
@@ -94,9 +96,9 @@ this is not a mock. every number below came off the Gemini sandbox.
 
 on 2026-10-11 23:40:52 UTC beagle bought 10 YES on `GEMI-BTC2610120000-HI83500` (BTC at or above $83,500 at 8pm EDT) at $0.10, fill-or-kill, Gemini order `145853902277682301`. it booked $1.00 principal plus $0.07 fee, which was the plan's estimate to the cent, then opened a 10 reward campaign that took its first claim. BTC closed above the strike and the contract paid $10.00 back into the sandbox account.
 
-on 2026-10-12 at 00:40 UTC the bar run from the example above, started by a first-time visitor on the public site, got 3 YES on `GEMI-BTC2610120100-HI83900` at an average $0.1333, Gemini order `145853902277805116`: $0.40 principal plus $0.03 fee against a $0.55 estimate and a $0.66 approved max.
+on 2026-10-12 at 00:40 UTC the run in the recording above, started by a first-time visitor on the public site, got 3 YES on `GEMI-BTC2610120100-HI83900` at an average $0.1333, Gemini order `145853902277805116`: $0.40 principal plus $0.03 fee against a $0.55 estimate and a $0.66 approved max.
 
-filming that run also caught a bug: the campaign headline moved to $83,900 but the agent's fine print still said $83,200 and "the first 10 customers". the planner now rewrites both to what was actually bought.
+that run shows the matching being strict. the visitor asked for "above $83,000". the contract had no $83,000 strike, so the agent rewrote the customer promise to $83,200 rather than hedge something that settles differently. that book was too thin, so the engine moved to $83,900 and the plan said it covered 3 of the 10 rewards asked for. filming it also caught a bug: the campaign headline moved to $83,900 but the agent's fine print still said $83,200 and "the first 10 customers". the planner now rewrites both to what was actually bought.
 
 ## how it works
 
@@ -131,7 +133,7 @@ pnpm test:db     # 10 database invariant tests against local supabase
 
 ## known limits
 
-- Gemini's sandbox only lists crypto and commodities, and its depth sits almost entirely in contracts settling within the hour. sports and weather matches are research only until those show up in sandbox, and campaigns stay small.
+- Gemini's sandbox only lists crypto and commodities, and its depth sits almost entirely in contracts settling within the hour. sports, rate decision and election matches are reference only until those markets show up in sandbox, and sandbox campaigns stay small.
 - that hourly book moves every few seconds. a plan can go unfillable before you click approve, and the button stays disabled until it fits again. there is no one click re-quote yet.
 - Gemini's websocket rejects master API keys, so with one the fees are booked from the published formula instead of the per-fill stream. the receipt says which.
 - the public demo caps each visitor at 6 new runs an hour since every run spends real model and Context.dev credits.
