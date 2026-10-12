@@ -1,6 +1,6 @@
 # Beagle
 
-an agent that understands your business, finds a matching prediction market, and puts together a hedge within your budget.
+an agent that understands your business, and uses prediction markets to build a protection plan within your budget.
 
 ## the problem
 
