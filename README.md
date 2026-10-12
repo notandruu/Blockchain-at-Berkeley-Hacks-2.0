@@ -4,7 +4,7 @@ an agent that understands your business, and uses prediction markets to build a 
 
 ## the problem
 
-business owners know what could hurt them. finding traditional insurance that covers it is harder. some risks just don't fit the policies they can buy.
+business owners know what could hurt them. finding traditional insurance that covers it is hard. some risks just don't fit the policies they can buy.
 
 we built beagle around the idea of nontraditional insurance. prediction markets already put prices on some of these events. we think they can help businesses fill those gaps.
 
