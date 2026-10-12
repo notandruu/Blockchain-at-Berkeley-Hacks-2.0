@@ -28,19 +28,23 @@ we're building a way for a business owner to go from “this could cost us money
 
 ## Example
 
-a painting company has $8,000 worth of outdoor jobs booked for next week.
+a restaurant wants to bring more people in for game night.
 
-a heat wave could force them to reschedule. crew wages and equipment rentals still need paying.
+the offer: “if our team wins, get $20 back on your meal.”
 
-they ask beagle: “we could be out $1,000 if Friday is too hot to work. can we hedge some of that with a $100 budget?”
+that creates a new risk. a busy night and a win could leave the restaurant paying out hundreds of dollars.
 
-beagle looks for a weather contract and checks its temperature threshold, date, settlement location, and liquidity.
+the owner asks beagle: “can we run this promotion with a $350 hedge budget, including fees?”
 
-if it settles at SFO airport while the jobs are inland, beagle flags the mismatch. the job sites could get much hotter than the airport.
+beagle researches the restaurant, looks for a contract tied to the same game, and checks that the reward condition matches the contract's settlement rules.
 
-the company can see what the contract would pay, when it would pay, and where it could fall short.
+then it calculates the cost and how many $20 rewards the hedge could support.
 
-weather contracts are research-only in this build. purchases currently run through Gemini’s crypto sandbox.
+when a matching sandbox contract is available, the owner approves the plan and beagle places the order. test rewards only open after the fill is confirmed, and enrollment stops when the funded slots run out.
+
+the restaurant gets a promotion with a clear cost and a fixed reward limit.
+
+sports promotions are research-only in the current build because sandbox has no sports listings. the executable promotion demo uses a crypto event.
 
 ## the crew
 
