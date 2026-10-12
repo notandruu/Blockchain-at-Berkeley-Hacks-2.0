@@ -75,7 +75,9 @@ function ClaimPage({ slug }: { slug: string }) {
         <Mascot who="sprout" size={96} state="working" />
       </div>
     );
-  const minimum = /\$(\d+(?:\.\d+)?)/.exec(c.qualification)?.[1];
+  // Only a stated tab minimum counts ("tab of $25"); the first dollar figure in the text is
+  // as likely to be the reward or a BTC strike.
+  const minimum = /tab of \$(\d+(?:\.\d+)?)/i.exec(c.qualification)?.[1];
   const open = c.status === "active" && c.remaining > 0 && new Date(c.closesAt) > new Date();
 
   return (

@@ -101,7 +101,9 @@ const ProposalInput = z.object({
       rewardUsd: z.string(),
       maxEntitlements: z.number().int().positive(),
       venueName: z.string(),
-      qualification: z.string().describe("What a customer must do, e.g. 'Open a tab of $25 or more'"),
+      qualification: z
+        .string()
+        .describe("Only what a customer must do to enroll, e.g. 'Open a tab of $25 or more'. Never the payout condition, price, strike, team or time: the headline states that, and the engine may move to a sibling strike."),
       enrollmentClosesAt: z.string().describe("ISO time; must be before the event resolves"),
     })
     .nullable(),

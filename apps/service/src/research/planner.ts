@@ -287,6 +287,25 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
   return { riskId: risk!.id, planId: planRow!.id, executable: true };
 }
 
+// The quote engine can move to a sibling strike when the asked one is too thin. The headline
+// is rebuilt from the chosen trigger, but the qualification is the agent's prose and may
+// still quote the old threshold, which would put two different promises on one page.
+export function rewriteThreshold(text: string, asked: Trigger, chosen: Trigger): string {
+  if (asked.kind !== "price_threshold" || chosen.kind !== "price_threshold") return text;
+  const from = Number(asked.threshold);
+  const to = Number(chosen.threshold);
+  if (!Number.isFinite(from) || !Number.isFinite(to) || from === to) return text;
+  const grouped = to.toLocaleString("en-US");
+  const variants = [from.toLocaleString("en-US"), String(from)].map((v) => v.replace(/[.,]/g, (c) => `\\${c}`));
+  return text.replace(new RegExp(`(\\$?)(?:${variants.join("|")})(?![\\d,])`, "g"), (_m, dollar: string) => `${dollar}${grouped}`);
+}
+
+// Same problem for capacity: the agent writes "the first 10 customers", the book covers 3.
+export function rewriteCount(text: string, requested: number, covered: number): string {
+  if (requested === covered) return text;
+  return text.replace(new RegExp(`\\b${requested}(?=\\s+(?:customers|guests|people|visitors|patrons)\\b)`, "g"), String(covered));
+}
+
 // Enrollment shuts this long before the contract observes its outcome, so nobody can sign up
 // once the answer is effectively known. An hour was too long: it closed every promotion on
 // the hourly sandbox contracts before it opened.
@@ -318,7 +337,7 @@ export function buildPlan(a: { planGroupId: string; version: number; riskId: str
           rewardPerEntitlementUsd: promo.rewardUsd,
           maxEntitlements: a.best.entitlements,
           headline: campaignHeadline(a.best, promo.rewardUsd),
-          qualification: promo.qualification,
+          qualification: rewriteCount(rewriteThreshold(promo.qualification, a.raw.trigger, a.best.trigger), promo.maxEntitlements, a.best.entitlements),
           enrollmentClosesAt: new Date(Math.min(Date.parse(promo.enrollmentClosesAt), expiry - ENROLLMENT_BUFFER_MS)).toISOString(),
         }
       : null,
