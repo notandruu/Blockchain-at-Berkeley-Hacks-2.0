@@ -79,8 +79,6 @@ sandbox liquidity is thin, so campaigns stay small. all trades and rewards are f
 
 watch the crew turn a business risk into a hedge plan.
 
-https://github.com/user-attachments/assets/YOUR_VIDEO_ID
-
 ## built with
 
 Context.dev, Gemini Predictions API, Anthropic, Next.js, Fastify, and Supabase.
