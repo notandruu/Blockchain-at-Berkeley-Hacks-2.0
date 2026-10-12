@@ -8,7 +8,7 @@ create table public.campaigns (
   holding_id uuid references public.holdings(id),
   slug text not null unique,
   -- Opaque token in the QR code. The slug alone is not enough to claim.
-  public_token text not null default encode(gen_random_bytes(18), 'base64'),
+  public_token text not null default encode(extensions.gen_random_bytes(18), 'base64'),
   venue_name text not null,
   headline text not null,
   qualification text not null,
@@ -26,7 +26,7 @@ create table public.entitlements (
   participant_key text not null,
   idempotency_key text not null unique,
   units numeric(18, 4) not null check (units > 0),
-  voucher_code text not null unique default upper(encode(gen_random_bytes(5), 'hex')),
+  voucher_code text not null unique default upper(encode(extensions.gen_random_bytes(5), 'hex')),
   status text not null default 'active' check (status in ('active', 'void')),
   created_at timestamptz not null default now(),
   -- one test reward per participant per campaign
