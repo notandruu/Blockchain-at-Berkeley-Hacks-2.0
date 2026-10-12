@@ -6,6 +6,12 @@ businesses are exposed to financial risks that traditional insurance often doesn
 
 **try it: [beagle.andrewliu.org](https://beagle.andrewliu.org)**. no sign up. you get your own workspace and a real agent.
 
+## where the idea came from
+
+in june a bar on the upper east side went viral for promising free tabs, up to $100, to everyone there before tip-off if the knicks won game 1 of the finals. the owner had already been burned once: an earlier promo knocking 1% off tabs for every point the knicks won by cost him $4,000. so this time he hedged it on a prediction market. ([fortune](https://fortune.com/2026/06/03/nyc-bar-knicks-kalshi-win-prediction-market/))
+
+it only happened because someone at the exchange saw the story and walked him through the trade. most owners don't have that. they don't know a market exists for their risk, which contract actually matches it, or how much to buy. we built beagle so any business can do what that bar did, from one sentence.
+
 ## why this is new
 
 insurance is built for risks that repeat across thousands of customers. a sports bar staking its margin on one game night, a builder whose financing gets worse if the Fed doesn't cut, a business whose next contract depends on how an election goes: these are too specific and too short-lived to underwrite. they usually just go uncovered.
@@ -21,7 +27,7 @@ that translation is what beagle does:
 
 ## what that looks like
 
-**a game night promotion.** a sports bar in Baltimore wants to say "if Baltimore beats Atlanta Monday night, $20 back on your tab", without risking a busy night that turns into hundreds of dollars of payouts. beagle finds the Baltimore vs Atlanta market, checks that YES pays on Baltimore and on the official final result, flags what happens on a tie and on a cancelled game, and sizes a hedge so the bar only publishes as many $20 rewards as the payout can cover.
+**a game night promotion.** the knicks bar, for any team. a sports bar in Baltimore wants to say "if Baltimore beats Atlanta Monday night, $20 back on your tab", without a packed night turning into thousands of dollars of payouts. beagle finds the Baltimore vs Atlanta market, checks that YES pays on Baltimore and on the official final result, flags what happens on a tie and on a cancelled game, and sizes a hedge so the bar only publishes as many $20 rewards as the payout can cover.
 
 **a rate decision.** a builder carrying a floating-rate construction loan loses money every month the Fed doesn't cut. beagle matches that to the "Cut 25bps" bucket of the Fed's October decision, reads that it is decided on October 28 and verified from the Federal Reserve, and warns that the buckets are mutually exclusive: a 50bp cut pays a different contract, and if the meeting is canceled only "maintains" pays.
 
@@ -33,7 +39,7 @@ these markets list on Gemini's production exchange today. beagle reads and match
 
 ![a live run on beagle.andrewliu.org, about 5x speed](docs/media/live-run.gif)
 
-*a first-time visitor on the public site, recorded unedited and played back at about 5x. research, plan, approval and a real sandbox fill in about two and a half minutes.*
+*a first-time visitor on the public site, recorded unedited and played back at about 5x. Gemini's sandbox only lists crypto right now, so this run ties the promo to a bitcoin contract instead of a game. same agent, same checks, same order path, and a real fill in about two and a half minutes.*
 
 ## the crew
 
