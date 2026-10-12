@@ -4,15 +4,16 @@ an agent that understands your business, finds a matching prediction market, and
 
 ## the problem
 
-a business can do everything right and still lose money because something outside its control changes.
+## the problem
 
-a heat wave delays a week of jobs. prices move before a supplier gets paid. revenue disappears, but wages and rent keep coming etc.
+business owners know what could hurt them. finding traditional insurance that covers it is harder. some risks fall outside the policies they can buy.
 
-traditional insurance doesn't always cover those losses.
+we built beagle around the idea of nontraditional insurance. prediction markets already put prices on some of these events. we think they can help businesses fill those gaps.
 
-prediction markets put prices on some of these events. but finding a market is only the first step. someone still has to read the settlement rules, check the liquidity, calculate the payout, and figure out how closely it matches the business's actual risk.
+tell beagle what you're worried about and what you can spend. it finds a matching contract, checks the terms, and works out how much the payout could help. you see the cost and what's still uncovered before you approve.
 
-business owners already know what could hurt them. turning that into a useful hedge is the hard part.
+the opportunity is to make protection accessible for risks that traditional policies leave behind.
+
 
 ## how beagle helps
 
