@@ -68,6 +68,24 @@ export async function fail(db: Sql, job: Job, err: unknown, retryable: boolean):
     where id = ${job.id}`;
 }
 
+export interface Lane {
+  name: string;
+  concurrency: number;
+  retryable: boolean;
+  leaseMs: number;
+}
+
+async function runJob(db: Sql, handlers: Map<JobKind, Handler>, lane: Lane, job: Job): Promise<void> {
+  const handler = handlers.get(job.kind);
+  if (!handler) return fail(db, job, new Error(`no handler for ${job.kind}`), false);
+  try {
+    await handler(job);
+    await complete(db, job.id);
+  } catch (err) {
+    await fail(db, job, err, lane.retryable);
+  }
+}
+
 export class Worker {
   private stopped = false;
   private readonly handlers = new Map<JobKind, Handler>();
@@ -75,7 +93,7 @@ export class Worker {
   constructor(
     private readonly db: Sql,
     private readonly workerId: string,
-    private readonly lanes: { name: string; concurrency: number; retryable: boolean; leaseMs: number }[],
+    private readonly lanes: Lane[],
   ) {}
 
   on(kind: JobKind, handler: Handler): this {
@@ -93,7 +111,34 @@ export class Worker {
     this.stopped = true;
   }
 
-  private async loop(lane: { name: string; retryable: boolean; leaseMs: number }): Promise<void> {
+  // Serverless: no process stays up to poll, so each request drains what is due on its way
+  // out. Lanes run side by side; within a lane jobs run one at a time. A job due within the
+  // remaining budget (a reconcile retry a few seconds out) is waited for rather than left
+  // for the next request. Claims are the same SKIP LOCKED leases, so concurrent drains in
+  // different instances never run one job twice.
+  async drain(budgetMs: number): Promise<void> {
+    const deadline = Date.now() + budgetMs;
+    await Promise.all(
+      this.lanes.map(async (lane) => {
+        while (Date.now() < deadline - 2_000) {
+          const job = await claim(this.db, lane.name, this.workerId, lane.leaseMs).catch(() => null);
+          if (job) {
+            await runJob(this.db, this.handlers, lane, job);
+            continue;
+          }
+          // A leased job held by a live drain elsewhere is not ours to wait for.
+          const [next] = await this.db<{ wait_ms: number | null }[]>`
+            select (extract(epoch from (min(run_after) - now())) * 1000)::int as wait_ms
+            from jobs where lane = ${lane.name} and status = 'queued'`;
+          const wait = next?.wait_ms;
+          if (wait == null || Date.now() + wait > deadline - 2_000) return;
+          await sleep(Math.max(250, wait));
+        }
+      }),
+    );
+  }
+
+  private async loop(lane: Lane): Promise<void> {
     while (!this.stopped) {
       let job: Job | null = null;
       try {
@@ -106,17 +151,7 @@ export class Worker {
         await sleep(400);
         continue;
       }
-      const handler = this.handlers.get(job.kind);
-      if (!handler) {
-        await fail(this.db, job, new Error(`no handler for ${job.kind}`), false);
-        continue;
-      }
-      try {
-        await handler(job);
-        await complete(this.db, job.id);
-      } catch (err) {
-        await fail(this.db, job, err, lane.retryable);
-      }
+      await runJob(this.db, this.handlers, lane, job);
     }
   }
 }

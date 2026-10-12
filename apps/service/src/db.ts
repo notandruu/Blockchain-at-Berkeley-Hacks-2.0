@@ -5,9 +5,13 @@ import postgres from "postgres";
 export type Sql = postgres.Sql<Record<string, never>>;
 export type Tx = postgres.TransactionSql<Record<string, never>>;
 
-export function connect(url: string): Sql {
+export function connect(url: string, max = 10): Sql {
+  // Supabase's transaction pooler (port 6543) cannot keep prepared statements across
+  // transactions, so they are off there.
+  const pooled = new URL(url).port === "6543";
   return postgres(url, {
-    max: 10,
+    max,
+    prepare: !pooled,
     idle_timeout: 30,
     // bigint ids from the exchange are stored as text; keep int8 as string if one appears.
     types: { bigint: postgres.BigInt },

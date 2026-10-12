@@ -9,22 +9,25 @@
     "preflight": "node --env-file=../../.env --import tsx src/scripts/preflight.ts",
     "seed": "node --env-file=../../.env --import tsx src/scripts/seed.ts",
     "typecheck": "tsc --noEmit -p .",
-    "operator-plan": "node --env-file=../../.env --import tsx src/scripts/operator-plan.ts"
+    "operator-plan": "node --env-file=../../.env --import tsx src/scripts/operator-plan.ts",
+    "build:vercel": "node build/vercel.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "4.0.78",
-    "@fastify/cors": "11.3.1",
     "@beagle/domain": "workspace:*",
     "@beagle/provider-context": "workspace:*",
     "@beagle/provider-gemini": "workspace:*",
     "@beagle/risk-engine": "workspace:*",
+    "@fastify/cors": "11.3.1",
     "@supabase/supabase-js": "2.117.3",
+    "@vercel/functions": "3.9.11",
     "ai": "7.0.137",
     "fastify": "5.12.5",
     "postgres": "3.4.9",
     "zod": "4.6.6"
   },
   "devDependencies": {
+    "esbuild": "0.28.2",
     "tsx": "4.23.15"
   }
 }
