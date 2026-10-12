@@ -2,6 +2,8 @@
 
 ![Beagle Insurance](docs/media/banner.jpg)
 
+🏆 **1st place, Gemini Predictions API track at Blockchain at Berkeley Hacks 2.0**
+
 businesses are exposed to financial risks that traditional insurance often doesn't cover. prediction markets have started putting prices on those events, but business owners don't know how to use them. beagle is the agent that understands the business, finds a matching market, calculates what's actually protected, and executes a bounded hedge.
 
 **try it: [beagle.andrewliu.org](https://beagle.andrewliu.org)**. no sign up. you get your own workspace and a real agent.
@@ -158,4 +160,4 @@ Context.dev, Gemini Predictions API, Anthropic, Next.js, Fastify, and Supabase.
 
 crew art from [OpenDots](https://github.com/CopilotKit/OpenDots), workspace inspiration from [OpenMuse](https://github.com/CopilotKit/OpenMuse). both MIT licensed.
 
-built for Blockchain at Berkeley Hacks 2.0, the Gemini Predictions API track, and the Context.dev bonus.
+won 1st in the Gemini Predictions API track at Blockchain at Berkeley Hacks 2.0. also built for the Context.dev bonus.
