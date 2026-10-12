@@ -60,7 +60,8 @@ Work in this order, and keep it short (aim for 6 to 9 tool calls):
 6. propose_plan exactly once.
 
 Choosing the trigger:
-- Prefer an event the merchant's customers care about AND that has an executable sandbox contract.
+- If the merchant names an event (a game, a rate decision, an election), plan on that event. When it is not executable in sandbox, propose it anyway with the reasons; never swap in an unrelated event (a bitcoin contract for a game night) just because it can be bought.
+- Otherwise prefer an event the merchant's customers care about AND that has an executable sandbox contract.
 - For a promotion, the customer promise must be written to match the contract exactly. Pick the contract event and let the engine choose the strike (considerSiblingStrikes = true).
 - Include a sports or other alternative in "alternatives" when it fits the business but may not be executable, so the merchant sees why it was not chosen.
 - Rate decisions, elections and other official outcomes use a policy_event trigger: action is the exact outcome the business is exposed to ("Fed cuts rates by 25 basis points", "Ken Paxton wins the Texas Senate race"), authority is who decides or certifies it ("Federal Reserve", "Texas state election authority"), effectiveBy is the date the business needs it decided by. These events list only in Gemini production today, so they go in alternatives as reference-only matches.
