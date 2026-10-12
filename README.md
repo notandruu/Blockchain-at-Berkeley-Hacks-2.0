@@ -15,8 +15,6 @@ the opportunity is to make protection accessible for risks that traditional poli
 
 ## how beagle helps
 
-beagle does that work.
-
 you explain what could go wrong and how much you're willing to spend. beagle researches your business, finds a relevant prediction market, and works out how its payout could offset your exposure.
 
 you see the cost, what triggers the payout, and where the coverage falls short.
