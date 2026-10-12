@@ -4,6 +4,8 @@
 //   node --env-file=.env --import tsx scripts/capture.ts shots
 //   node --env-file=.env --import tsx scripts/capture.ts claim <slug> <token>
 //   node --env-file=.env --import tsx scripts/capture.ts live <runId>
+//   WEB_ORIGIN=https://beagle.andrewliu.org node --import tsx scripts/capture.ts visitor "<goal>" 40
+//   (the research GIF is re-encoded to about 5x for the README; see docs/media)
 //
 // Needs the web app on WEB_ORIGIN, the service on :4000, ffmpeg on PATH.
 
@@ -184,18 +186,74 @@ async function liveGif(browser: Browser, auth: string, runId: string) {
   await still.close();
 }
 
+// Visitor: the public site as a first-time visitor sees it. No sign-in, a fresh anonymous
+// session, a real agent run. Films the research as it streams, stills the plan, then, if
+// the live book fills inside the window, films approve through to the campaign.
+async function visitorRun(browser: Browser, goal: string, budget: string) {
+  const { ctx, page } = await recording(browser, undefined, { width: 1280, height: 800 });
+  await page.goto(ORIGIN);
+  await settle(page, 1500);
+  await page.locator("textarea").pressSequentially(goal, { delay: 12 });
+  await page.getByPlaceholder("Max spend").fill(budget);
+  await sleep(600);
+  await page.getByRole("button", { name: "Start research" }).click();
+  await page.waitForURL(/\/runs\//);
+  const runUrl = page.url();
+  console.log("run", runUrl);
+  const outcome = await Promise.race([
+    page.getByRole("button", { name: "Approve and buy" }).waitFor({ timeout: 300_000 }).then(() => "plan"),
+    page.getByText(/No executable match|Failed/).first().waitFor({ timeout: 300_000 }).then(() => "none"),
+  ]);
+  await sleep(2500);
+  const researchVideo = page.video()!;
+
+  // Stills from a crisp 2x context on the same session.
+  const state = join(TMP, "visitor.json");
+  await ctx.storageState({ path: state });
+  const still = await browser.newContext({ viewport: DESKTOP, deviceScaleFactor: 2, storageState: state });
+  const s = await still.newPage();
+  await s.goto(runUrl);
+  await settle(s, 3000);
+  await shot(s, outcome === "plan" ? "live-plan" : "live-no-match");
+
+  if (outcome === "plan") {
+    const buy = page.getByRole("button", { name: "Approve and buy" });
+    const deadline = Date.now() + 120_000;
+    while (!(await buy.isEnabled()) && Date.now() < deadline) await sleep(300);
+    if (await buy.isEnabled()) {
+      await buy.click();
+      await page.getByText(/Scan to claim|Nothing was bought|unknown/i).first().waitFor({ timeout: 120_000 });
+      await sleep(3500);
+      await s.goto(runUrl);
+      await settle(s, 3000);
+      await shot(s, "live-operating");
+    } else console.log("book never filled inside the window; no buy");
+  }
+  await still.close();
+  await ctx.close();
+  // Research runs for minutes; play it back at 4x.
+  const src = await researchVideo.path();
+  execFileSync("ffmpeg", [
+    "-y", "-loglevel", "error", "-ss", "0.6", "-i", src,
+    "-vf", "setpts=0.25*PTS,fps=12,scale=1100:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle",
+    join(OUT, "live-run.gif"),
+  ]);
+  console.log("gif live-run");
+}
+
 const [mode, ...args] = process.argv.slice(2);
 rmSync(TMP, { recursive: true, force: true });
 mkdirSync(TMP, { recursive: true });
 const browser = await chromium.launch();
 try {
-  const auth = mode === "claim" ? undefined : await signIn(browser);
+  const auth = mode === "claim" || mode === "visitor" ? undefined : await signIn(browser);
   if (mode === "shots") {
     await shots(browser, auth!);
     await homeGif(browser, auth!);
   } else if (mode === "claim") await claimGif(browser, args[0]!, args[1]!);
   else if (mode === "live") await liveGif(browser, auth!, args[0]!);
-  else throw new Error("mode: shots | claim | live");
+  else if (mode === "visitor") await visitorRun(browser, args[0]!, args[1] ?? "40");
+  else throw new Error("mode: shots | claim | live | visitor");
 } finally {
   await browser.close();
   for (const f of readdirSync(TMP)) if (f.endsWith(".json")) rmSync(join(TMP, f));
