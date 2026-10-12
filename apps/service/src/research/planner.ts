@@ -18,7 +18,7 @@ import {
   type MatchResult,
   type Quote,
 } from "@beagle/risk-engine";
-import { createPublicClient, fetchDepth, getEventCandidates } from "@beagle/provider-gemini";
+import { fetchDepth, getEventCandidates } from "@beagle/provider-gemini";
 import type { Sql } from "../db.js";
 import { transition } from "../runs.js";
 import type { ResearchToolkit } from "./toolkit.js";
@@ -96,7 +96,7 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
       const fresh: MarketCandidate[] = [];
       for (const env of ["sandbox", "production"] as const) {
         try {
-          fresh.push(...(await getEventCandidates(await createPublicClient(env), env, goal.eventTicker)));
+          fresh.push(...(await getEventCandidates(await kit.publicClient(env), env, goal.eventTicker)));
         } catch {
           /* not listed in this environment */
         }
@@ -126,7 +126,7 @@ export async function planFromProposal(db: Sql, kit: ResearchToolkit, merchantId
   }
 
   // Quote every executable option against a fresh sandbox book.
-  const sandbox = await createPublicClient("sandbox");
+  const sandbox = await kit.publicClient("sandbox");
   for (const o of options.filter((x) => x.match.executable && x.match.outcome)) {
     const depth = await fetchDepth(sandbox, "sandbox", o.candidate.instrumentSymbol);
     o.depth = depth;

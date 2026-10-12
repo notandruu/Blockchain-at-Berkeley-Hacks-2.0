@@ -54,14 +54,18 @@ export async function discoverInventory(
   return result;
 }
 
+// Per-call deadlines, well under the SDK's 30s default. A planner reads a dozen of these in a
+// row; one slow socket at 30s each was enough to run a serverless function out of time.
+export const GEMINI_CALL_TIMEOUT_MS = 8_000;
+
 export async function getEventCandidates(client: GeminiClient, environment: ExchangeEnvironment, eventTicker: string): Promise<MarketCandidate[]> {
-  const ev = (await client.predictions.getEvent({ eventTicker } as never)) as unknown as RawEvent;
+  const ev = (await client.predictions.getEvent({ eventTicker } as never, { timeoutMs: GEMINI_CALL_TIMEOUT_MS } as never)) as unknown as RawEvent;
   return normalizeEvent(ev, environment);
 }
 
 // One fresh snapshot. The quote engine only uses these levels and never extrapolates.
 export async function fetchDepth(client: GeminiClient, environment: ExchangeEnvironment, instrumentSymbol: string): Promise<DepthSnapshot> {
-  const res = (await client.websocket.public.depthSnapshot(instrumentSymbol)) as unknown as {
+  const res = (await client.websocket.public.depthSnapshot(instrumentSymbol, { timeoutMs: GEMINI_CALL_TIMEOUT_MS } as never)) as unknown as {
     lastUpdateId?: number | bigint;
     bids?: [string, string][];
     asks?: [string, string][];

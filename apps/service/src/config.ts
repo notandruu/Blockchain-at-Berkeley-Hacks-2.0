@@ -37,6 +37,9 @@ const Env = z.object({
   // pool size per instance.
   STREAM_MAX_MS: z.coerce.number().int().positive().default(3_600_000),
   DB_POOL_MAX: z.coerce.number().int().positive().default(10),
+  // Upper bound on one research run. Serverless sets it under the function limit so a stuck
+  // provider call fails the run with a reason instead of the platform killing it mid-write.
+  RUN_DEADLINE_MS: z.coerce.number().int().nonnegative().default(0),
 });
 
 export type Config = z.infer<typeof Env> & {

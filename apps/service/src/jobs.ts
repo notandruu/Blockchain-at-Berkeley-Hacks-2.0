@@ -73,6 +73,9 @@ export interface Lane {
   concurrency: number;
   retryable: boolean;
   leaseMs: number;
+  // Drain only: claim a job on this lane only with at least this much budget left, so a
+  // job never starts too late to finish before the function is stopped.
+  minBudgetMs?: number;
 }
 
 async function runJob(db: Sql, handlers: Map<JobKind, Handler>, lane: Lane, job: Job): Promise<void> {
@@ -120,7 +123,7 @@ export class Worker {
     const deadline = Date.now() + budgetMs;
     await Promise.all(
       this.lanes.map(async (lane) => {
-        while (Date.now() < deadline - 2_000) {
+        while (Date.now() < deadline - Math.max(2_000, lane.minBudgetMs ?? 0)) {
           const job = await claim(this.db, lane.name, this.workerId, lane.leaseMs).catch(() => null);
           if (job) {
             await runJob(this.db, this.handlers, lane, job);

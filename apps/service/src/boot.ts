@@ -21,9 +21,9 @@ export async function boot() {
   const accountStream = trading ? new AccountStream(trading, cfg.GEMINI_API_KEY.startsWith("master-")) : null;
 
   const worker = new Worker(db, cfg.WORKER_ID, [
-    { name: "research", concurrency: 3, retryable: false, leaseMs: 5 * 60_000 },
+    { name: "research", concurrency: 3, retryable: false, leaseMs: 5 * 60_000, minBudgetMs: cfg.RUN_DEADLINE_MS + 10_000 },
     // One mutation lane for the sandbox account. Reconcile jobs retry; submits never do.
-    { name: ACCOUNT_LANE, concurrency: 1, retryable: true, leaseMs: 60_000 },
+    { name: ACCOUNT_LANE, concurrency: 1, retryable: true, leaseMs: 60_000, minBudgetMs: 30_000 },
   ]);
   worker.on("research", researchHandler(db, admin, cfg));
   if (trading && accountStream) {

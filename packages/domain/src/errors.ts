@@ -25,6 +25,8 @@ export const ERROR_CODES = [
   "RATE_LIMITED",
   "PROVIDER_UNAVAILABLE",
   "UNSAFE_URL",
+  "RUN_TIMEOUT",
+  "RUN_INTERRUPTED",
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

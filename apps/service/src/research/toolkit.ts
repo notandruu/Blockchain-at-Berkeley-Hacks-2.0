@@ -25,6 +25,22 @@ export class ResearchToolkit {
   readonly candidates = new Map<string, MarketCandidate>();
   private publicClients = new Map<string, GeminiClient>();
 
+  // One public client per environment for the whole run. Each client holds its own
+  // websocket; the planner reuses these instead of opening more.
+  async publicClient(env: "sandbox" | "production"): Promise<GeminiClient> {
+    let c = this.publicClients.get(env);
+    if (!c) {
+      c = await createPublicClient(env);
+      this.publicClients.set(env, c);
+    }
+    return c;
+  }
+
+  close(): void {
+    for (const c of this.publicClients.values()) c.websocket.public.close?.();
+    this.publicClients.clear();
+  }
+
   constructor(
     private readonly db: Sql,
     private readonly admin: SupabaseClient,
