@@ -157,3 +157,19 @@ describe("policy events against production fixtures", () => {
     expect(matchCandidate(t, bucket(senate, "James Talarico"), now).rejections).toContain("WRONG_OUTCOME");
   });
 });
+
+describe("team names", () => {
+  it("matches a full team name against Gemini's short label", () => {
+    // Live run 2026-10-12: the agent wrote "Baltimore Ravens", the contract label is "Baltimore",
+    // and every Ravens-Falcons contract was rejected as the wrong team.
+    const sf = normalizeEvent(fixture("production-event-sports.json"), "production");
+    const label = sf.find((c) => /San Francisco/.test(c.label))!;
+    const other = sf.find((c) => c.label && !/San Francisco|Tie|Draw/i.test(c.label))!;
+    const t = (team: string): Trigger => ({ kind: "sports_result", league: "Pro Football", homeTeam: "San Francisco", awayTeam: "Seattle", team, gameDate: (label.startTime ?? "2026-10-11").slice(0, 10), scheduledStart: label.startTime, period: "final", tieTreatment: "no_reward", cancellationTreatment: "void_promotion" });
+    const now = new Date("2026-10-01T00:00:00Z");
+    for (const team of ["San Francisco", "San Francisco 49ers", "49ers", "SF"]) {
+      expect(matchCandidate(t(team), label, now).rejections).not.toContain("WRONG_TEAM");
+    }
+    expect(matchCandidate(t("San Francisco 49ers"), other, now).rejections).toContain("WRONG_TEAM");
+  });
+});

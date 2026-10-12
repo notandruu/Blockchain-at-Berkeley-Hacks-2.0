@@ -277,7 +277,7 @@ export function matchCandidate(trigger: Trigger, candidate: MarketCandidate, now
       const dateOk = cDate !== null && Math.abs(new Date(cDate).getTime() - new Date(trigger.gameDate).getTime()) <= 86_400_000;
       base.checks.push({ field: "game date", merchant: trigger.gameDate, contract: candidate.startTime ?? "missing", status: dateOk ? "match" : "mismatch" });
       if (!dateOk) base.rejections.push("WRONG_DATE");
-      const teamIsYes = candidate.label.toLowerCase().includes(trigger.team.toLowerCase());
+      const teamIsYes = sameTeam(trigger.team, candidate.label, candidate.participants);
       base.checks.push({ field: "team", merchant: `${trigger.team} wins`, contract: `YES pays if ${candidate.label} wins`, status: teamIsYes ? "match" : "mismatch" });
       if (!teamIsYes) base.rejections.push("WRONG_TEAM");
       let partial = false;
@@ -300,6 +300,20 @@ export function matchCandidate(trigger: Trigger, candidate: MarketCandidate, now
     case "policy_event":
       return matchPolicy(trigger, candidate, base);
   }
+}
+
+// Contract labels are short ("Baltimore"), participants carry the full name ("Baltimore
+// Ravens", BAL), and the agent may write either, or just "Ravens". Same team if the label
+// and the team name point at the same participant.
+function sameTeam(team: string, label: string, participants: MarketCandidate["participants"]): boolean {
+  const words = (s: string) => s.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  const t = words(team);
+  const l = words(label);
+  if (!t.length || !l.length) return false;
+  const within = (a: string[], b: string[]) => a.every((w) => b.includes(w));
+  if (within(t, l) || within(l, t)) return true;
+  const p = participants.find((x) => within(l, words(x.name)) || (x.abbreviation ?? "").toLowerCase() === l.join(""));
+  return !!p && within(t, [...words(p.name), (p.abbreviation ?? "").toLowerCase()]);
 }
 
 // ---- policy events: rate decisions, elections, other official outcomes --------------------
