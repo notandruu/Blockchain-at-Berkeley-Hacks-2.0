@@ -126,13 +126,15 @@ async function shots(browser: Browser, auth: string) {
   await phone.close();
 }
 
-async function homeGif(browser: Browser, auth: string) {
+const HOME_GOAL = "We're a bar in Manhattan. If the Knicks win Monday night, everyone here by tip-off gets $20 back on their tab. Up to 40 customers.";
+
+async function homeGif(browser: Browser, auth: string | undefined) {
   const { ctx, page } = await recording(browser, auth, { width: 1280, height: 800 });
   await page.goto(ORIGIN);
   await settle(page, 1500);
   const box = page.locator("textarea");
   await box.click();
-  await box.pressSequentially("Help our bar bring people in on game night. If Bitcoin closes above $83k tonight, every customer gets $20 back. We can spend $350.", { delay: 22 });
+  await box.pressSequentially(HOME_GOAL, { delay: 22 });
   await sleep(1400);
   await page.locator("textarea").fill("");
   await page.getByText("Insure an existing risk").hover();
@@ -246,14 +248,15 @@ rmSync(TMP, { recursive: true, force: true });
 mkdirSync(TMP, { recursive: true });
 const browser = await chromium.launch();
 try {
-  const auth = mode === "claim" || mode === "visitor" ? undefined : await signIn(browser);
+  const auth = mode === "claim" || mode === "visitor" || mode === "home" ? undefined : await signIn(browser);
   if (mode === "shots") {
     await shots(browser, auth!);
     await homeGif(browser, auth!);
   } else if (mode === "claim") await claimGif(browser, args[0]!, args[1]!);
   else if (mode === "live") await liveGif(browser, auth!, args[0]!);
+  else if (mode === "home") await homeGif(browser, undefined);
   else if (mode === "visitor") await visitorRun(browser, args[0]!, args[1] ?? "40");
-  else throw new Error("mode: shots | claim | live | visitor");
+  else throw new Error("mode: shots | claim | live | visitor | home");
 } finally {
   await browser.close();
   for (const f of readdirSync(TMP)) if (f.endsWith(".json")) rmSync(join(TMP, f));

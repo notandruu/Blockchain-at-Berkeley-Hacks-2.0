@@ -39,7 +39,9 @@ these markets list on Gemini's production exchange today. beagle reads and match
 
 ![a live run on beagle.andrewliu.org, about 5x speed](docs/media/live-run.gif)
 
-*a first-time visitor on the public site, recorded unedited and played back at about 5x. Gemini's sandbox only lists crypto right now, so this run ties the promo to a bitcoin contract instead of a game. same agent, same checks, same order path, and a real fill in about two and a half minutes.*
+*a first-time visitor on the public site asks for the knicks promo, recorded unedited and played back at about 5x. beagle finds the real Knicks vs Timberwolves market on Gemini, checks game, league, date, which team YES pays on and the final-result rule, flags what happens if the game is cancelled, and names the one thing that doesn't line up: the game is listed on Gemini's production exchange, and beagle places orders on the sandbox.*
+
+![the knicks game, matched field by field](docs/media/live-match.png)
 
 ## the crew
 
@@ -78,6 +80,8 @@ sandbox liquidity is thin, so campaigns stay small. all trades and rewards are f
 you describe the risk in plain words. Scout reads the web through Context.dev, Nova pulls every Gemini contract and the live order book, and Penny sizes a hedge against what is actually on offer.
 
 ![asking beagle](docs/media/home.gif)
+
+orders go to Gemini's sandbox, and the sandbox only lists crypto right now, so the plan, fill and campaign below ran on a bitcoin contract. it's the same engine the knicks game goes through above.
 
 Penny's plan is the only thing you approve. it shows the estimate and the hard maximum separately, what would not pay, and why the coverage is smaller than you asked for when the book is thin.
 
