@@ -55,8 +55,8 @@ function rateLimit(key: string, max: number, windowMs: number): void {
 
 export async function buildServer(deps: ServerDeps) {
   const { db, admin, cfg } = deps;
-  const app = Fastify({ logger: { level: "info" }, bodyLimit: 256 * 1024 });
-  await app.register(cors, { origin: [cfg.WEB_ORIGIN], credentials: false, allowedHeaders: ["authorization", "content-type", "idempotency-key"] });
+  const app = Fastify({ logger: { level: "info" }, bodyLimit: 256 * 1024, trustProxy: true });
+  await app.register(cors, { origin: cfg.webOrigins, credentials: false, allowedHeaders: ["authorization", "content-type", "idempotency-key"] });
 
   // Keep the raw body for the webhook signature; parse JSON ourselves.
   app.addContentTypeParser("application/json", { parseAs: "buffer" }, (req, body, done) => {
@@ -70,7 +70,7 @@ export async function buildServer(deps: ServerDeps) {
   });
 
   const auth = async (req: FastifyRequest) => {
-    req.principal = await authenticate(admin, db, req.headers.authorization);
+    req.principal = await authenticate(admin, db, req.headers.authorization, cfg.OPEN_ACCESS === "true" ? cfg.OPEN_ACCESS_MERCHANT_NAME : null);
     return req.principal;
   };
   const wrap =
@@ -99,6 +99,9 @@ export async function buildServer(deps: ServerDeps) {
     if (!merchantId) throw new DomainError("FORBIDDEN", "no merchant membership");
     requireMember(p, merchantId);
     if (body.businessUrl) await assertPublicUrl(body.businessUrl);
+    // Counted in the database, so the cap holds across serverless instances.
+    const [{ n } = { n: 0 }] = await db<{ n: number }[]>`select count(*)::int as n from runs where created_by = ${p.userId} and created_at > now() - interval '1 hour'`;
+    if (n >= cfg.RUNS_PER_VISITOR_PER_HOUR) throw new DomainError("RATE_LIMITED", `limit is ${cfg.RUNS_PER_VISITOR_PER_HOUR} new runs per hour`);
     const idem = (req.headers["idempotency-key"] as string | undefined) ?? null;
     if (idem) {
       const [prior] = await db<{ id: string; state: string }[]>`select id, state from runs where idempotency_key = ${idem}`;
@@ -155,7 +158,7 @@ export async function buildServer(deps: ServerDeps) {
         "content-type": "text/event-stream",
         "cache-control": "no-cache, no-transform",
         connection: "keep-alive",
-        "access-control-allow-origin": cfg.WEB_ORIGIN,
+        "access-control-allow-origin": cfg.webOrigins.includes(String(req.headers.origin)) ? String(req.headers.origin) : cfg.webOrigins[0]!,
       });
       let last = after;
       const send = (ev: RunEvent) => {
@@ -167,8 +170,26 @@ export async function buildServer(deps: ServerDeps) {
       hub.on(`run:${id}`, listener);
       for (const ev of await eventsAfter(db, id, after)) send(ev);
       const beat = setInterval(() => res.write(`: heartbeat ${Date.now()}\n\n`), 15_000);
+      // The hub only carries events written by this process. Events from a job running in
+      // another instance arrive through the log, so poll it too.
+      let polling = false;
+      const poll = setInterval(async () => {
+        if (polling) return;
+        polling = true;
+        try {
+          for (const ev of await eventsAfter(db, id, last)) send(ev);
+        } catch {
+          // next tick retries
+        } finally {
+          polling = false;
+        }
+      }, 800);
+      // Close before the platform kills the function; the client resumes from `last`.
+      const cap = setTimeout(() => res.end(), cfg.STREAM_MAX_MS);
       req.raw.on("close", () => {
         clearInterval(beat);
+        clearInterval(poll);
+        clearTimeout(cap);
         hub.off(`run:${id}`, listener);
       });
     } catch (e) {

@@ -5,7 +5,7 @@ import { Briefcase, Megaphone, Plus, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { SERVICE_URL, supabase } from "@/lib/api";
+import { ensureSession, SERVICE_URL } from "@/lib/api";
 import { CREW, Mascot, type CrewMember } from "./crew";
 
 interface Health {
@@ -25,15 +25,13 @@ export function useSession() {
   const [ready, setReady] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   useEffect(() => {
-    void supabase()
-      .auth.getSession()
-      .then(({ data }) => {
-        if (!data.session) router.replace("/login");
-        else {
-          setEmail(data.session.user.email ?? null);
-          setReady(true);
-        }
-      });
+    void ensureSession().then((session) => {
+      if (!session) router.replace("/login");
+      else {
+        setEmail(session.user.email ?? null);
+        setReady(true);
+      }
+    });
   }, [router]);
   return { ready, email };
 }

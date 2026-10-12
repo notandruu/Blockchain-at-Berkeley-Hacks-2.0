@@ -16,3 +16,6 @@ test-results/
 .claude/
 next-env.d.ts
 docs/media/.video/
+.env.production*
+.vercel
+.env*

@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
 
 // The browser only ever holds the Supabase publishable key and the user's own session.
 // Exchange, Context and model credentials live in the service.
@@ -12,7 +12,9 @@ export function supabase(): SupabaseClient {
   return client;
 }
 
-export const SERVICE_URL = process.env.NEXT_PUBLIC_SERVICE_URL ?? "http://localhost:4000";
+// "same-origin" on the hosted site, where Next rewrites /api to the service project.
+const serviceUrl = process.env.NEXT_PUBLIC_SERVICE_URL ?? "http://localhost:4000";
+export const SERVICE_URL = serviceUrl === "same-origin" ? "" : serviceUrl;
 
 export class ApiError extends Error {
   constructor(
@@ -25,9 +27,26 @@ export class ApiError extends Error {
   }
 }
 
-export async function token(): Promise<string | null> {
+// Public deployments have no sign-in screen: a visitor without a session gets an anonymous
+// Supabase session, and the service gives that user their own demo merchant.
+export const OPEN_ACCESS = process.env.NEXT_PUBLIC_OPEN_ACCESS === "true";
+
+let pending: Promise<Session | null> | null = null;
+export async function ensureSession(): Promise<Session | null> {
   const { data } = await supabase().auth.getSession();
-  return data.session?.access_token ?? null;
+  if (data.session || !OPEN_ACCESS) return data.session;
+  // Several components ask at once on first load; only one anonymous user may be created.
+  pending ??= supabase()
+    .auth.signInAnonymously()
+    .then(({ data: d }) => d.session)
+    .finally(() => {
+      pending = null;
+    });
+  return pending;
+}
+
+export async function token(): Promise<string | null> {
+  return (await ensureSession())?.access_token ?? null;
 }
 
 export async function api<T>(path: string, init: RequestInit & { idempotencyKey?: string; anonymous?: boolean } = {}): Promise<T> {
@@ -62,6 +81,7 @@ export function streamRunEvents<E extends { sequence: number }>(
     let backoff = 500;
     while (!stopped) {
       controller = new AbortController();
+      let clean = false;
       try {
         const t = await token();
         const res = await fetch(`${SERVICE_URL}/api/runs/${runId}/events?after=${after}`, {
@@ -76,7 +96,12 @@ export function streamRunEvents<E extends { sequence: number }>(
         let buf = "";
         for (;;) {
           const { value, done } = await reader.read();
-          if (done) break;
+          if (done) {
+            // The server closes long streams on purpose (serverless time limit). Resume at
+            // once from the last sequence without showing a reconnect.
+            clean = true;
+            break;
+          }
           buf += decoder.decode(value, { stream: true });
           let idx;
           while ((idx = buf.indexOf("\n\n")) >= 0) {
@@ -95,6 +120,7 @@ export function streamRunEvents<E extends { sequence: number }>(
         if (stopped) return;
       }
       if (stopped) return;
+      if (clean) continue;
       onStatus("reconnecting");
       await new Promise((r) => setTimeout(r, backoff));
       backoff = Math.min(backoff * 2, 8000);

@@ -27,9 +27,20 @@ const Env = z.object({
   QUOTE_MAX_AGE_MS: z.coerce.number().int().positive().default(5000),
   FEE_BOUND_FILL_UNIT: z.string().default("1"),
   WORKER_ID: z.string().default(`worker-${process.pid}`),
+  // Public demo: any visitor gets an anonymous session and their own demo merchant, no
+  // sign-in. Off by default; the hosted deployment turns it on.
+  OPEN_ACCESS: z.enum(["true", "false"]).default("false"),
+  OPEN_ACCESS_MERCHANT_NAME: z.string().default("Golden Bear Taproom"),
+  // New research runs one visitor may start per hour. Each run spends model and Context credits.
+  RUNS_PER_VISITOR_PER_HOUR: z.coerce.number().int().positive().default(6),
+  // Serverless: how long one SSE response stays open before the client reconnects, and the
+  // pool size per instance.
+  STREAM_MAX_MS: z.coerce.number().int().positive().default(3_600_000),
+  DB_POOL_MAX: z.coerce.number().int().positive().default(10),
 });
 
 export type Config = z.infer<typeof Env> & {
+  webOrigins: string[];
   providers: { context: boolean; gemini: boolean; agent: boolean };
 };
 
@@ -45,6 +56,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   }
   return {
     ...parsed,
+    webOrigins: parsed.WEB_ORIGIN.split(",").map((s) => s.trim()).filter(Boolean),
     providers: {
       context: parsed.CONTEXT_DEV_API_KEY.length > 0,
       gemini: parsed.GEMINI_API_KEY.length > 0 && parsed.GEMINI_API_SECRET.length > 0,
