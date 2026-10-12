@@ -13,8 +13,9 @@ export function connect(url: string, max = 10): Sql {
     max,
     prepare: !pooled,
     idle_timeout: 30,
-    // bigint ids from the exchange are stored as text; keep int8 as string if one appears.
-    types: { bigint: postgres.BigInt },
+    // int8 comes back as a string, like numeric. postgres.BigInt would hand out JS BigInts,
+    // which JSON.stringify refuses, and any run with a cached Context source has one.
+    types: { bigint: { to: 20, from: [20], serialize: (x: unknown) => String(x), parse: (x: string) => x } },
     onnotice: () => {},
   }) as unknown as Sql;
 }
