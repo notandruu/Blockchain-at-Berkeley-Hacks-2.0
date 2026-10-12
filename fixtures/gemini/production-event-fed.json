@@ -1,0 +1,256 @@
+{
+  "id": "255554",
+  "title": "Fed decision in October?",
+  "slug": "fed-decision-in-october",
+  "type": "categorical",
+  "category": "Economics",
+  "ticker": "FED261030",
+  "status": "active",
+  "createdAt": "2026-09-16T23:18:53.836Z",
+  "contracts": [
+    {
+      "id": "255554-634771",
+      "label": "Fed maintains rate",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If the Federal Reserve maintains rates at their current level on October 28, 2026, then the market resolves to Yes. Otherwise, it resolves to No. Outcome verified from the Federal Reserve. This market is mutually exclusive. Therefore, only one bucket, at maximum, can resolve to Yes. If a scheduled FOMC meeting is canceled and does not occur on its scheduled date, then the strike for \"Fed maintains rate\" will resolve to Yes and all others will resolve to No.\nView the full [rules](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fa739111ce4d14031b8fa642d703f6417?alt=media&token=018dc0da-fca8-43f8-a4c4-6d0dde135f95&apiKey=1b77ce3a269a43e985e77f3d65f715ba)",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.86",
+          "no": "0.18"
+        },
+        "sell": {
+          "yes": "0.82",
+          "no": "0.14"
+        },
+        "bestBid": "0.82",
+        "bestAsk": "0.86",
+        "lastTradePrice": "0.86"
+      },
+      "status": "active",
+      "createdAt": "2026-09-16T23:18:53.836Z",
+      "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+      "ticker": "MAINTAIN",
+      "instrumentSymbol": "GEMI-FED261030-MAINTAIN",
+      "marketState": "open",
+      "color": "#0f9ee7",
+      "expiryDate": "2026-10-30T04:00:00.000Z",
+      "effectiveDate": "2026-09-16T23:24:21.000Z",
+      "isCombo": false,
+      "quantityIncrement": "0.01",
+      "quantityMinimum": "0.01",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "255554-634701",
+      "label": "Hike 25bps",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If the Federal Reserve increases rates by 25bps on October 28, 2026, then the market resolves to Yes. Otherwise, it resolves to No. Outcome verified from the Federal Reserve. This market is mutually exclusive. Therefore, only one bucket, at maximum, can resolve to Yes. If a scheduled FOMC meeting is canceled and does not occur on its scheduled date, then the strike for \"Fed maintains rate\" will resolve to Yes and all others will resolve to No.\nView the full [rules](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fa739111ce4d14031b8fa642d703f6417?alt=media&token=018dc0da-fca8-43f8-a4c4-6d0dde135f95&apiKey=1b77ce3a269a43e985e77f3d65f715ba)",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.17",
+          "no": "0.86"
+        },
+        "sell": {
+          "yes": "0.14",
+          "no": "0.83"
+        },
+        "bestBid": "0.14",
+        "bestAsk": "0.17",
+        "lastTradePrice": "0.14"
+      },
+      "status": "active",
+      "createdAt": "2026-09-16T23:18:53.836Z",
+      "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+      "ticker": "HIKE25",
+      "instrumentSymbol": "GEMI-FED261030-HIKE25",
+      "marketState": "open",
+      "color": "#0f9ee7",
+      "expiryDate": "2026-10-30T04:00:00.000Z",
+      "effectiveDate": "2026-09-16T23:20:18.000Z",
+      "isCombo": false,
+      "quantityIncrement": "0.01",
+      "quantityMinimum": "0.01",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "255554-634805",
+      "label": "Hike >25bps",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If the Federal Reserve increases rates by more than 25bps on October 28, 2026, then the market resolves to Yes. Otherwise, it resolves to No. Outcome verified from the Federal Reserve. This market is mutually exclusive. Therefore, only one bucket, at maximum, can resolve to Yes. If a scheduled FOMC meeting is canceled and does not occur on its scheduled date, then the strike for \"Fed maintains rate\" will resolve to Yes and all others will resolve to No.\nView the full [rules](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fa739111ce4d14031b8fa642d703f6417?alt=media&token=018dc0da-fca8-43f8-a4c4-6d0dde135f95&apiKey=1b77ce3a269a43e985e77f3d65f715ba)",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.03",
+          "no": "0.97"
+        },
+        "sell": {
+          "yes": "0.03",
+          "no": "0.97"
+        },
+        "bestAsk": "0.03",
+        "lastTradePrice": "0.03"
+      },
+      "status": "active",
+      "createdAt": "2026-09-16T23:18:53.836Z",
+      "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+      "ticker": "HIKEGT25",
+      "instrumentSymbol": "GEMI-FED261030-HIKEGT25",
+      "marketState": "open",
+      "color": "#0f9ee7",
+      "expiryDate": "2026-10-30T04:00:00.000Z",
+      "effectiveDate": "2026-09-16T23:29:37.000Z",
+      "isCombo": false,
+      "quantityIncrement": "0.01",
+      "quantityMinimum": "0.01",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "255554-634804",
+      "label": "Cut >25bps",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If the Federal Reserve decreases rates by more than 25bps on October 28, 2026, then the market resolves to Yes. Otherwise, it resolves to No. Outcome verified from the Federal Reserve. This market is mutually exclusive. Therefore, only one bucket, at maximum, can resolve to Yes. If a scheduled FOMC meeting is canceled and does not occur on its scheduled date, then the strike for \"Fed maintains rate\" will resolve to Yes and all others will resolve to No.\nView the full [rules](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fa739111ce4d14031b8fa642d703f6417?alt=media&token=018dc0da-fca8-43f8-a4c4-6d0dde135f95&apiKey=1b77ce3a269a43e985e77f3d65f715ba)",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.02",
+          "no": "0.99"
+        },
+        "sell": {
+          "yes": "0.01",
+          "no": "0.98"
+        },
+        "bestBid": "0.01",
+        "bestAsk": "0.02",
+        "lastTradePrice": "0.01"
+      },
+      "status": "active",
+      "createdAt": "2026-09-16T23:18:53.836Z",
+      "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+      "ticker": "CUTGT25",
+      "instrumentSymbol": "GEMI-FED261030-CUTGT25",
+      "marketState": "open",
+      "color": "#0f9ee7",
+      "expiryDate": "2026-10-30T04:00:00.000Z",
+      "effectiveDate": "2026-09-16T23:27:07.000Z",
+      "isCombo": false,
+      "quantityIncrement": "0.01",
+      "quantityMinimum": "0.01",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "255554-634678",
+      "label": "Cut 25bps",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If the Federal Reserve decreases rates by more than 25bps on October 28, 2026, then the market resolves to Yes. Otherwise, it resolves to No. Outcome verified from the Federal Reserve. This market is mutually exclusive. Therefore, only one bucket, at maximum, can resolve to Yes. If a scheduled FOMC meeting is canceled and does not occur on its scheduled date, then the strike for \"Fed maintains rate\" will resolve to Yes and all others will resolve to No.\nView the full [rules](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fa739111ce4d14031b8fa642d703f6417?alt=media&token=018dc0da-fca8-43f8-a4c4-6d0dde135f95&apiKey=1b77ce3a269a43e985e77f3d65f715ba)\n",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.01",
+          "no": "0.99"
+        },
+        "sell": {
+          "yes": "0.01",
+          "no": "0.99"
+        },
+        "bestAsk": "0.01",
+        "lastTradePrice": "0.01"
+      },
+      "status": "active",
+      "createdAt": "2026-09-16T23:18:53.836Z",
+      "termsAndConditionsUrl": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+      "ticker": "CUT25",
+      "instrumentSymbol": "GEMI-FED261030-CUT25",
+      "marketState": "open",
+      "color": "#0f9ee7",
+      "expiryDate": "2026-10-30T04:00:00.000Z",
+      "effectiveDate": "2026-09-16T23:18:45.000Z",
+      "isCombo": false,
+      "quantityIncrement": "0.01",
+      "quantityMinimum": "0.01",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    }
+  ],
+  "effectiveDate": "2026-09-16T23:18:53.836Z",
+  "isLive": true,
+  "participants": [],
+  "description": "Fed decision in October?",
+  "imageUrl": "https://assets.gemini.com/predictions/images/fed_Contract_Image_33bd1879-aa29-454f-81a0-363174001f46.avif",
+  "volume": "99680.11",
+  "volume24h": "0",
+  "tags": [
+    "Fed"
+  ],
+  "expiryDate": "2026-10-30T04:00:00.000Z",
+  "startTime": "2026-09-16T23:10:33.900Z",
+  "termsLink": "https://assets.gemini.com/predictions/terms_and_conditions/Gemini_402_Product_Filing_-_FEDDEC_-_20251211_6927e3ff-608d-4f76-98c4-f16ad6402cc6.pdf",
+  "subcategory": {
+    "id": 100,
+    "slug": "economics_fed",
+    "name": "Fed",
+    "path": [
+      "Economics",
+      "Fed"
+    ]
+  },
+  "socialImageUrl": "https://assets.gemini.com/predictions/images/fedsocial_5469fa05-1bfe-4932-aac8-79f6bd057cfa.png",
+  "featuredImageUrl": "https://assets.gemini.com/predictions/images/Card_Carousel_-_2026-07-30T102610043_8ef04235-797c-4ae1-8c08-c99abc2ade5f_2a1bc8c5-2424-4c87-a21d-de8809ec1aec.avif",
+  "template": "categorical",
+  "volumeDelta24hPct": "-100"
+}

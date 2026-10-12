@@ -1,0 +1,175 @@
+{
+  "id": "93910",
+  "title": "Texas US Senate Winner",
+  "slug": "texas-us-senate-winner",
+  "type": "categorical",
+  "category": "Politics",
+  "ticker": "SEN26TX",
+  "status": "active",
+  "createdAt": "2026-06-16T22:55:47.524Z",
+  "contracts": [
+    {
+      "id": "93910-282211",
+      "label": "James Talarico",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If James Talarico wins the 2026 U.S. Senate election in Texas, then this market resolves to Yes. Outcome should be verified from the applicable state election authority and widely reported national sources. This event is mutually exclusive within the Texas Senate election. Read the full contract [terms & conditions](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fd87e2bb2cb084a0bb9d5936394a9f233?alt=media&token=01422eba-fddb-496b-bd1f-fcb568ad5383&apiKey=1b77ce3a269a43e985e77f3d65f715ba).",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.64",
+          "no": "0.4"
+        },
+        "sell": {
+          "yes": "0.6",
+          "no": "0.36"
+        },
+        "bestBid": "0.6",
+        "bestAsk": "0.64",
+        "lastTradePrice": "0.57"
+      },
+      "status": "active",
+      "createdAt": "2026-06-16T22:55:47.524Z",
+      "termsAndConditionsUrl": "",
+      "ticker": "JAMESTALARICO",
+      "instrumentSymbol": "GEMI-SEN26TX-JAMESTALARICO",
+      "marketState": "open",
+      "abbreviatedName": "James Talarico",
+      "color": "#0f9ee7",
+      "imageUrl": "https://images.ctfassets.net/jg6lo9a2ukvr/6scOV1kBmAiir6ziDF0dhJ/8330fbf5b44d4f7941b6792ceb200b6a/Democrat.png",
+      "expiryDate": "2026-11-10T00:00:00.000Z",
+      "effectiveDate": "2026-05-14T00:00:00.000Z",
+      "isCombo": false,
+      "quantityIncrement": "1",
+      "quantityMinimum": "1",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "93910-282218",
+      "label": "Ken Paxton",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If Ken Paxton wins the 2026 U.S. Senate election in Texas, then this market resolves to Yes. Outcome should be verified from the applicable state election authority and widely reported national sources. This event is mutually exclusive within the Texas Senate election. Read the full contract [terms & conditions](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fd87e2bb2cb084a0bb9d5936394a9f233?alt=media&token=01422eba-fddb-496b-bd1f-fcb568ad5383&apiKey=1b77ce3a269a43e985e77f3d65f715ba).",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {
+          "yes": "0.41",
+          "no": "0.61"
+        },
+        "sell": {
+          "yes": "0.39",
+          "no": "0.59"
+        },
+        "bestBid": "0.39",
+        "bestAsk": "0.41",
+        "lastTradePrice": "0.41"
+      },
+      "status": "active",
+      "createdAt": "2026-06-16T22:55:47.524Z",
+      "termsAndConditionsUrl": "",
+      "ticker": "KENPAXTON",
+      "instrumentSymbol": "GEMI-SEN26TX-KENPAXTON",
+      "marketState": "open",
+      "abbreviatedName": "Ken Paxton",
+      "color": "#0f9ee7",
+      "imageUrl": "https://images.ctfassets.net/jg6lo9a2ukvr/4jB6qLZD8G2q1zBTFspELZ/b1cc56ba77c2fa83b929f0363beb80ec/Republican.png",
+      "expiryDate": "2026-11-10T00:00:00.000Z",
+      "effectiveDate": "2026-05-14T00:00:00.000Z",
+      "isCombo": false,
+      "quantityIncrement": "1",
+      "quantityMinimum": "1",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    },
+    {
+      "id": "93910-282214",
+      "label": "John Cornyn",
+      "description": {
+        "data": {},
+        "content": [
+          {
+            "data": {},
+            "marks": [],
+            "value": "If John Cornyn wins the 2026 U.S. Senate election in Texas, then this market resolves to Yes. Outcome should be verified from the applicable state election authority and widely reported national sources. This event is mutually exclusive within the Texas Senate election. Read the full contract [terms & conditions](https://cdn.builder.io/o/assets%2F1b77ce3a269a43e985e77f3d65f715ba%2Fd87e2bb2cb084a0bb9d5936394a9f233?alt=media&token=01422eba-fddb-496b-bd1f-fcb568ad5383&apiKey=1b77ce3a269a43e985e77f3d65f715ba).",
+            "nodeType": "text"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "prices": {
+        "buy": {},
+        "sell": {}
+      },
+      "status": "settled",
+      "createdAt": "2026-06-16T22:55:47.524Z",
+      "termsAndConditionsUrl": "",
+      "ticker": "JOHNCORNYN",
+      "instrumentSymbol": "GEMI-SEN26TX-JOHNCORNYN",
+      "marketState": "closed",
+      "abbreviatedName": "John Cornyn",
+      "color": "#0f9ee7",
+      "imageUrl": "https://images.ctfassets.net/jg6lo9a2ukvr/4jB6qLZD8G2q1zBTFspELZ/b1cc56ba77c2fa83b929f0363beb80ec/Republican.png",
+      "expiryDate": "2026-11-10T00:00:00.000Z",
+      "resolutionSide": "no",
+      "resolvedAt": "2026-06-17T23:17:35.085Z",
+      "effectiveDate": "2026-05-14T00:00:00.000Z",
+      "isCombo": false,
+      "quantityIncrement": "1",
+      "quantityMinimum": "1",
+      "priceIncrement": "0.01",
+      "quoteAssetPrecision": 2,
+      "priceMinimum": "0.01"
+    }
+  ],
+  "effectiveDate": "2026-06-16T22:55:47.524Z",
+  "isLive": false,
+  "participants": [],
+  "description": "Who will win the 2026 U.S. Senate election in Texas?",
+  "imageUrl": "https://assets.gemini.com/predictions/images/Texas_4013c17d-9c49-4f87-b65b-46ced8dac837.avif",
+  "volume": "55333",
+  "volume24h": "3942",
+  "tags": [
+    "Senate"
+  ],
+  "expiryDate": "2026-11-10T00:00:00.000Z",
+  "termsLink": "",
+  "subcategory": {
+    "id": 174,
+    "slug": "politics_midterms_senate",
+    "name": "Senate",
+    "path": [
+      "Politics",
+      "Midterms",
+      "Senate"
+    ]
+  },
+  "socialImageUrl": "https://images.ctfassets.net/jg6lo9a2ukvr/1X12y7OhZNqwdNenVwemrA/81a6784737b185a4bd7be2276a69d5cf/Contract_Image.png",
+  "featuredImageUrl": "https://assets.gemini.com/predictions/images/Politics_52fce6dd-2a10-4db6-aed4-2a763e5ebe12.avif",
+  "eventTags": [
+    {
+      "id": 3986,
+      "name": "Midterms",
+      "slug": "midterms"
+    }
+  ],
+  "volumeDelta24hPct": "250.71"
+}

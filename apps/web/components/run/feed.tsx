@@ -158,6 +158,7 @@ const REASON: Record<string, string> = {
   WRONG_DATE: "Different date",
   WRONG_STATION: "Different station",
   WRONG_TEAM: "Other team",
+  WRONG_OUTCOME: "Different outcome",
   WRONG_EVENT: "Different event",
   PERIOD_MISMATCH: "Different period",
   EXPIRED: "Expired",

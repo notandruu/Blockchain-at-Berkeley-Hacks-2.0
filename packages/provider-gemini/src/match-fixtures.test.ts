@@ -84,11 +84,11 @@ describe("matching real Gemini listings", () => {
     expect(matchCandidate(trigger, btc.find((c) => c.contractTicker === "HI82000")!, later).rejections).toContain("EXPIRED");
   });
 
-  it("keeps policy triggers research-only", () => {
+  it("rejects a policy trigger pointed at an unrelated contract", () => {
     const trigger: Trigger = { kind: "policy_event", action: "tariff on imported steel", authority: "USTR", effectiveBy: "2026-12-01" };
     const m = matchCandidate(trigger, btc[0]!, now);
     expect(m.executable).toBe(false);
-    expect(m.rejections).toContain("UNSUPPORTED_TRIGGER");
+    expect(m.rejections).toEqual(expect.arrayContaining(["WRONG_EVENT", "WRONG_OUTCOME"]));
   });
 });
 
@@ -110,5 +110,50 @@ describe("market state", () => {
     const [c] = normalizeEvent(event("halted") as never, "sandbox");
     expect(c!.marketState).toBe("unknown");
     expect(isTakeable(c!)).toBe(false);
+  });
+});
+
+describe("policy events against production fixtures", () => {
+  const now = new Date("2026-10-12T01:00:00Z");
+  const fed = normalizeEvent(fixture("production-event-fed.json"), "production");
+  const senate = normalizeEvent(fixture("production-event-senate.json"), "production");
+  const policy = (action: string, authority: string, effectiveBy: string): Trigger => ({ kind: "policy_event", action, authority, effectiveBy });
+  const bucket = (pool: typeof fed, label: string) => pool.find((c) => c.label === label)!;
+
+  it("matches a 25bp cut to the Cut 25bps bucket only", () => {
+    const t = policy("Fed cuts rates by 25 basis points", "Federal Reserve", "2026-10-31");
+    const hit = matchCandidate(t, bucket(fed, "Cut 25bps"), now);
+    expect(hit.checks.find((c) => c.field === "outcome")?.status).toBe("match");
+    expect(hit.outcome).toBe("yes");
+    // Production is reference only, but the reasons it is not executable are environment, not fit.
+    expect(hit.rejections).toEqual(["NOT_EXECUTABLE_IN_ENV"]);
+    expect(matchCandidate(t, bucket(fed, "Cut >25bps"), now).rejections).toContain("WRONG_OUTCOME");
+    expect(matchCandidate(t, bucket(fed, "Fed maintains rate"), now).rejections).toContain("WRONG_OUTCOME");
+  });
+
+  it("reads 'holds' as the maintains bucket and surfaces the cancellation rule", () => {
+    const m = matchCandidate(policy("the Fed holds rates steady", "Federal Reserve FOMC", "2026-10-31"), bucket(fed, "Fed maintains rate"), now);
+    expect(m.checks.find((c) => c.field === "outcome")?.status).toBe("match");
+    expect(m.checks.find((c) => c.field === "decided by date")?.contract).toBe("2026-10-28");
+    expect(m.caveats.join(" ")).toMatch(/canceled/);
+  });
+
+  it("calls a size-less hike only a partial match for a sized bucket", () => {
+    const m = matchCandidate(policy("the Fed raises rates", "Federal Reserve", "2026-10-31"), bucket(fed, "Hike 25bps"), now);
+    expect(m.checks.find((c) => c.field === "outcome")?.status).toBe("partial");
+  });
+
+  it("rejects a decision that lands after the business needs it", () => {
+    const m = matchCandidate(policy("Fed cuts 25bps", "Federal Reserve", "2026-10-20"), bucket(fed, "Cut 25bps"), now);
+    expect(m.rejections).toContain("WRONG_DATE");
+  });
+
+  it("matches an election winner by candidate and warns about certification", () => {
+    const t = policy("Ken Paxton wins the Texas Senate race", "Texas state election authority", "2026-11-30");
+    const m = matchCandidate(t, bucket(senate, "Ken Paxton"), now);
+    expect(m.checks.find((c) => c.field === "outcome")?.status).toBe("match");
+    expect(m.checks.find((c) => c.field === "resolution source")?.contract).toMatch(/state election authority/);
+    expect(m.caveats.join(" ")).toMatch(/certified result/);
+    expect(matchCandidate(t, bucket(senate, "James Talarico"), now).rejections).toContain("WRONG_OUTCOME");
   });
 });

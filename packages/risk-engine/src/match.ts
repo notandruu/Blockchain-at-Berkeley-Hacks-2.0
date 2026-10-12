@@ -33,6 +33,7 @@ export type RejectionCode =
   | "WRONG_THRESHOLD"
   | "WRONG_ASSET"
   | "WRONG_TEAM"
+  | "WRONG_OUTCOME"
   | "PERIOD_MISMATCH"
   | "NO_SETTLEMENT_RULES"
   | "UNSUPPORTED_TRIGGER"
@@ -297,10 +298,90 @@ export function matchCandidate(trigger: Trigger, candidate: MarketCandidate, now
       return finish(candidate, base, teamIsYes ? "yes" : null, partial);
     }
     case "policy_event":
-      base.rejections.push("UNSUPPORTED_TRIGGER");
-      base.checks.push({ field: "verifier", merchant: trigger.action, contract: candidate.eventTitle, status: "unknown", note: "No trigger verifier implemented for policy events. Research only." });
-      return finish(candidate, base, null, false);
+      return matchPolicy(trigger, candidate, base);
   }
+}
+
+// ---- policy events: rate decisions, elections, other official outcomes --------------------
+
+// One vocabulary for the business's words and the contract's labels. "Fed holds rates" and
+// "Fed maintains rate" are the same outcome; a 50bp cut is not the 25bp bucket.
+function policyTokens(text: string): Set<string> {
+  let t = ` ${text.toLowerCase()} `
+    .replace(/[’']/g, "")
+    .replace(/(?:>|more than |over |at least )\s*25\s*(?:bps?|basis points?)|\b50\s*(?:bps?|basis points?)|\bhalf[- ]point\b|\b0?\.5\s*%/g, " gt25bps ")
+    .replace(/\b25\s*(?:bps?|basis points?)|\bquarter[- ]point\b|\b0?\.25\s*%/g, " 25bps ")
+    .replace(/\b(?:maintains?|holds?|holding|unchanged|pauses?|keeps?|steady)\b/g, " maintain ")
+    .replace(/\b(?:cuts?|cutting|lowers?|lowering|reduces?|reduction|eases?)\b/g, " cut ")
+    .replace(/\b(?:hikes?|hiking|raises?|raising|increases?|tightens?)\b/g, " hike ");
+  t = t.replace(/[^a-z0-9 ]+/g, " ");
+  const stop = new Set(["the", "fed", "federal", "reserve", "rate", "rates", "interest", "by", "in", "at", "its", "a", "an", "of", "on", "to", "wins", "win", "winner", "will", "if", "us", "u", "s", "senate", "election", "race", "governor", "house", "and", "or"]);
+  return new Set(t.split(/\s+/).filter((w) => w.length > 1 && !stop.has(w)));
+}
+
+const DIRECTIONS = ["maintain", "cut", "hike"];
+const SIZES = ["25bps", "gt25bps"];
+
+function decisionDate(c: MarketCandidate): string | null {
+  const m = /\bon ([A-Z][a-z]+ \d{1,2}, \d{4})/.exec(c.rulesText);
+  if (m) {
+    const d = new Date(`${m[1]} 12:00 UTC`);
+    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  }
+  return dateOf(c.expiryDate);
+}
+
+function matchPolicy(trigger: Extract<Trigger, { kind: "policy_event" }>, candidate: MarketCandidate, base: ReturnType<typeof common>): MatchResult {
+  const haystack = [candidate.eventTitle, candidate.rulesText, ...candidate.subcategoryPath].join(" ").toLowerCase();
+
+  // Same decision-maker: most of the authority's words appear in the title, rules or path.
+  const authWords = trigger.authority.toLowerCase().split(/[^a-z]+/).filter((w) => w.length >= 4 && !["state", "official", "office"].includes(w));
+  const authHits = authWords.filter((w) => haystack.includes(w)).length;
+  const authOk = authWords.length > 0 && authHits * 2 >= authWords.length;
+  base.checks.push({ field: "decided by", merchant: trigger.authority, contract: candidate.eventTitle, status: authOk ? "match" : "mismatch" });
+  if (!authOk) base.rejections.push("WRONG_EVENT");
+
+  // Same outcome: every meaningful word of the contract label is in the business's outcome.
+  const want = policyTokens(trigger.action);
+  const label = policyTokens(candidate.label);
+  const labelDir = DIRECTIONS.find((d) => label.has(d));
+  const wantDir = DIRECTIONS.find((d) => want.has(d));
+  const labelSize = SIZES.find((x) => label.has(x));
+  const wantSize = SIZES.find((x) => want.has(x));
+  let outcomeStatus: CheckStatus;
+  let note: string | undefined;
+  if (labelDir || wantDir) {
+    if (labelDir !== wantDir) outcomeStatus = "mismatch";
+    else if (labelSize && !wantSize) {
+      outcomeStatus = "partial";
+      note = `Your risk is any ${wantDir}; this bucket pays only on exactly the size in its label.`;
+    } else outcomeStatus = labelSize === wantSize ? "match" : "mismatch";
+  } else {
+    const names = [...label];
+    outcomeStatus = names.length > 0 && names.every((w) => want.has(w)) ? "match" : "mismatch";
+  }
+  base.checks.push({ field: "outcome", merchant: trigger.action, contract: `YES pays if: ${candidate.label}`, status: outcomeStatus, ...(note ? { note } : {}) });
+  if (outcomeStatus === "mismatch") base.rejections.push("WRONG_OUTCOME");
+
+  // Decided in time: the contract's decision date must land on or before the business's date.
+  const decided = decisionDate(candidate);
+  const dateOk = decided !== null && decided <= trigger.effectiveBy;
+  base.checks.push({ field: "decided by date", merchant: trigger.effectiveBy, contract: decided ?? "missing", status: dateOk ? "match" : "mismatch" });
+  if (!dateOk) base.rejections.push("WRONG_DATE");
+
+  const source = /outcome (?:should be |will be )?verified (?:from|by) (?:the )?([^.]+)\./i.exec(candidate.rulesText)?.[1]?.trim();
+  base.checks.push({ field: "resolution source", merchant: trigger.authority, contract: source ?? "not stated", status: source ? "match" : "unknown" });
+
+  if (/mutually exclusive/i.test(candidate.rulesText)) {
+    base.caveats.push("Only one bucket can pay. A different outcome, or a different-sized move, pays a different contract.");
+  }
+  if (/meeting is canceled/i.test(candidate.rulesText)) {
+    base.caveats.push("If the scheduled meeting is canceled, the 'maintains' bucket pays and every other bucket pays nothing.");
+  }
+  if (/election authority/i.test(candidate.rulesText)) {
+    base.caveats.push("Settles on the certified result. A recount or contested race can push the payout well past election night.");
+  }
+  return finish(candidate, base, outcomeStatus === "mismatch" ? null : "yes", outcomeStatus === "partial");
 }
 
 // Rank only after hard eligibility: exact before proxy before unknown, sandbox before
