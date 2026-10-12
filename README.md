@@ -2,50 +2,36 @@
 
 ![Beagle Insurance](docs/media/banner.jpg)
 
-an agent that understands your business, and uses prediction markets to build a protection plan within your budget.
+businesses are exposed to financial risks that traditional insurance often doesn't cover. prediction markets have started putting prices on those events, but business owners don't know how to use them. beagle is the agent that understands the business, finds a matching market, calculates what's actually protected, and executes a bounded hedge.
 
 **try it: [beagle.andrewliu.org](https://beagle.andrewliu.org)**. no sign up. you get your own workspace, a real agent, and real Gemini sandbox orders (test money).
 
-## the problem
+![a live run on beagle.andrewliu.org, about 5x speed](docs/media/live-run.gif)
 
-business owners know what could hurt them. finding traditional insurance that covers it is hard. some risks just don't fit the policies they can buy.
+*a first-time visitor on the public site, recorded unedited and played back at about 5x. research, plan, approval and a real sandbox fill in about two and a half minutes.*
 
-we built beagle around the idea of nontraditional insurance. prediction markets already put prices on some of these events. we think they can help businesses fill those gaps.
+## why this is new
 
-tell beagle what you're worried about and what you can spend. it finds a matching contract, checks the terms, and works out how much the payout could help. you see the cost and what's still uncovered before you approve.
+insurance is built for risks that repeat across thousands of customers. a bar betting its margin on one game night, or a painting crew that has to cancel a $3,000 job if tomorrow's high goes above 71°F, is too small, too specific and too short-lived to underwrite. those risks usually just go uncovered.
 
-the opportunity is to make protection accessible for risks that traditional policies leave behind.
+prediction markets already price a lot of these events, often by the hour. but a contract is not a policy. it pays on its own wording, at its own strike, from its own settlement source, and the price you see is only good for the size on the book. an owner reading "$83,500 or above, LS-LRRR-XBTUSD, 8pm ET" has no way to tell whether that covers their risk, or how much of it.
 
+that translation is what beagle does:
 
-## how beagle helps
+- it reads your situation and the contract rules, and checks them field by field. when they don't line up it says so ("this settles at SFO airport, not your job site") instead of selling you a near-miss.
+- it sizes the hedge against the real order book with the real fees, so the number on the plan is what the market can actually fill.
+- it tells you what is protected and what is not before you spend anything. if the book only covers 3 of the 10 rewards you asked for, the plan says 3.
+- the downside is fixed. you approve one exact plan with a hard maximum, it goes out as a single fill-or-kill order, and nothing else is ever bought.
 
-you explain what could go wrong and how much you're willing to spend. beagle researches your business, finds a relevant prediction market, and works out how its payout could offset your exposure.
+## a real example
 
-you see the cost, what triggers the payout, and where the coverage falls short.
+a bar near campus wanted to tell customers: "if Bitcoin is above $83,000 at 9pm, everyone who opens a tab gets $1 back, up to 10 people."
 
-then you decide. one approval, a clear spending limit, and an order sized to what the market can actually fill.
+beagle searched the web through Context.dev for where BTC was trading, pulled every Gemini contract, and read the settlement terms. the 9pm event had no $83,000 strike (the lowest was $83,200), so it rewrote the customer promise to match the contract instead of hedging something that doesn't settle the same way. the $83,200 book was too thin, so it moved to the $83,900 strike and told the owner the hedge covers 3 rewards, not 10, for at most $0.66.
 
-we're building a way for a business owner to go from "this could cost us money" to "here's what we can do about it."
+the owner approved. beagle bought 3 YES for $0.43 including fees (Gemini order `145853902277805116`), and the campaign opened with exactly 3 rewards. a customer claimed one from their phone.
 
-## Example
-
-a restaurant wants to bring more people in for game night.
-
-the offer: "if our team wins, get $20 back on your meal."
-
-that creates a new risk. a busy night and a win could leave the restaurant paying out hundreds of dollars.
-
-the owner asks beagle: "can we run this promotion with a $350 hedge budget, including fees?"
-
-beagle researches the restaurant, looks for a contract tied to the same game, and checks that the reward condition matches the contract's settlement rules.
-
-then it calculates the cost and how many $20 rewards the hedge could support.
-
-when a matching sandbox contract is available, the owner approves the plan and beagle places the order. test rewards only open after the fill is confirmed, and enrollment stops when the funded slots run out.
-
-the restaurant gets a promotion with a clear cost and a fixed reward limit.
-
-sports promotions are research-only in the current build because sandbox has no sports listings. the executable promotion demo uses a crypto event.
+the same flow works for sports and weather risks. Gemini's sandbox doesn't list those yet, so they run as research only for now, and the executable demo uses crypto.
 
 ## the crew
 
@@ -81,12 +67,6 @@ sandbox liquidity is thin, so campaigns stay small. all trades and rewards are f
 
 ## demo
 
-watch the crew turn a business risk into a hedge plan.
-
-![a live run on beagle.andrewliu.org, about 5x speed](docs/media/live-run.gif)
-
-*a first-time visitor on the public site, recorded unedited and played back at about 5x. research, plan, approval and a real sandbox fill in about two and a half minutes.*
-
 you describe the risk in plain words. Scout reads the web through Context.dev, Nova pulls every Gemini contract and the live order book, and Penny sizes a hedge against what is actually on offer.
 
 ![asking beagle](docs/media/home.gif)
@@ -114,9 +94,9 @@ this is not a mock. every number below came off the Gemini sandbox.
 
 on 2026-10-11 23:40:52 UTC beagle bought 10 YES on `GEMI-BTC2610120000-HI83500` (BTC at or above $83,500 at 8pm EDT) at $0.10, fill-or-kill, Gemini order `145853902277682301`. it booked $1.00 principal plus $0.07 fee, which was the plan's estimate to the cent, then opened a 10 reward campaign that took its first claim. BTC closed above the strike and the contract paid $10.00 back into the sandbox account.
 
-on 2026-10-12 at 00:40 UTC a first-time visitor on the public site (the recording above) got 3 YES on `GEMI-BTC2610120100-HI83900` at an average $0.1333, Gemini order `145853902277805116`: $0.40 principal plus $0.03 fee against a $0.55 estimate and a $0.66 approved max.
+on 2026-10-12 at 00:40 UTC the bar run from the example above, started by a first-time visitor on the public site, got 3 YES on `GEMI-BTC2610120100-HI83900` at an average $0.1333, Gemini order `145853902277805116`: $0.40 principal plus $0.03 fee against a $0.55 estimate and a $0.66 approved max.
 
-that run is a good example of why the matching is strict. the bar asked for "above $83,000". the agent found the 9pm event has no $83,000 strike (the lowest is $83,200), so it rewrote the customer promise to match the contract instead of the other way round. the $83,200 book was then too thin, so the quote engine moved to the $83,900 strike, covered 3 of the 10 rewards the bar asked for, and said so on the plan. filming it also caught a bug: the campaign headline moved to $83,900 but the agent's fine print still said $83,200 and "the first 10 customers". the planner now rewrites both to what was actually bought.
+filming that run also caught a bug: the campaign headline moved to $83,900 but the agent's fine print still said $83,200 and "the first 10 customers". the planner now rewrites both to what was actually bought.
 
 ## how it works
 
